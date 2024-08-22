@@ -2,8 +2,8 @@
 																									
 #### Type of change:																									
 																									
-- [ ] Bug fix (non-breaking change which fixes an issue).																									
-- [ ] New feature (non breaking change which adds functionality).																									
+- [ ] Bug fix (a change which fixes an issue).																									
+- [ ] New feature (a change which adds functionality).																									
 - [ ] Code refactor.																									
 - [ ] Add/change styles.																									
 
