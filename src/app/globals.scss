@@ -29,3 +29,11 @@ footer {
 main {
   flex-grow: 1;
 }
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  pointer-events: none;
+}
