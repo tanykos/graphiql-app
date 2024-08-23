@@ -4,16 +4,38 @@ import styles from './header.module.scss';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import SvgImage from '@/components/svg-image/svg-image';
-import { LOCALES } from '@/const';
+import { DEFAULT_LOCALE, LOCALES } from '@/const';
+import { useRouter } from 'next/navigation';
+import { useContext, useState } from 'react';
+import { DictionaryContext } from '@/providers/dictionary-provider';
+import isLocaleCorrect from '@/utils/is-locale-correct';
 
 export default function Header(): React.ReactNode {
   const pathname = usePathname();
+  const locale = pathname.split('/')[1];
+  const [selectValue, setSelectValue] = useState(isLocaleCorrect(locale) ? locale : '');
+
+  const router = useRouter();
+
+  const dictionary = useContext(DictionaryContext);
+  if (!dictionary) return;
+
+  function handleLocaleChange(event: React.ChangeEvent) {
+    if (!(event.target instanceof HTMLSelectElement)) return;
+
+    setSelectValue(event.target.value);
+    const newLocale = event.target.value;
+    router.push(`${pathname.replace(locale, newLocale)}`);
+  }
 
   return (
     <header className={styles.header}>
       <nav>
-        <Link href="/" className={pathname === '/' ? styles.inactive : styles.active}>
-          Logo
+        <Link
+          href={`/${DEFAULT_LOCALE}`}
+          className={pathname === `/${DEFAULT_LOCALE}` ? styles.inactive : styles.active}
+        >
+          {dictionary.header.logo}
         </Link>
       </nav>
       <div className={styles.controls}>
@@ -21,7 +43,8 @@ export default function Header(): React.ReactNode {
           <label htmlFor="select">
             <SvgImage url={'/globe-sprite.svg#lang'} className={styles.svg} />
           </label>
-          <select id="select">
+          <select id="select" onChange={handleLocaleChange} value={selectValue}>
+            <option></option>
             {LOCALES.map((locale) => (
               <option value={locale} key={locale}>
                 {locale.toUpperCase()}
