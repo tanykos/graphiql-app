@@ -29,6 +29,10 @@
 
   select {
     border: none;
+
+    option:first-child {
+      display: none;
+    }
   }
 }
 
