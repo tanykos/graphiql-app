@@ -4,7 +4,7 @@ import { Locale } from '@/types';
 
 const dictionaries = {
   en: () => import('./dictionaries/en.json').then((module) => module.default),
-  ru: () => import('./dictionaries/ru.json').then((test) => test.default),
+  ru: () => import('./dictionaries/ru.json').then((module) => module.default),
 };
 
 export default async function getDictionary(locale: Locale) {
