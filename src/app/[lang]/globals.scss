@@ -1,5 +1,8 @@
 :root {
-  /* variables */
+  --border-input: #8f8f8f;
+  --table-text-color: #585858;
+  --placeholder-color: #b9b9b9;
+  --table-border: #d3d3d3;
 }
 
 * {
@@ -22,7 +25,7 @@ main,
 footer {
   width: 100%;
   padding: 1rem;
-  border: 1px solid tomato;
+  border: 1px solid #9b9b9b;
 }
 
 main {

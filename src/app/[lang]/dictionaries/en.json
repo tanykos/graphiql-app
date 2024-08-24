@@ -2,5 +2,18 @@
   "header": {
     "logo": "Logo"
   },
-  "testRoute": "Some other page is here"
+  "addHeader": "Add header",
+  "body": {
+    "request": "Body",
+    "response": "Body"
+  },
+  "headers": "Headers",
+  "key": "Key",
+  "method": "Method",
+  "request": "Request",
+  "response": "Response",
+  "send": "Send",
+  "status": "Status",
+  "testRoute": "Some other page is here",
+  "value": "Value"
 }
