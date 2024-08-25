@@ -1,7 +1,7 @@
 import NextLink from 'next/link';
 import MuiLink from '@mui/material/Link';
 import MuiButton from '@mui/material/Button';
-import { DEFAULT_LOCALE } from '@/const';
+import { usePathname } from 'next/navigation';
 
 interface RouterLinkProps {
   type?: 'link' | 'button';
@@ -12,6 +12,9 @@ interface RouterLinkProps {
 }
 
 export default function RouterLink({ type = 'link', href, children, ...props }: RouterLinkProps) {
+  const pathname = usePathname();
+  const locale = pathname.split('/')[1];
+
   const renderLinkContent = () => {
     if (type === 'button') {
       const { variantBtn, ...buttonProps } = props;
@@ -26,7 +29,7 @@ export default function RouterLink({ type = 'link', href, children, ...props }: 
   };
 
   return (
-    <NextLink href={`/${DEFAULT_LOCALE}/${href}`} passHref>
+    <NextLink href={`/${locale}/${href}`} passHref>
       {renderLinkContent()}
     </NextLink>
   );
