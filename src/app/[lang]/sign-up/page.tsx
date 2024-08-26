@@ -43,11 +43,11 @@ export default function SignUp() {
             <TextField fullWidth id="user" label={dictionary.signup.username} type="text" variant="standard" />
           </Grid>
           <Grid item xs={12}>
-            <TextField fullWidth id="email" label={dictionary.signup.email} type="email" variant="standard" />
+            <TextField fullWidth id="email" label={dictionary.email} type="email" variant="standard" />
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth variant="standard">
-              <InputLabel htmlFor="password">{dictionary.signup.password}</InputLabel>
+              <InputLabel htmlFor="password">{dictionary.password}</InputLabel>
               <Input
                 size="small"
                 id="password"
@@ -81,7 +81,7 @@ export default function SignUp() {
             >
               {dictionary.signup.note}{' '}
               <RouterLink type="link" href="sign-in">
-                {dictionary.signup.signin}
+                {dictionary.signup.link}
               </RouterLink>
             </Typography>
           </Grid>

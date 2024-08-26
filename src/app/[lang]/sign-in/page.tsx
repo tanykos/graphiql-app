@@ -40,11 +40,11 @@ export default function SignIn() {
       <Box component="form" autoComplete="off">
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <TextField fullWidth id="email" label={dictionary.signup.email} type="email" variant="standard" />
+            <TextField fullWidth id="email" label={dictionary.email} type="email" variant="standard" />
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth variant="standard">
-              <InputLabel htmlFor="password">{dictionary.signup.password}</InputLabel>
+              <InputLabel htmlFor="password">{dictionary.password}</InputLabel>
               <Input
                 size="small"
                 id="password"
@@ -78,7 +78,7 @@ export default function SignIn() {
             >
               {dictionary.signin.note}{' '}
               <RouterLink type="link" href="sign-up">
-                {dictionary.signin.signin}
+                {dictionary.signin.link}
               </RouterLink>
             </Typography>
           </Grid>

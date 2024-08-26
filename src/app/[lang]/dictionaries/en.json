@@ -9,19 +9,19 @@
     "signup": "Sign Up",
     "section": "Project information"
   },
+  "email": "Email",
+  "password": "Password",
   "signup": {
     "title": "Sign Up",
     "username": "Username",
-    "email": "Email",
-    "password": "Password",
     "button": "Sign Up",
     "note": "Already have an account?",
-    "signin": "Sign In"
+    "link": "Sign In"
   },
   "signin": {
     "title": "Sign In",
     "button": "Sign In",
     "note": "Don't have an account?",
-    "signin": "Sign Up"
+    "link": "Sign Up"
   }
 }
