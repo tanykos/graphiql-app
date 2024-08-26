@@ -30,7 +30,7 @@ export default function BodyRequest() {
   };
 
   const Textarea = styled(BaseTextareaAutosize)(
-    ({ theme }) => `
+    () => `
     box-sizing: border-box;
     width: 100%;
     font-family: inherit;
@@ -43,7 +43,6 @@ export default function BodyRequest() {
     background: #fff;
     border-color: ${grey[400]};
     border-width: 1px;
-    // color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
 
     &:hover {
       border-color: ${grey[800]};
@@ -64,7 +63,6 @@ export default function BodyRequest() {
   return (
     <div>
       <p className={style.bodyTitle}>{dictionary.body.request}</p>
-
       <Textarea minRows={3} aria-label="Body" placeholder="Body" defaultValue="" />
     </div>
   );
