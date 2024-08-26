@@ -15,5 +15,11 @@
   "send": "Send",
   "status": "Status",
   "testRoute": "Some other page is here",
-  "value": "Value"
+  "value": "Value",
+  "main": {
+    "title": "Welcome!",
+    "signin": "Sign In",
+    "signup": "Sign Up",
+    "section": "Project information"
+  }
 }
