@@ -1,75 +1,73 @@
 'use client';
 
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import { Select } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import { useContext, useState } from 'react';
+import { SelectChangeEvent } from '@mui/material/Select';
+import style from './RESTful.module.scss';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import { METHODS } from '@/const';
-import style from './restful.module.scss';
-import { useContext } from 'react';
 import { DictionaryContext } from '@/providers/dictionary-provider';
+import Headers from '@/components/restful-client/Headers/Headers';
+import BodyRequest from '@/components/restful-client/Body-request/Body-request';
 
 export default function Client() {
+  const [method, setMethod] = useState('');
+  const handleChange = (event: SelectChangeEvent) => {
+    setMethod(event.target.value);
+  };
+
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
   return (
-    <form className={style.form}>
-      <fieldset className={style.requestFieldset}>
-        <legend>{dictionary.request}</legend>
+    <>
+      <div>
+        <form className={style.restful}>
+          <fieldset className={style.fieldset}>
+            <legend className={style.sectionTitle}>{dictionary.request}</legend>
+            <div className={style.formInputLine}>
+              <FormControl size="small">
+                <InputLabel id="method-label">Method</InputLabel>
+                <Select
+                  labelId="method-label"
+                  id="method"
+                  value={method}
+                  label="Method"
+                  onChange={handleChange}
+                  className={style.select}
+                  size="small"
+                >
+                  {METHODS.map((method) => (
+                    <MenuItem key={method} value={method}>
+                      {method}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl className={style.inputUrl}>
+                <TextField id="url" label="URL" variant="outlined" size="small" />
+              </FormControl>
+              <Button type="submit" variant="contained" size="medium" className={style.button}>
+                {dictionary.send}
+              </Button>
+            </div>
+            <Headers />
+            <BodyRequest />
+          </fieldset>
 
-        <div className={style.formInputLine}>
-          <div className={style.formUnit}>
-            <label htmlFor="method-label">{dictionary.method}</label>
-            <select id="method-label" name="Method" className={style.select}>
-              {METHODS.map((method) => (
-                <option key={method} value={method}>
-                  {method}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className={style.formUnit}>
-            <label htmlFor="url">URL</label>
-            <input className={style.inputUrl} id="url" name="URL" />
-          </div>
-          <button type="submit" className={style.submit}>
-            {dictionary.send}
-          </button>
-        </div>
-
-        <div className={style.formUnit}>
-          <div className={style.headersTitleWrapper}>
-            <p className={style.headersTitle}>{dictionary.headers}</p>
-            <button>{dictionary.addHeader}</button>
-          </div>
-          <table className={style.headersTable}>
-            <tbody>
-              <tr>
-                <th className={style.headersTableKeys}>{dictionary.key}</th>
-                <th>{dictionary.value}</th>
-              </tr>
-              <tr>
-                <td>
-                  <input type="text" className={style.headersInput} placeholder={dictionary.key} />
-                </td>
-                <td>
-                  <input type="text" className={style.headersInput} placeholder={dictionary.value} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div className={style.bodyTitleWrapper}>
-          <label htmlFor="body-label">{dictionary.body.request}</label>
-        </div>
-        <textarea className={style.bodyRequest} id="body-label" rows={4} cols={30} />
-      </fieldset>
-
-      <fieldset className={style.responseFieldset}>
-        <legend>{dictionary.response}</legend>
-        <p className={style.statusTitle}>{dictionary.status}</p>
-        <div className={style.statusValue}></div>
-        <p className={style.bodyTitle}>{dictionary.body.response}</p>
-        <div className={style.bodyValue}></div>
-      </fieldset>
-    </form>
+          <fieldset className={style.fieldset}>
+            <legend className={style.sectionTitle}>{dictionary.response}</legend>
+            <p className={style.statusTitle}>{dictionary.status}</p>
+            <div className={style.statusValue}></div>
+            <p className={style.bodyTitle}>{dictionary.body.response}</p>
+            <div className={style.bodyValue}></div>
+          </fieldset>
+        </form>
+      </div>
+    </>
   );
 }
