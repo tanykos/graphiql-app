@@ -2,5 +2,11 @@
   "header": {
     "logo": "Logo"
   },
-  "testRoute": "Some other page is here"
+  "testRoute": "Some other page is here",
+  "main": {
+    "title": "Welcome!",
+    "signin": "Sign In",
+    "signup": "Sign Up",
+    "section": "Project information"
+  }
 }
