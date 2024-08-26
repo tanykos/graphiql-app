@@ -40,7 +40,7 @@ export default function SignIn() {
       <Box component="form" autoComplete="off">
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <TextField fullWidth id="email" label={dictionary.signin.email} type="email" variant="standard" />
+            <TextField fullWidth id="email" label={dictionary.signup.email} type="email" variant="standard" />
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth variant="standard">

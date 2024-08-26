@@ -20,8 +20,6 @@
   },
   "signin": {
     "title": "Sign In",
-    "email": "Email",
-    "password": "Password",
     "button": "Sign In",
     "note": "Don't have an account?",
     "signin": "Sign Up"
