@@ -1,5 +1,5 @@
+import styles from './RouterLink.module.scss';
 import NextLink from 'next/link';
-import MuiLink from '@mui/material/Link';
 import MuiButton from '@mui/material/Button';
 import { usePathname } from 'next/navigation';
 
@@ -24,12 +24,12 @@ export default function RouterLink({ type = 'link', href, children, ...props }: 
         </MuiButton>
       );
     } else {
-      return <MuiLink {...props}>{children}</MuiLink>;
+      return <>{children}</>;
     }
   };
 
   return (
-    <NextLink href={`/${locale}/${href}`} passHref>
+    <NextLink href={`/${locale}/${href}`} passHref className={styles.link}>
       {renderLinkContent()}
     </NextLink>
   );
