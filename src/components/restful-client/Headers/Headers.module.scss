@@ -1,0 +1,21 @@
+.button {
+  font-size: 1rem;
+}
+
+.headersTitle {
+  line-height: 40px;
+  font-size: 1.1rem;
+}
+
+.headersTitleWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-left: 8px;
+  margin: 15px 0 10px;
+}
+
+.nestedInput {
+  box-sizing: border-box;
+  width: 100%;
+}

@@ -1,0 +1,57 @@
+.restful {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.select {
+  width: 120px;
+}
+
+.inputUrl {
+  flex-grow: 1;
+}
+
+.button {
+  font-size: 1rem;
+}
+
+.formInputLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 5px;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.fieldset {
+  padding: 5px;
+  border: 1px solid var(--table-border);
+
+  .sectionTitle {
+    font-size: 0.8rem;
+    color: var(--placeholder-color);
+    padding: 0 3px;
+  }
+}
+
+.statusTitle {
+  padding-left: 8px;
+  margin: 5px 15px 10px 0;
+}
+
+.statusTitle,
+.statusValue {
+  display: inline-block;
+}
+
+.bodyTitle {
+  padding-left: 8px;
+  margin: 15px 0 10px;
+}
+
+.bodyValue {
+  padding-left: 8px;
+}
