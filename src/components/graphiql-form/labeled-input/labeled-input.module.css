@@ -1,0 +1,14 @@
+.labeled-input {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.labeled-input label {
+  color: var(--color-label);
+}
+
+.labeled-input input {
+  padding: 10px;
+  font-size: inherit;
+}

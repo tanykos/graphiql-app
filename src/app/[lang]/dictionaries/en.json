@@ -8,6 +8,10 @@
     "response": "Body"
   },
   "headers": "Headers",
+  "graphql": {
+    "endpointUrl": "Endpoint URL",
+    "query": "Query"
+  },
   "key": "Key",
   "method": "Method",
   "request": "Request",
