@@ -8,6 +8,10 @@
     "response": "Тело ответа"
   },
   "headers": "Заголовки",
+  "graphql": {
+    "endpointUrl": "URL-адрес",
+    "query": "Запрос (query)"
+  },
   "key": "Ключ",
   "method": "Метод",
   "request": "Запрос",

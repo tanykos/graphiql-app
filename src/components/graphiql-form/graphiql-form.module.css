@@ -1,0 +1,24 @@
+.graphiql-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.graphiql-form input {
+  height: 40px;
+}
+
+.main-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.main-row div {
+  flex-grow: 1;
+}
+
+.graphiql-form input[type='submit'] {
+  font-size: inherit;
+  padding: 5px;
+}
