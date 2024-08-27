@@ -6,7 +6,7 @@ import { Select } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import { useContext, useState } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
-import style from './RESTful.module.scss';
+import style from './restful.module.scss';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { METHODS } from '@/const';
@@ -15,7 +15,7 @@ import Headers from '@/components/restful-client/Headers/Headers';
 import BodyRequest from '@/components/restful-client/Body-request/Body-request';
 
 export default function Client() {
-  const [method, setMethod] = useState('');
+  const [method, setMethod] = useState('GET');
   const handleChange = (event: SelectChangeEvent) => {
     setMethod(event.target.value);
   };
