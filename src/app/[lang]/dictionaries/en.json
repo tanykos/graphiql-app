@@ -21,5 +21,20 @@
     "signin": "Sign In",
     "signup": "Sign Up",
     "section": "Project information"
+  },
+  "email": "Email",
+  "password": "Password",
+  "signup": {
+    "title": "Sign Up",
+    "username": "Username",
+    "button": "Sign Up",
+    "note": "Already have an account?",
+    "link": "Sign In"
+  },
+  "signin": {
+    "title": "Sign In",
+    "button": "Sign In",
+    "note": "Don't have an account?",
+    "link": "Sign Up"
   }
 }
