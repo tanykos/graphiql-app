@@ -1,35 +1,43 @@
-import { FormControl, Input, InputLabel } from '@mui/material';
-import { useState } from 'react';
+import { FormControl, Input, InputLabel, InputProps, FormHelperText } from '@mui/material';
+import { forwardRef, useState } from 'react';
 import { PasswordAction } from '../PasswordAction/PasswordAction';
 
-interface InputFieldProps {
+interface InputFieldProps extends InputProps {
   id: string;
   label: string;
   type?: 'text' | 'email' | 'password';
   fullWidth?: boolean;
+  error?: boolean;
+  helperText?: string;
 }
 
-export function InputField({ id, label, type = 'text', fullWidth = true }: InputFieldProps) {
-  const [showPassword, setShowPassword] = useState(false);
+const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
+  ({ id, label, type = 'text', fullWidth = true, error, helperText, ...rest }, ref) => {
+    const [showPassword, setShowPassword] = useState(false);
 
-  const getInputType = () => {
-    if (type === 'password') {
-      return showPassword ? 'text' : 'password';
-    }
-    return type;
-  };
+    return (
+      <FormControl
+        fullWidth={fullWidth}
+        variant="standard"
+        error={error}
+        sx={{ position: 'relative', paddingBottom: '20px' }}
+      >
+        <InputLabel htmlFor={id}>{label}</InputLabel>
+        <Input
+          id={id}
+          type={type === 'password' && !showPassword ? 'password' : 'text'}
+          autoComplete="off"
+          endAdornment={
+            type === 'password' && <PasswordAction showPassword={showPassword} setShowPassword={setShowPassword} />
+          }
+          ref={ref}
+          {...rest}
+        />
+        {helperText && <FormHelperText sx={{ position: 'absolute', bottom: '0' }}>{helperText}</FormHelperText>}
+      </FormControl>
+    );
+  },
+);
 
-  return (
-    <FormControl fullWidth={fullWidth} variant="standard">
-      <InputLabel htmlFor={id}>{label}</InputLabel>
-      <Input
-        id={id}
-        type={getInputType()}
-        autoComplete="off"
-        endAdornment={
-          type === 'password' && <PasswordAction showPassword={showPassword} setShowPassword={setShowPassword} />
-        }
-      />
-    </FormControl>
-  );
-}
+InputField.displayName = 'InputField';
+export { InputField };
