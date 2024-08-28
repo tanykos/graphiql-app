@@ -4,7 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { Select } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
-import { useContext, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
 import style from './restful.module.scss';
 import TextField from '@mui/material/TextField';
@@ -13,18 +13,49 @@ import { METHODS } from '@/const';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import Headers from '@/components/restful-client/Headers/Headers';
 import BodyRequest from '@/components/restful-client/Body-request/Body-request';
+import { useForm } from 'react-hook-form';
+import { usePathname, useRouter } from 'next/navigation';
+import getLocale from '@/utils/get-locale';
+import getEncodedString from '@/utils/get-encoded-string';
+import getDecodedStr from '@/utils/get-decoded-string';
+import { MethodType, RestfulFormFields, RestfulParams } from '@/types/restful';
 
-export default function Client() {
-  const [method, setMethod] = useState('GET');
+export default function RestfulClientForm({ params, response }: { params?: RestfulParams; response?: unknown }) {
+  if (response) console.log('response: ', response);
+  const [method, setMethod] = useState(params && params.method in METHODS ? params.method : 'GET');
   const handleChange = (event: SelectChangeEvent) => {
-    setMethod(event.target.value);
+    setMethod(event.target.value as MethodType);
+  };
+  const { handleSubmit, register, getValues } = useForm<RestfulFormFields>({
+    mode: 'onChange',
+    defaultValues: {
+      method,
+      url: params ? getDecodedStr(params.base64Url) : '',
+    },
+  });
+
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const onSubmit = () => {
+    const values = getValues();
+    const locale = getLocale(pathname);
+    const base64Url = getEncodedString(values.url);
+
+    if (base64Url) router.push(`/${locale}/${values.method}/${base64Url}`);
   };
 
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
   return (
-    <form className={style.restful}>
+    <form
+      className={style.restful}
+      onSubmit={(e: FormEvent) => {
+        e.preventDefault();
+        void handleSubmit(onSubmit)();
+      }}
+    >
       <fieldset className={style.fieldset}>
         <legend className={style.sectionTitle}>{dictionary.request}</legend>
         <div className={style.formInputLine}>
@@ -35,9 +66,9 @@ export default function Client() {
               id="method"
               value={method}
               label="Method"
-              onChange={handleChange}
               className={style.select}
               size="small"
+              {...register('method', { onChange: handleChange })}
             >
               {METHODS.map((method) => (
                 <MenuItem key={method} value={method}>
@@ -47,7 +78,13 @@ export default function Client() {
             </Select>
           </FormControl>
           <FormControl className={style.inputUrl}>
-            <TextField id="url" label="URL" variant="outlined" size="small" />
+            <TextField
+              id="url"
+              label="URL"
+              variant="outlined"
+              size="small"
+              {...register('url', { required: { value: true, message: 'Enter URL' } })}
+            />
           </FormControl>
           <Button type="submit" variant="contained" size="medium" className={style.button}>
             {dictionary.send}
