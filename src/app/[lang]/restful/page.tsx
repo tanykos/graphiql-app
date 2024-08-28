@@ -22,11 +22,11 @@ import { MethodType, RestfulFormFields, RestfulParams } from '@/types/restful';
 
 export default function RestfulClientForm({ params, response }: { params?: RestfulParams; response?: unknown }) {
   if (response) console.log('response: ', response);
-  const [method, setMethod] = useState(params && params.method ? params.method : 'GET');
+  const [method, setMethod] = useState(params && params.method in METHODS ? params.method : 'GET');
   const handleChange = (event: SelectChangeEvent) => {
     setMethod(event.target.value as MethodType);
   };
-  const { handleSubmit, register, getValues } = useForm({
+  const { handleSubmit, register, getValues } = useForm<RestfulFormFields>({
     mode: 'onChange',
     defaultValues: {
       method,
@@ -38,7 +38,7 @@ export default function RestfulClientForm({ params, response }: { params?: Restf
   const router = useRouter();
 
   const onSubmit = () => {
-    const values = getValues() as RestfulFormFields;
+    const values = getValues();
     const locale = getLocale(pathname);
     const base64Url = getEncodedString(values.url);
 
