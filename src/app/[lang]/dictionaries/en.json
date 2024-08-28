@@ -9,8 +9,10 @@
   },
   "headers": "Headers",
   "graphql": {
+    "documentation": "Documentation",
     "endpointUrl": "Endpoint URL",
-    "query": "Query"
+    "query": "Query",
+    "sdlUrl": "SDL Endpoint URL"
   },
   "key": "Key",
   "method": "Method",

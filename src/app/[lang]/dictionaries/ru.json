@@ -9,8 +9,10 @@
   },
   "headers": "Заголовки",
   "graphql": {
+    "documentation": "Документация",
     "endpointUrl": "URL-адрес",
-    "query": "Запрос (query)"
+    "query": "Запрос (query)",
+    "sdlUrl": "SDL URL-адрес"
   },
   "key": "Ключ",
   "method": "Метод",

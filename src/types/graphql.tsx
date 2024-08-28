@@ -1,5 +1,7 @@
 export type GraphQlRequest = {
   endpointUrl: string;
+  sdlUrl: string;
+  documentation: string;
   query: string;
 };
 
