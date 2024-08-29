@@ -12,11 +12,18 @@ import { DictionaryContext } from '@/providers/dictionary-provider';
 import getLocale from '@/utils/get-locale';
 import getEncodedString from '@/utils/get-encoded-string';
 
-export default function GraphiQlForm({ params }: { params?: GraphQlUrlParams }) {
+export default function GraphiQlForm({
+  params,
+  documentation = undefined,
+}: {
+  params?: GraphQlUrlParams;
+  documentation?: object | undefined;
+}) {
   const { register, handleSubmit, watch } = useForm<GraphQlRequest>({
     defaultValues: {
       endpointUrl: params ? getDecodedStr(params.base64endpoint) : '',
       query: params ? getDecodedStr(params.base64body) : '',
+      documentation: documentation ? JSON.stringify(documentation) : '',
     },
   });
   const pathname = usePathname();
@@ -47,7 +54,11 @@ export default function GraphiQlForm({ params }: { params?: GraphQlUrlParams }) 
         <LabeledInput field="endpointUrl" register={register} isRequired={true} />
         <input type="submit" value={dictionary.send} />
       </div>
-      <LabeledInput field="query" register={register} />
+      <LabeledInput field="sdlUrl" register={register} />
+      <div className={styles.editors}>
+        {documentation && <LabeledInput field="documentation" register={register} />}
+        <LabeledInput field="query" register={register} />
+      </div>
     </form>
   );
 }
