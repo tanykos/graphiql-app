@@ -10,9 +10,18 @@ import Paper from '@mui/material/Paper';
 import { useContext, useState } from 'react';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import { FormControl, TextField } from '@mui/material';
+import { UseFormRegister } from 'react-hook-form';
+import { RestfulFormFields, SearchParams } from '@/types/restful';
+import queriesNumberToArray from '@/utils/queries-number-to-array';
 
-export default function Headers() {
-  const [rows, setRows] = useState([1]);
+interface Props {
+  register: UseFormRegister<RestfulFormFields>;
+  queries?: SearchParams;
+}
+
+export default function Headers(props: Props) {
+  const [rows, setRows] = useState(props.queries ? queriesNumberToArray(Object.entries(props.queries).length) : [1]);
+
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
@@ -42,12 +51,22 @@ export default function Headers() {
                 <TableRow key={`row${row}`}>
                   <TableCell>
                     <FormControl className={style.nestedInput}>
-                      <TextField label={dictionary.key} variant="outlined" size="small" />
+                      <TextField
+                        label={dictionary.key}
+                        variant="outlined"
+                        size="small"
+                        {...props.register(`key_${row}`)}
+                      />
                     </FormControl>
                   </TableCell>
                   <TableCell>
                     <FormControl className={style.nestedInput}>
-                      <TextField label={dictionary.value} variant="outlined" size="small" />
+                      <TextField
+                        label={dictionary.value}
+                        variant="outlined"
+                        size="small"
+                        {...props.register(`value_${row}`)}
+                      />
                     </FormControl>
                   </TableCell>
                 </TableRow>

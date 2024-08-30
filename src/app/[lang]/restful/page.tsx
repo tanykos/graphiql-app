@@ -18,9 +18,19 @@ import { usePathname, useRouter } from 'next/navigation';
 import getLocale from '@/utils/get-locale';
 import getEncodedString from '@/utils/get-encoded-string';
 import getDecodedStr from '@/utils/get-decoded-string';
-import { MethodType, RestfulFormFields, RestfulParams } from '@/types/restful';
+import { MethodType, RestfulFormFields, RestfulParams, SearchParams } from '@/types/restful';
+import transformHeadersToQueries from '@/utils/transform-headers-to-queries';
+import transformQueriesToHeaders from '@/utils/transform-queries-to-headers';
 
-export default function RestfulClientForm({ params, response }: { params?: RestfulParams; response?: unknown }) {
+export default function RestfulClientForm({
+  params,
+  response,
+  queries,
+}: {
+  params?: RestfulParams;
+  response?: unknown;
+  queries?: SearchParams;
+}) {
   if (response) console.log('response: ', response);
   const [method, setMethod] = useState(params && params.method in METHODS ? params.method : 'GET');
   const handleChange = (event: SelectChangeEvent) => {
@@ -31,6 +41,7 @@ export default function RestfulClientForm({ params, response }: { params?: Restf
     defaultValues: {
       method,
       url: params ? getDecodedStr(params.base64Url) : '',
+      ...transformQueriesToHeaders(queries),
     },
   });
 
@@ -42,7 +53,9 @@ export default function RestfulClientForm({ params, response }: { params?: Restf
     const locale = getLocale(pathname);
     const base64Url = getEncodedString(values.url);
 
-    if (base64Url) router.push(`/${locale}/${values.method}/${base64Url}`);
+    const queryParams = transformHeadersToQueries(values);
+
+    if (base64Url) router.push(`/${locale}/${values.method}/${base64Url}${queryParams}`);
   };
 
   const dictionary = useContext(DictionaryContext);
@@ -90,7 +103,7 @@ export default function RestfulClientForm({ params, response }: { params?: Restf
             {dictionary.send}
           </Button>
         </div>
-        <Headers />
+        <Headers register={register} queries={queries} />
         <BodyRequest />
       </fieldset>
 
