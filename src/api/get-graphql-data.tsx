@@ -1,8 +1,9 @@
-export default async function getGraphQlData(endpoint: string, query?: string): Promise<unknown> {
+import { ApiResponse } from '@/types';
+
+export default async function getGraphQlData(endpoint: string, query?: string): Promise<ApiResponse> {
   const bodyQuery = query ? `query ${query}` : '';
 
-  // TODO specify data type to replace 'unknown'
-  let response: unknown;
+  const response: ApiResponse = { data: undefined, status: { code: undefined, text: undefined } };
   await fetch(endpoint, {
     method: 'POST',
     headers: {
@@ -11,10 +12,12 @@ export default async function getGraphQlData(endpoint: string, query?: string): 
     body: JSON.stringify({ query: bodyQuery }),
   })
     .then((res: Response) => {
+      response.status.code = res.status;
+      response.status.text = res.statusText;
       return res.json();
     })
     .then((data) => {
-      response = data;
+      response.data = data;
     })
     .catch((error: Error) => error);
 
