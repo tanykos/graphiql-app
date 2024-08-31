@@ -1,9 +1,12 @@
 :root {
+  --header-height: 60px;
+  --body-gap: 2rem;
+  --color-bg: rgb(226, 236, 228);
   --border-input: #8f8f8f;
   --table-text-color: #585858;
   --placeholder-color: #b9b9b9;
   --table-border: #d3d3d3;
-  --color-accent: teal;
+  --color-accent: #4f6e61;
   --color-border: #8f8f8f;
   --color-label: #8f8f8f;
 }
@@ -17,7 +20,6 @@
 body {
   max-width: 100vw;
   min-height: 100vh;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -27,12 +29,17 @@ header,
 main,
 footer {
   width: 100%;
-  padding: 1rem;
-  border: 1px solid #9b9b9b;
+  padding: 1rem 2rem;
+}
+
+header,
+footer {
+  background-color: var(--color-bg);
 }
 
 main {
   flex-grow: 1;
+  height: 2000px; // to test sticky header
 }
 
 button {
