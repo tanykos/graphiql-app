@@ -13,7 +13,3 @@ export interface RestfulParams {
   method: MethodType;
   base64Url: string;
 }
-
-export interface SearchParams {
-  [key: string]: string;
-}

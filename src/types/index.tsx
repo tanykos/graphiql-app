@@ -7,3 +7,7 @@ export interface fieldsFormData {
   linkText: string;
   href: string;
 }
+
+export interface SearchParams {
+  [key: string]: string;
+}

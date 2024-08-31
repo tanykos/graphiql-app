@@ -1,16 +1,14 @@
-import { SearchParams } from '@/types/restful';
+import { SearchParams } from '@/types';
 
-export default function transformQueriesToHeaders(queries: SearchParams | undefined) {
+export default function transformQueriesToHeaders(queries: SearchParams | undefined): SearchParams | '' {
   if (!queries) return '';
 
-  interface ObjectKeys {
-    [key: string]: string;
-  }
+  const queriesEntries = Object.entries(queries);
 
-  const obj: ObjectKeys = {};
-  for (let i = 1; i <= Object.entries(queries).length; i += 1) {
-    obj[`key_${i}`] = `${Object.entries(queries)[i - 1][0]}`;
-    obj[`value_${i}`] = `${Object.entries(queries)[i - 1][1]}`;
+  const obj: SearchParams = {};
+  for (let i = 1; i <= queriesEntries.length; i += 1) {
+    obj[`key_${i}`] = `${queriesEntries[i - 1][0]}`;
+    obj[`value_${i}`] = `${queriesEntries[i - 1][1]}`;
   }
   return obj;
 }

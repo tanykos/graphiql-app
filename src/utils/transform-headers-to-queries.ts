@@ -1,4 +1,4 @@
-export default function transformHeadersToQueries(values: { [key: string]: string }) {
+export default function transformHeadersToQueries(values: { [key: string]: string }): string {
   let query = '';
   for (const [key, value] of Object.entries(values)) {
     if (key.includes('key')) {

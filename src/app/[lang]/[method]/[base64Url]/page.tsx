@@ -1,7 +1,8 @@
-import { RestfulParams, SearchParams } from '@/types/restful';
+import { RestfulParams } from '@/types/restful';
 import RestfulClientForm from '../../restful/page';
 import getDecodedStr from '@/utils/get-decoded-string';
 import getRestfulData from '@/api/get-restful-data';
+import { SearchParams } from '@/types';
 
 export default async function RestfulFilledFormPage({
   params,

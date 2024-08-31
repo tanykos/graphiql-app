@@ -18,9 +18,10 @@ import { usePathname, useRouter } from 'next/navigation';
 import getLocale from '@/utils/get-locale';
 import getEncodedString from '@/utils/get-encoded-string';
 import getDecodedStr from '@/utils/get-decoded-string';
-import { MethodType, RestfulFormFields, RestfulParams, SearchParams } from '@/types/restful';
+import { MethodType, RestfulFormFields, RestfulParams } from '@/types/restful';
 import transformHeadersToQueries from '@/utils/transform-headers-to-queries';
 import transformQueriesToHeaders from '@/utils/transform-queries-to-headers';
+import { SearchParams } from '@/types';
 
 export default function RestfulClientForm({
   params,

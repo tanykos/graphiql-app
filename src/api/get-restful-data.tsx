@@ -1,10 +1,11 @@
-import { MethodType, SearchParams } from '@/types/restful';
-import transformSearchParamsToUrlQuery from '@/utils/transform-search-params-to-url';
+import { SearchParams } from '@/types';
+import { MethodType } from '@/types/restful';
+import transformSearchParamsToQueries from '@/utils/transform-search-params-to-queries';
 
 export default async function getRestfulData(method: MethodType, url: string, searchParams?: SearchParams) {
   let queryParams = '';
 
-  if (searchParams) queryParams = transformSearchParamsToUrlQuery(searchParams);
+  if (searchParams) queryParams = transformSearchParamsToQueries(searchParams);
   const data: unknown = await fetch(`${url}${queryParams}`, { method: method })
     .then((res) => res.json())
     .catch((error: Error) => {

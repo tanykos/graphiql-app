@@ -11,8 +11,9 @@ import { useContext, useState } from 'react';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import { FormControl, TextField } from '@mui/material';
 import { UseFormRegister } from 'react-hook-form';
-import { RestfulFormFields, SearchParams } from '@/types/restful';
+import { RestfulFormFields } from '@/types/restful';
 import queriesNumberToArray from '@/utils/queries-number-to-array';
+import { SearchParams } from '@/types';
 
 interface Props {
   register: UseFormRegister<RestfulFormFields>;
