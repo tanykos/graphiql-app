@@ -20,17 +20,17 @@ import getEncodedString from '@/utils/get-encoded-string';
 import getDecodedStr from '@/utils/get-decoded-string';
 import { MethodType, RestfulFormFields, RestfulParams } from '@/types/restful';
 import transformHeadersToQueries from '@/utils/transform-headers-to-queries';
-import transformQueriesToHeaders from '@/utils/transform-queries-to-headers';
+import transformSearchParamsToHeaders from '@/utils/transform-search-params-to-headers';
 import { SearchParams } from '@/types';
 
 export default function RestfulClientForm({
   params,
   response,
-  queries,
+  searchParams,
 }: {
   params?: RestfulParams;
   response?: unknown;
-  queries?: SearchParams;
+  searchParams?: SearchParams;
 }) {
   if (response) console.log('response: ', response);
   const [method, setMethod] = useState(params && params.method in METHODS ? params.method : 'GET');
@@ -42,7 +42,7 @@ export default function RestfulClientForm({
     defaultValues: {
       method,
       url: params ? getDecodedStr(params.base64Url) : '',
-      ...transformQueriesToHeaders(queries),
+      ...transformSearchParamsToHeaders(searchParams),
     },
   });
 
@@ -104,7 +104,7 @@ export default function RestfulClientForm({
             {dictionary.send}
           </Button>
         </div>
-        <Headers register={register} queries={queries} />
+        <Headers register={register} searchParams={searchParams} />
         <BodyRequest />
       </fieldset>
 

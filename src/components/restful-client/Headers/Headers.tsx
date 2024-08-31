@@ -16,11 +16,11 @@ import { SearchParams } from '@/types';
 
 interface Props {
   register: UseFormRegister<RestfulFormFields>;
-  queries?: SearchParams;
+  searchParams?: SearchParams;
 }
 
-export default function Headers(props: Props) {
-  const [rows, setRows] = useState(props.queries ? queriesNumberToArray(Object.entries(props.queries).length) : [1]);
+export default function Headers({ register, searchParams }: Props) {
+  const [rows, setRows] = useState(queriesNumberToArray(searchParams));
 
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
@@ -45,12 +45,7 @@ export default function Headers(props: Props) {
                 <TableRow key={`row${row}`}>
                   <TableCell className={style.tdStyle}>
                     <FormControl className={style.nestedInput}>
-                      <TextField
-                        label={dictionary.key}
-                        variant="outlined"
-                        size="small"
-                        {...props.register(`key_${row}`)}
-                      />
+                      <TextField label={dictionary.key} variant="outlined" size="small" {...register(`key_${row}`)} />
                     </FormControl>
                   </TableCell>
                   <TableCell className={style.tdStyle}>
@@ -59,7 +54,7 @@ export default function Headers(props: Props) {
                         label={dictionary.value}
                         variant="outlined"
                         size="small"
-                        {...props.register(`value_${row}`)}
+                        {...register(`value_${row}`)}
                       />
                     </FormControl>
                   </TableCell>

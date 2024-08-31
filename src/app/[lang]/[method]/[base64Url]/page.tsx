@@ -17,5 +17,5 @@ export default async function RestfulFilledFormPage({
   let response: unknown;
   if (url) response = await getRestfulData(method, url, searchParams);
 
-  return <RestfulClientForm params={params} response={response} queries={searchParams} />;
+  return <RestfulClientForm params={params} response={response} searchParams={searchParams} />;
 }
