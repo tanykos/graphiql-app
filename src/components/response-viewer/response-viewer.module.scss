@@ -1,0 +1,24 @@
+.response-wrapper {
+  padding: 10px;
+  border: 1px solid var(--color-border);
+}
+
+.response-wrapper legend {
+  padding: 0 3px;
+  color: var(--color-label);
+}
+
+.response {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.status-code {
+  color: var(--color-accent);
+}
+
+.status-text {
+  color: var(--color-label);
+  font-size: 0.8rem;
+}

@@ -22,3 +22,12 @@
   font-size: inherit;
   padding: 5px;
 }
+
+.editors {
+  display: flex;
+  gap: 10px;
+}
+
+.editors div {
+  flex-grow: 1;
+}
