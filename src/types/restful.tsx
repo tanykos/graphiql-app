@@ -5,6 +5,7 @@ export type MethodType = (typeof METHODS)[number];
 export interface RestfulFormFields {
   method: MethodType;
   url: string;
+  [key: string]: string;
 }
 
 export interface RestfulParams {

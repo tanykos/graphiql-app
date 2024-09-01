@@ -8,6 +8,10 @@ export interface fieldsFormData {
   href: string;
 }
 
+export interface SearchParams {
+  [key: string]: string;
+}
+
 // TODO specify data type to replace 'unknown'
 export type ApiResponse = {
   data: unknown;
