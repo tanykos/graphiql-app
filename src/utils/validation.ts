@@ -4,10 +4,10 @@ const basePasswordSchema = yup
   .string()
   .required('Password is required')
   .min(8, 'Password must be at least 8 characters long')
-  .matches(/[A-Z]/, 'Password must contain at least one uppercase Latin letter')
-  .matches(/[a-z]/, 'Password must contain at least one lowercase Latin letter')
+  .matches(/.*\p{Lu}.*/u, 'Password must contain at least one uppercase Latin letter')
+  .matches(/.*\p{Ll}.*/u, 'Password must contain at least one lowercase Latin letter')
   .matches(/\d/, 'Password must contain at least one digit')
-  .matches(/[@$!%*?&#]/, 'Password must contain at least one special character');
+  .matches(/[\p{P}\p{S}]/u, 'Password must contain at least one special character');
 
 const baseEmailSchema = yup
   .string()
