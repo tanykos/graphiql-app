@@ -21,8 +21,7 @@ export default function Header(): React.ReactNode {
   const [isHeaderSticky, setIsHeaderSticky] = useState(false);
 
   const handleStickyHeader = () => {
-    if (window.scrollY > 0) setIsHeaderSticky(true);
-    else setIsHeaderSticky(false);
+    setIsHeaderSticky(window.scrollY > 0);
   };
 
   useEffect(() => {
