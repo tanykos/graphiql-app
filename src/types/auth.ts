@@ -1,4 +1,4 @@
-export interface fieldsFormData {
+export interface authPageData {
   title: string;
   buttonText: string;
   disabled: boolean;
@@ -20,15 +20,10 @@ export type SignInFieldIds = keyof SignInFormInputs;
 
 export type SignUpFieldIds = keyof SignUpFormInputs;
 
-export interface FormField {
+export interface FormField<T extends SignInFormInputs | SignUpFormInputs> {
   label: string;
   type: 'text' | 'email' | 'password';
+  id: keyof T;
 }
 
-export interface SignInField extends FormField {
-  id: SignInFieldIds;
-}
-
-export interface SignUpField extends FormField {
-  id: SignUpFieldIds;
-}
+export type FormInputs = SignInFormInputs | SignUpFormInputs;

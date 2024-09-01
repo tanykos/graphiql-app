@@ -1,10 +1,10 @@
 import { Paper, Box, Grid, Typography, Button } from '@mui/material';
 import { FormEventHandler, ReactNode } from 'react';
 import { FormLink } from '../../FormLink/FormLink';
-import { fieldsFormData } from '@/types/auth';
+import { authPageData } from '@/types/auth';
 
 interface FormContainerProps {
-  data: fieldsFormData;
+  data: authPageData;
   children: ReactNode;
   onSubmit: FormEventHandler<HTMLFormElement>;
 }
