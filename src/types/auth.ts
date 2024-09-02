@@ -1,3 +1,5 @@
+import { DictionaryKeys } from '@/constants/form-fields-const';
+
 export interface authPageData {
   title: string;
   buttonText: string;
@@ -28,4 +30,4 @@ export interface FormField<T extends SignInFormInputs | SignUpFormInputs> {
 
 export type FormInputs = SignInFormInputs | SignUpFormInputs;
 
-export type AuthKeys = 'signup' | 'signin';
+export type AuthKeys = DictionaryKeys.SIGNUP | DictionaryKeys.SIGNIN;

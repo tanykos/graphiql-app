@@ -1,32 +1,66 @@
 import * as yup from 'yup';
 
-const basePasswordSchema = yup
-  .string()
-  .required('Password is required')
-  .matches(/.*\p{Lu}.*/u, 'Password must contain at least one uppercase letter')
-  .matches(/.*\p{Ll}.*/u, 'Password must contain at least one lowercase letter')
-  .matches(/\d/, 'Password must contain at least one digit')
-  .matches(/[\p{P}\p{S}]/u, 'Password must contain at least one special character')
-  .min(8, 'Password must be at least 8 characters long');
+export interface ValidationMessages {
+  required: string;
+  uppercase: string;
+  lowercase: string;
+  digit: string;
+  special: string;
+  minLength: string;
+}
 
-const baseEmailSchema = yup
-  .string()
-  .required('Email is required')
-  .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Invalid email');
+export interface Dictionary {
+  validation: {
+    password: ValidationMessages;
+    email: {
+      required: string;
+      invalid: string;
+    };
+    user: {
+      required: string;
+      onlyLatin: string;
+      startUppercase: string;
+    };
+  };
+}
 
-const baseUserSchema = yup
-  .string()
-  .required('Name is required')
-  .matches(/^[A-Za-z]+$/, 'Name must contain only Latin letters')
-  .matches(/^[A-Z][a-z]*$/, 'Name must start with an uppercase Latin letter');
+const getBasePasswordSchema = (dictionary: Dictionary) =>
+  yup
+    .string()
+    .required(dictionary.validation.password.required)
+    .matches(/.*\p{Lu}.*/u, dictionary.validation.password.uppercase)
+    .matches(/.*\p{Ll}.*/u, dictionary.validation.password.lowercase)
+    .matches(/\d/, dictionary.validation.password.digit)
+    .matches(/[\p{P}\p{S}]/u, dictionary.validation.password.special)
+    .min(8, dictionary.validation.password.minLength);
 
-export const validationSignUpSchema = yup.object({
-  user: baseUserSchema,
-  email: baseEmailSchema,
-  password: basePasswordSchema,
-});
+const getBaseEmailSchema = (dictionary: Dictionary) =>
+  yup
+    .string()
+    .required(dictionary.validation.email.required)
+    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, dictionary.validation.email.invalid);
 
-export const validationSignInSchema = yup.object({
-  email: baseEmailSchema,
-  password: basePasswordSchema,
-});
+const getBaseUserSchema = (dictionary: Dictionary) =>
+  yup
+    .string()
+    .required(dictionary.validation.user.required)
+    .matches(/^[A-Za-z]+$/, dictionary.validation.user.onlyLatin)
+    .matches(/^[A-Z][A-Za-z]*$/, dictionary.validation.user.startUppercase);
+
+export const validationSignUpSchema = (dictionary: Dictionary) =>
+  yup.object({
+    user: getBaseUserSchema(dictionary),
+    email: getBaseEmailSchema(dictionary),
+    password: getBasePasswordSchema(dictionary),
+  });
+
+export const validationSignInSchema = (dictionary: Dictionary) =>
+  yup.object({
+    email: getBaseEmailSchema(dictionary),
+    password: getBasePasswordSchema(dictionary),
+  });
+
+export const getValidationSchemas = (dictionary: Dictionary, isSignUp: boolean) => {
+  if (isSignUp) return validationSignUpSchema(dictionary);
+  return validationSignInSchema(dictionary);
+};

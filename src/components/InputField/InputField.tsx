@@ -33,7 +33,9 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           ref={ref}
           {...rest}
         />
-        {helperText && <FormHelperText sx={{ position: 'absolute', bottom: '0' }}>{helperText}</FormHelperText>}
+        {helperText && (
+          <FormHelperText sx={{ position: 'absolute', bottom: '0', fontSize: '0.7rem' }}>{helperText}</FormHelperText>
+        )}
       </FormControl>
     );
   },

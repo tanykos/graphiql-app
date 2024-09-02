@@ -8,17 +8,19 @@ import { InputField } from '@/components/InputField/InputField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import { AuthKeys, FormInputs } from '@/types/auth';
-import { validationSignInSchema, validationSignUpSchema } from '@/utils/validation';
+import { getValidationSchemas } from '@/utils/validation';
 import { getFieldsData } from '@/utils/get-fields-data';
+import { DictionaryKeys } from '@/constants/form-fields-const';
 
 interface AuthFormProps {
   dictionaryKey: AuthKeys;
 }
 
 export default function AuthForm({ dictionaryKey }: AuthFormProps) {
-  const isSignUp = dictionaryKey === 'signup';
-  const validationSchema = isSignUp ? validationSignUpSchema : validationSignInSchema;
+  const dictionary = useContext(DictionaryContext);
 
+  const isSignUp = dictionaryKey === DictionaryKeys.SIGNUP;
+  const validationSchema = getValidationSchemas(dictionary!, isSignUp);
   const defaultValues: FormInputs = isSignUp ? { email: '', password: '', user: '' } : { email: '', password: '' };
 
   const {
@@ -31,7 +33,6 @@ export default function AuthForm({ dictionaryKey }: AuthFormProps) {
     defaultValues,
   });
 
-  const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
   const formData = {
@@ -40,7 +41,7 @@ export default function AuthForm({ dictionaryKey }: AuthFormProps) {
     disabled: !isValid || isSubmitting,
     note: dictionary[dictionaryKey].note,
     linkText: dictionary[dictionaryKey].link,
-    href: dictionaryKey === 'signup' ? 'sign-in' : 'sign-up',
+    href: dictionaryKey === DictionaryKeys.SIGNUP ? 'sign-in' : 'sign-up',
   };
 
   const onSubmit = (data: FormInputs) => {
