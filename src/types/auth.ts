@@ -27,3 +27,5 @@ export interface FormField<T extends SignInFormInputs | SignUpFormInputs> {
 }
 
 export type FormInputs = SignInFormInputs | SignUpFormInputs;
+
+export type AuthKeys = 'signup' | 'signin';

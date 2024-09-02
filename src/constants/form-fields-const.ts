@@ -11,8 +11,3 @@ export const signInFields = (dictionary: Dictionary): Array<FormField<SignInForm
   { id: 'email', label: dictionary.email, type: 'email' },
   { id: 'password', label: dictionary.password, type: 'password' },
 ];
-
-export const getFieldsData = (dictionary: Dictionary, dictionaryKey: 'signup' | 'signin') => {
-  if (dictionaryKey === 'signup') return signUpFields(dictionary);
-  return signInFields(dictionary);
-};

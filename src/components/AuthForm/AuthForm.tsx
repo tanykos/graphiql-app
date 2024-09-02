@@ -5,14 +5,14 @@ import { Grid } from '@mui/material';
 import { useContext } from 'react';
 import { FormContainer } from '@/components/AuthForm/FormContainer/FormContainer';
 import { InputField } from '@/components/InputField/InputField';
-import { getFieldsData } from '@/constants/form-fields-const';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
-import { FormInputs } from '@/types/auth';
+import { AuthKeys, FormInputs } from '@/types/auth';
 import { validationSignInSchema, validationSignUpSchema } from '@/utils/validation';
+import { getFieldsData } from '@/utils/get-fields-data';
 
 interface AuthFormProps {
-  dictionaryKey: 'signup' | 'signin';
+  dictionaryKey: AuthKeys;
 }
 
 export default function AuthForm({ dictionaryKey }: AuthFormProps) {
