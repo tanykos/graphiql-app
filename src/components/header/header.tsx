@@ -6,16 +6,34 @@ import { usePathname } from 'next/navigation';
 import SvgImage from '@/components/svg-image/svg-image';
 import { DEFAULT_LOCALE, LOCALES } from '@/const';
 import { useRouter } from 'next/navigation';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import isLocaleCorrect from '@/utils/is-locale-correct';
+import getLocale from '@/utils/get-locale';
 
 export default function Header(): React.ReactNode {
   const pathname = usePathname();
-  const locale = pathname.split('/')[1];
+  const locale = getLocale(pathname);
   const [selectValue, setSelectValue] = useState(isLocaleCorrect(locale) ? locale : '');
 
   const router = useRouter();
+
+  const [isHeaderSticky, setIsHeaderSticky] = useState(false);
+
+  const handleStickyHeader = () => {
+    setIsHeaderSticky(window.scrollY > 0);
+  };
+
+  useEffect(() => {
+    handleStickyHeader();
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleStickyHeader);
+    return () => {
+      window.removeEventListener('scroll', handleStickyHeader);
+    };
+  });
 
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
@@ -25,11 +43,12 @@ export default function Header(): React.ReactNode {
 
     setSelectValue(event.target.value);
     const newLocale = event.target.value;
-    router.push(`${pathname.replace(locale, newLocale)}`);
+    router.push(`${pathname.replace(locale, newLocale)}`, { scroll: true });
   }
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${isHeaderSticky && styles.sticky}`}>
+      <div className={styles.backdrop}></div>
       <nav>
         <Link
           href={`/${DEFAULT_LOCALE}`}
