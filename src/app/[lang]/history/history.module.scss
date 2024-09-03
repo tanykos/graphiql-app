@@ -1,0 +1,11 @@
+.requests {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+main:has(.requests) {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

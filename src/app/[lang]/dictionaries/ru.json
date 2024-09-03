@@ -8,6 +8,9 @@
     "response": "Тело ответа"
   },
   "headers": "Заголовки",
+  "historyPage": {
+    "emptyMessage": "Вы не отправили еще ни одного запроса"
+  },
   "graphql": {
     "documentation": "Документация",
     "endpointUrl": "URL-адрес",
@@ -17,6 +20,7 @@
   "key": "Ключ",
   "method": "Метод",
   "request": "Запрос",
+  "requestsHistory": "История запросов",
   "response": "Ответ",
   "send": "Отправить",
   "status": "Статус",
