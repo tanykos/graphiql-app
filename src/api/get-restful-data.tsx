@@ -7,19 +7,13 @@ export default async function getRestfulData(
   searchParams?: SearchParams,
   body?: string,
 ) {
-  console.log('body: ', body, typeof body);
-  const data: unknown =
-    body !== undefined
-      ? await fetch(url, { method: method, headers: searchParams, body })
-          .then((res) => res.json())
-          .catch((error: Error) => {
-            console.log(error);
-          })
-      : await fetch(url, { method: method, headers: searchParams })
-          .then((res) => res.json())
-          .catch((error: Error) => {
-            console.log(error);
-          });
+  const options =
+    body !== undefined ? { method: method, headers: searchParams, body } : { method: method, headers: searchParams };
+  const data: unknown = await fetch(url, options)
+    .then((res) => res.json())
+    .catch((error: Error) => {
+      console.log(error);
+    });
 
   return data;
 }

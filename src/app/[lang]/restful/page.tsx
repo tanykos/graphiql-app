@@ -44,7 +44,7 @@ export default function RestfulClientForm({
       method,
       url: params ? getDecodedStr(params.base64Url) : '',
       ...transformSearchParamsToHeaders(searchParams),
-      body: params ? getDecodedStr(params.base64Body) : '',
+      body: params && params.base64Body ? getDecodedStr(params.base64Body) : '',
     },
   });
 
@@ -53,7 +53,6 @@ export default function RestfulClientForm({
 
   const onSubmit = () => {
     const values = getValues();
-    console.log('values: ', values);
     const locale = getLocale(pathname);
     const base64Url = getEncodedString(values.url);
     const base64Body = getEncodedString(values.body);
