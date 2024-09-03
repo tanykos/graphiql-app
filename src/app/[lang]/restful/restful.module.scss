@@ -31,9 +31,12 @@
   border: 1px solid var(--table-border);
 
   .sectionTitle {
-    font-size: 0.8rem;
-    color: var(--placeholder-color);
+    font-size: 1.1rem;
     padding: 0 3px;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 400;
+    line-height: 1.5em;
+    color: var(--form-legend-color);
   }
 }
 

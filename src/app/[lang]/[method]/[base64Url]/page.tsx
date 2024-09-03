@@ -12,10 +12,16 @@ export default async function RestfulFilledFormPage({
   searchParams: SearchParams;
 }) {
   const url = getDecodedStr(params.base64Url);
+  console.log('params: ', params);
   const method = params.method;
+  let body: string | undefined = '';
+  if (params.base64Body) body = getDecodedStr(params.base64Body);
+  console.log('body!: ', body);
+  console.log('params: ', params);
+  console.log('searchParams: ', searchParams);
 
   let response: unknown;
-  if (url) response = await getRestfulData(method, url, searchParams);
+  if (url) response = await getRestfulData(method, url, searchParams, body);
 
   return <RestfulClientForm params={params} response={response} searchParams={searchParams} />;
 }
