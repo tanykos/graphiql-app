@@ -1,12 +1,12 @@
 import { Paper, Box, Grid, Typography, Button } from '@mui/material';
-import { ReactNode } from 'react';
-import { FormLink } from '../FormLink/FormLink';
-import { fieldsFormData } from '@/types';
+import { FormEventHandler, ReactNode } from 'react';
+import { FormLink } from '../../FormLink/FormLink';
+import { authPageData } from '@/types/auth';
 
 interface FormContainerProps {
-  data: fieldsFormData;
+  data: authPageData;
   children: ReactNode;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit: FormEventHandler<HTMLFormElement>;
 }
 
 export function FormContainer({ data, children, onSubmit }: FormContainerProps) {
@@ -16,10 +16,10 @@ export function FormContainer({ data, children, onSubmit }: FormContainerProps) 
         {data.title}
       </Typography>
       <Box component="form" onSubmit={onSubmit}>
-        <Grid container spacing={3}>
+        <Grid container spacing={1}>
           {children}
           <Grid item xs={12}>
-            <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 2 }}>
+            <Button type="submit" disabled={data.disabled} fullWidth variant="contained" color="primary" sx={{ mt: 2 }}>
               {data.buttonText}
             </Button>
           </Grid>
