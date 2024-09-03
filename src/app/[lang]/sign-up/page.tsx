@@ -1,6 +1,6 @@
 import AuthForm from '@/components/AuthForm/AuthForm';
-import { DictionaryKeys } from '@/constants/form-fields-const';
+import { AuthFormNames } from '@/constants/form-fields-const';
 
 export default function SignUp() {
-  return <AuthForm dictionaryKey={DictionaryKeys.SIGNUP} />;
+  return <AuthForm dictionaryKey={AuthFormNames.SIGNUP} />;
 }

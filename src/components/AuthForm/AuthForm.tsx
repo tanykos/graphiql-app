@@ -10,7 +10,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { AuthKeys, FormInputs } from '@/types/auth';
 import { getValidationSchemas } from '@/utils/validation';
 import { getFieldsData } from '@/utils/get-fields-data';
-import { DictionaryKeys } from '@/constants/form-fields-const';
+import { AuthFormNames } from '@/constants/form-fields-const';
 
 interface AuthFormProps {
   dictionaryKey: AuthKeys;
@@ -19,7 +19,7 @@ interface AuthFormProps {
 export default function AuthForm({ dictionaryKey }: AuthFormProps) {
   const dictionary = useContext(DictionaryContext);
 
-  const isSignUp = dictionaryKey === DictionaryKeys.SIGNUP;
+  const isSignUp = dictionaryKey === AuthFormNames.SIGNUP;
   const validationSchema = getValidationSchemas(dictionary!, isSignUp);
   const defaultValues: FormInputs = isSignUp ? { email: '', password: '', user: '' } : { email: '', password: '' };
 
@@ -41,7 +41,7 @@ export default function AuthForm({ dictionaryKey }: AuthFormProps) {
     disabled: !isValid || isSubmitting,
     note: dictionary[dictionaryKey].note,
     linkText: dictionary[dictionaryKey].link,
-    href: dictionaryKey === DictionaryKeys.SIGNUP ? 'sign-in' : 'sign-up',
+    href: dictionaryKey === AuthFormNames.SIGNUP ? 'sign-in' : 'sign-up',
   };
 
   const onSubmit = (data: FormInputs) => {

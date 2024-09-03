@@ -1,4 +1,4 @@
-import { DictionaryKeys } from '@/constants/form-fields-const';
+import { AuthFormNames } from '@/constants/form-fields-const';
 
 export interface authPageData {
   title: string;
@@ -30,4 +30,4 @@ export interface FormField<T extends SignInFormInputs | SignUpFormInputs> {
 
 export type FormInputs = SignInFormInputs | SignUpFormInputs;
 
-export type AuthKeys = DictionaryKeys.SIGNUP | DictionaryKeys.SIGNIN;
+export type AuthKeys = AuthFormNames.SIGNUP | AuthFormNames.SIGNIN;

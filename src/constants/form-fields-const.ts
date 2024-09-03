@@ -12,7 +12,7 @@ export const signInFields = (dictionary: Dictionary): Array<FormField<SignInForm
   { id: 'password', label: dictionary.password, type: 'password' },
 ];
 
-export enum DictionaryKeys {
+export enum AuthFormNames {
   SIGNUP = 'signup',
   SIGNIN = 'signin',
 }
