@@ -60,7 +60,7 @@ export default function Header(): React.ReactNode {
       <div className={styles.controls}>
         <div className={styles.lang}>
           <label htmlFor="select">
-            <SvgImage url={'/globe-sprite.svg#lang'} className={styles.svg} />
+            <SvgImage url={'/globe-sprite.svg#lang'} className={styles.svg} ariaLabel="Language globe" />
           </label>
           <select id="select" onChange={handleLocaleChange} value={selectValue}>
             <option></option>
@@ -71,8 +71,8 @@ export default function Header(): React.ReactNode {
             ))}
           </select>
         </div>
-        <button className={styles['sign-out-button']} aria-label="sign out" title="sign out">
-          <SvgImage url={'/sign-out-sprite.svg#signOut'} className={styles.svg}></SvgImage>
+        <button className={styles['sign-out-button']} aria-label="Sign out" title="sign out">
+          <SvgImage url={'/sign-out-sprite.svg#signOut'} className={styles.svg} />
         </button>
       </div>
     </header>

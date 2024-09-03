@@ -9,6 +9,7 @@
   --color-accent: #4f6e61;
   --color-border: #8f8f8f;
   --color-label: #8f8f8f;
+  --color-text-secondary: #636363;
 }
 
 * {
@@ -39,7 +40,7 @@ footer {
 
 main {
   flex-grow: 1;
-  height: 2000px; // to test sticky header
+  height: 1000px; // to test sticky header
 }
 
 button {
