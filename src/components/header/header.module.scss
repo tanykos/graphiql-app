@@ -34,7 +34,7 @@
 }
 
 .active {
-  color: #636363;
+  color: var(--color-text-secondary);
 }
 
 .inactive {
@@ -71,7 +71,7 @@
 .svg {
   width: 22px;
   height: 22px;
-  color: #636363;
+  color: var(--color-text-secondary);
 
   &:hover {
     color: var(--color-accent);
