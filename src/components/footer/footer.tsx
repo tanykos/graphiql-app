@@ -1,8 +1,13 @@
 import Link from 'next/link';
 import SvgImage from '../svg-image/svg-image';
 import styles from './footer.module.scss';
+import getDictionary from '@/app/[lang]/dictionaries';
+import { Locale } from '@/types';
+import { use } from 'react';
 
-export default function Footer(): React.ReactNode {
+export default function Footer({ locale }: { locale: Locale }): React.ReactNode {
+  const dictionary = use(getDictionary(locale));
+
   const developers = [
     { name: 'Tetiana', github: 'tanykos' },
     { name: 'Tanya', github: 'pambaka' },
@@ -31,7 +36,11 @@ export default function Footer(): React.ReactNode {
       </div>
       <p>2024</p>
       <Link href="https://rs.school/courses/reactjs" target={'_blank'} title="RS School React">
-        <SvgImage url="/footer-icons-sprite.svg#rss" className={styles.github} ariaLabel="RS School, React course" />
+        <SvgImage
+          url="/footer-icons-sprite.svg#rss"
+          className={styles.github}
+          ariaLabel={dictionary.icons.rsSchoolReact}
+        />
       </Link>
     </footer>
   );

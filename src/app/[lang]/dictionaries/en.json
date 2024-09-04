@@ -14,6 +14,11 @@
     "query": "Query",
     "sdlUrl": "SDL Endpoint URL"
   },
+  "icons": {
+    "globe": "Language globe",
+    "rsSchoolReact": "RS School, React course",
+    "signOut": "Sign out"
+  },
   "key": "Key",
   "method": "Method",
   "request": "Request",

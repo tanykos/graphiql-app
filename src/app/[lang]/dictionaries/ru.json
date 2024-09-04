@@ -14,6 +14,11 @@
     "query": "Запрос (query)",
     "sdlUrl": "SDL URL-адрес"
   },
+  "icons": {
+    "globe": "Глобус",
+    "rsSchoolReact": "RS школа, курс по React",
+    "signOut": "Выйти"
+  },
   "key": "Ключ",
   "method": "Метод",
   "request": "Запрос",
