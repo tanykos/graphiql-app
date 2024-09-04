@@ -32,7 +32,7 @@
   "testRoute": "Some other page is here",
   "value": "Value",
   "main": {
-    "title": "Welcome!",
+    "title": "Welcome",
     "signin": "Sign In",
     "signup": "Sign Up",
     "section": "Project information"
@@ -70,5 +70,6 @@
       "onlyLatin": "Name must contain only Latin letters",
       "startUppercase": "Name must start with an uppercase Latin letter"
     }
-  }
+  },
+  "authFailed": "Authentication failed. Please try again."
 }

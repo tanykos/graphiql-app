@@ -10,8 +10,21 @@ import { useContext, useEffect, useState } from 'react';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import isLocaleCorrect from '@/utils/is-locale-correct';
 import getLocale from '@/utils/get-locale';
+import { auth } from '../../../firebaseConfig';
+import { signOut, User } from 'firebase/auth';
+import { Routes } from '@/constants/routes';
+import RouterLink from '../RouterLink/RouterLink';
+import { IconButton, Tooltip } from '@mui/material';
+import LoginIcon from '@mui/icons-material/Login';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import LogoutIcon from '@mui/icons-material/Logout';
+import withAuth from '@/hoc/withAuth';
 
-export default function Header(): React.ReactNode {
+interface HeaderProps {
+  user: User | null;
+}
+
+function Header({ user }: HeaderProps): React.ReactNode {
   const pathname = usePathname();
   const locale = getLocale(pathname);
   const [selectValue, setSelectValue] = useState(isLocaleCorrect(locale) ? locale : '');
@@ -46,6 +59,15 @@ export default function Header(): React.ReactNode {
     router.push(`${pathname.replace(locale, newLocale)}`, { scroll: true });
   }
 
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      router.push(`/${locale}`);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
   return (
     <header className={`${styles.header} ${isHeaderSticky && styles.sticky}`}>
       <div className={styles.backdrop}></div>
@@ -71,14 +93,35 @@ export default function Header(): React.ReactNode {
             ))}
           </select>
         </div>
-        <button
-          className={styles['sign-out-button']}
-          aria-label={dictionary.icons.signOut}
-          title={dictionary.icons.signOut}
-        >
-          <SvgImage url={'/sign-out-sprite.svg#signOut'} className={styles.svg} />
-        </button>
+
+        {user ? (
+          <Tooltip title={dictionary.icons.signOut}>
+            <IconButton color="primary" onClick={() => void handleSignOut()}>
+              <LogoutIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <>
+            <RouterLink href={Routes.SIGN_IN}>
+              <Tooltip title={dictionary.main.signin}>
+                <IconButton color="primary" aria-label={dictionary.main.signin}>
+                  <LoginIcon />
+                </IconButton>
+              </Tooltip>
+            </RouterLink>
+
+            <RouterLink href={Routes.SIGN_UP}>
+              <Tooltip title={dictionary.main.signup}>
+                <IconButton color="primary" aria-label={dictionary.main.signup}>
+                  <AppRegistrationIcon />
+                </IconButton>
+              </Tooltip>
+            </RouterLink>
+          </>
+        )}
       </div>
     </header>
   );
 }
+
+export default withAuth(Header);
