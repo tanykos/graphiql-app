@@ -8,6 +8,9 @@
     "response": "Body"
   },
   "headers": "Headers",
+  "historyPage": {
+    "emptyMessage": "You haven't sent any requests yet"
+  },
   "graphql": {
     "documentation": "Documentation",
     "endpointUrl": "Endpoint URL",
@@ -17,6 +20,7 @@
   "key": "Key",
   "method": "Method",
   "request": "Request",
+  "requestsHistory": "Requests History",
   "response": "Response",
   "send": "Send",
   "status": "Status",
