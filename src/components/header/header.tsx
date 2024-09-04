@@ -2,7 +2,7 @@
 
 import styles from './header.module.scss';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import SvgImage from '@/components/svg-image/svg-image';
 import { DEFAULT_LOCALE, LOCALES } from '@/const';
 import { useRouter } from 'next/navigation';
@@ -16,6 +16,7 @@ export default function Header(): React.ReactNode {
   const locale = getLocale(pathname);
   const [selectValue, setSelectValue] = useState(isLocaleCorrect(locale) ? locale : '');
 
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   const [isHeaderSticky, setIsHeaderSticky] = useState(false);
@@ -43,7 +44,7 @@ export default function Header(): React.ReactNode {
 
     setSelectValue(event.target.value);
     const newLocale = event.target.value;
-    router.push(`${pathname.replace(locale, newLocale)}`, { scroll: true });
+    router.push(`${pathname.replace(locale, newLocale)}?${searchParams.toString()}`, { scroll: true });
   }
 
   return (
