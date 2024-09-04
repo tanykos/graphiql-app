@@ -12,7 +12,6 @@ import Button from '@mui/material/Button';
 import { METHODS } from '@/const';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import Headers from '@/components/restful-client/Headers/Headers';
-import BodyRequest from '@/components/restful-client/Body-request/Body-request';
 import { useForm } from 'react-hook-form';
 import { usePathname, useRouter } from 'next/navigation';
 import getLocale from '@/utils/get-locale';
@@ -22,6 +21,7 @@ import { MethodType, RestfulFormFields, RestfulParams } from '@/types/restful';
 import transformHeadersToQueries from '@/utils/transform-headers-to-queries';
 import transformSearchParamsToHeaders from '@/utils/transform-search-params-to-headers';
 import { SearchParams } from '@/types';
+import BodyEditor from '@/components/restful-client/Body-editor/Body-editor';
 
 export default function RestfulClientForm({
   params,
@@ -33,16 +33,18 @@ export default function RestfulClientForm({
   searchParams?: SearchParams;
 }) {
   if (response) console.log('response: ', response);
-  const [method, setMethod] = useState(params && params.method in METHODS ? params.method : 'GET');
+
+  const [method, setMethod] = useState(params && METHODS.includes(params.method) ? params.method : 'GET');
   const handleChange = (event: SelectChangeEvent) => {
     setMethod(event.target.value as MethodType);
   };
-  const { handleSubmit, register, getValues } = useForm<RestfulFormFields>({
+  const { handleSubmit, register, getValues, control } = useForm<RestfulFormFields>({
     mode: 'onChange',
     defaultValues: {
       method,
       url: params ? getDecodedStr(params.base64Url) : '',
       ...transformSearchParamsToHeaders(searchParams),
+      body: params && params.base64Body ? getDecodedStr(params.base64Body) : '',
     },
   });
 
@@ -53,10 +55,11 @@ export default function RestfulClientForm({
     const values = getValues();
     const locale = getLocale(pathname);
     const base64Url = getEncodedString(values.url);
-
+    const base64Body = getEncodedString(values.body);
     const queryParams = transformHeadersToQueries(values);
 
-    if (base64Url) router.push(`/${locale}/${values.method}/${base64Url}${queryParams}`);
+    if (base64Url && base64Body !== undefined)
+      router.push(`/${locale}/${values.method}/${base64Url}/${base64Body}${queryParams}`);
   };
 
   const dictionary = useContext(DictionaryContext);
@@ -105,7 +108,7 @@ export default function RestfulClientForm({
           </Button>
         </div>
         <Headers register={register} searchParams={searchParams} />
-        <BodyRequest />
+        <BodyEditor control={control} />
       </fieldset>
 
       <fieldset className={style.fieldset}>
