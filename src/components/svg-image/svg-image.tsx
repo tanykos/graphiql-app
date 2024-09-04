@@ -1,6 +1,14 @@
-export default function SvgImage({ url, className }: { url: string; className: string }): React.ReactNode {
+export default function SvgImage({
+  url,
+  className,
+  ariaLabel,
+}: {
+  url: string;
+  className: string;
+  ariaLabel?: string;
+}): React.ReactNode {
   return (
-    <svg className={className}>
+    <svg className={className} role="img" {...(ariaLabel && { 'aria-label': ariaLabel })}>
       <use xlinkHref={url} />
     </svg>
   );
