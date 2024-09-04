@@ -11,6 +11,7 @@ import getDecodedStr from '@/utils/get-decoded-string';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import getLocale from '@/utils/get-locale';
 import getEncodedString from '@/utils/get-encoded-string';
+import useLocalStorageHistory from '@/hooks/use-local-storage-history';
 
 export default function GraphiQlForm({
   params,
@@ -29,6 +30,8 @@ export default function GraphiQlForm({
   const pathname = usePathname();
   const router = useRouter();
 
+  const [, saveToLocalStorage] = useLocalStorageHistory();
+
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
@@ -39,7 +42,11 @@ export default function GraphiQlForm({
     const body = watch('query');
     const base64body = getEncodedString(body);
 
-    if (base64endpoint && base64body !== undefined) router.push(`/${locale}/GRAPHQL/${base64endpoint}/${base64body}`);
+    if (base64endpoint && base64body !== undefined) {
+      const path = `/${locale}/GRAPHQL/${base64endpoint}/${base64body}`;
+      saveToLocalStorage(path);
+      router.push(path);
+    }
   };
 
   return (

@@ -31,7 +31,7 @@ export default async function RootLayout({
         <DictionaryProvider dictionary={dictionary}>
           <Header />
           <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
-          <Footer />
+          <Footer locale={locale} />
         </DictionaryProvider>
       </body>
     </html>
