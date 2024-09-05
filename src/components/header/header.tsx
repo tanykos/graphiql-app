@@ -18,6 +18,7 @@ import { IconButton, Tooltip } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LogoutIcon from '@mui/icons-material/Logout';
+import HomeIcon from '@mui/icons-material/Home';
 import withAuth from '@/hoc/withAuth';
 
 interface HeaderProps {
@@ -95,11 +96,21 @@ function Header({ user }: HeaderProps): React.ReactNode {
         </div>
 
         {user ? (
-          <Tooltip title={dictionary.icons.signOut}>
-            <IconButton color="primary" onClick={() => void handleSignOut()}>
-              <LogoutIcon />
-            </IconButton>
-          </Tooltip>
+          <>
+            <RouterLink href={Routes.MAIN}>
+              <Tooltip title={dictionary.icons.toMain}>
+                <IconButton color="primary" aria-label={dictionary.icons.toMain}>
+                  <HomeIcon />
+                </IconButton>
+              </Tooltip>
+            </RouterLink>
+
+            <Tooltip title={dictionary.icons.signOut}>
+              <IconButton color="primary" onClick={() => void handleSignOut()}>
+                <LogoutIcon />
+              </IconButton>
+            </Tooltip>
+          </>
         ) : (
           <>
             <RouterLink href={Routes.SIGN_IN}>

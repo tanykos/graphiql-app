@@ -20,7 +20,8 @@
   "icons": {
     "globe": "Глобус",
     "rsSchoolReact": "RS школа, курс по React",
-    "signOut": "Выйти"
+    "signOut": "Выйти",
+    "toMain": "На Главную Страницу"
   },
   "key": "Ключ",
   "method": "Метод",
