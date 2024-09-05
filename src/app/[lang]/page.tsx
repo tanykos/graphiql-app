@@ -4,15 +4,25 @@ import { DictionaryContext } from '@/providers/dictionary-provider';
 import { useContext } from 'react';
 import RouterLink from '@/components/RouterLink/RouterLink';
 import { Box, Grid, Typography } from '@mui/material';
+import { User } from 'firebase/auth';
+import { Routes } from '@/constants/routes';
+import withAuth from '@/hoc/withAuth';
 
-export default function MainPage() {
+interface MainPageProps {
+  user: User | null;
+}
+
+function MainPage({ user }: MainPageProps) {
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} sx={{ textAlign: 'center' }}>
-        <Typography variant="h3">{dictionary.main.title}</Typography>
+      <Grid item xs={12} sx={{ wordBreak: 'break-all' }}>
+        <Typography variant="h3" sx={{ textAlign: 'center', mt: 4 }}>
+          {dictionary.main.title}
+          {user ? `, ${user.displayName}` : ``}!
+        </Typography>
       </Grid>
 
       <Grid item xs={12} sx={{ textAlign: 'center' }}>
@@ -24,12 +34,28 @@ export default function MainPage() {
             },
           }}
         >
-          <RouterLink type="button" href="sign-in" variantBtn="outlined">
-            {dictionary.main.signin}
-          </RouterLink>
-          <RouterLink type="button" href="sign-up" variantBtn="outlined">
-            {dictionary.main.signup}
-          </RouterLink>
+          {user ? (
+            <>
+              <RouterLink type="button" href={Routes.RESTFUL_CLIENT} variantBtn="outlined">
+                {dictionary.restClient}
+              </RouterLink>
+              <RouterLink type="button" href={Routes.GRAPHQL_CLIENT} variantBtn="outlined">
+                {dictionary.graphClient}
+              </RouterLink>
+              <RouterLink type="button" href={Routes.HISTORY} variantBtn="outlined">
+                {dictionary.history}
+              </RouterLink>
+            </>
+          ) : (
+            <>
+              <RouterLink type="button" href={Routes.SIGN_IN} variantBtn="outlined">
+                {dictionary.main.signin}
+              </RouterLink>
+              <RouterLink type="button" href={Routes.SIGN_UP} variantBtn="outlined">
+                {dictionary.main.signup}
+              </RouterLink>
+            </>
+          )}
         </Box>
       </Grid>
 
@@ -40,3 +66,5 @@ export default function MainPage() {
     </Grid>
   );
 }
+
+export default withAuth(MainPage);

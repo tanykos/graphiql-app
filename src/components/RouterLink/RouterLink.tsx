@@ -2,9 +2,10 @@ import styles from './RouterLink.module.scss';
 import NextLink from 'next/link';
 import MuiButton from '@mui/material/Button';
 import { usePathname } from 'next/navigation';
+import { IconButton, Tooltip } from '@mui/material';
 
 interface RouterLinkProps {
-  type?: 'link' | 'button';
+  type?: 'link' | 'button' | 'iconButton';
   href: string;
   children: React.ReactNode;
   variantBtn?: 'text' | 'outlined' | 'contained';
@@ -22,6 +23,14 @@ export default function RouterLink({ type = 'link', href, children, ...props }: 
         <MuiButton variant={variantBtn} {...buttonProps}>
           {children}
         </MuiButton>
+      );
+    }
+    if (type === 'iconButton') {
+      const { tooltip, ...buttonProps } = props;
+      return (
+        <Tooltip title={tooltip} {...buttonProps}>
+          <IconButton color="primary">{children}</IconButton>
+        </Tooltip>
       );
     } else {
       return <>{children}</>;
