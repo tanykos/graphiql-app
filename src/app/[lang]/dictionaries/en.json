@@ -72,5 +72,8 @@
       "startUppercase": "Name must start with an uppercase Latin letter"
     }
   },
-  "authFailed": "Authentication failed. Please try again."
+  "authFailed": "Authentication failed. Please try again.",
+  "restClient": "REST Client",
+  "graphClient": "GraphiQL Client",
+  "history": "History"
 }

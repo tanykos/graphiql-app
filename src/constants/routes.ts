@@ -4,4 +4,5 @@ export enum Routes {
   SIGN_IN = 'sign-in',
   RESTFUL_CLIENT = 'restful',
   GRAPHQL_CLIENT = 'graphiql',
+  HISTORY = 'history',
 }

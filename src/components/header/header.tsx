@@ -97,12 +97,8 @@ function Header({ user }: HeaderProps): React.ReactNode {
 
         {user ? (
           <>
-            <RouterLink href={Routes.MAIN}>
-              <Tooltip title={dictionary.icons.toMain}>
-                <IconButton color="primary" aria-label={dictionary.icons.toMain}>
-                  <HomeIcon />
-                </IconButton>
-              </Tooltip>
+            <RouterLink href={Routes.MAIN} tooltip={dictionary.icons.toMain} type="iconButton">
+              <HomeIcon />
             </RouterLink>
 
             <Tooltip title={dictionary.icons.signOut}>
@@ -113,20 +109,12 @@ function Header({ user }: HeaderProps): React.ReactNode {
           </>
         ) : (
           <>
-            <RouterLink href={Routes.SIGN_IN}>
-              <Tooltip title={dictionary.main.signin}>
-                <IconButton color="primary" aria-label={dictionary.main.signin}>
-                  <LoginIcon />
-                </IconButton>
-              </Tooltip>
+            <RouterLink href={Routes.SIGN_IN} tooltip={dictionary.main.signin} type="iconButton">
+              <LoginIcon />
             </RouterLink>
 
-            <RouterLink href={Routes.SIGN_UP}>
-              <Tooltip title={dictionary.main.signup}>
-                <IconButton color="primary" aria-label={dictionary.main.signup}>
-                  <AppRegistrationIcon />
-                </IconButton>
-              </Tooltip>
+            <RouterLink href={Routes.SIGN_UP} tooltip={dictionary.main.signup} type="iconButton">
+              <AppRegistrationIcon />
             </RouterLink>
           </>
         )}

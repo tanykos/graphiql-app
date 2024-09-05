@@ -37,13 +37,13 @@ function MainPage({ user }: MainPageProps) {
           {user ? (
             <>
               <RouterLink type="button" href={Routes.RESTFUL_CLIENT} variantBtn="outlined">
-                REST Client
+                {dictionary.restClient}
               </RouterLink>
               <RouterLink type="button" href={Routes.GRAPHQL_CLIENT} variantBtn="outlined">
-                GraphiQL Client
+                {dictionary.graphClient}
               </RouterLink>
-              <RouterLink type="button" href="history" variantBtn="outlined">
-                History
+              <RouterLink type="button" href={Routes.HISTORY} variantBtn="outlined">
+                {dictionary.history}
               </RouterLink>
             </>
           ) : (
