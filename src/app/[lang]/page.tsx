@@ -18,8 +18,8 @@ function MainPage({ user }: MainPageProps) {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} sx={{ textAlign: 'center' }}>
-        <Typography variant="h3">
+      <Grid item xs={12} sx={{ wordBreak: 'break-all' }}>
+        <Typography variant="h3" sx={{ textAlign: 'center', mt: 4 }}>
           {dictionary.main.title}
           {user ? `, ${user.displayName}` : ``}!
         </Typography>
