@@ -2,7 +2,7 @@ import { RestfulParams } from '@/types/restful';
 import RestfulClientForm from '../../restful/page';
 import getDecodedStr from '@/utils/get-decoded-string';
 import getRestfulData from '@/api/get-restful-data';
-import { SearchParams } from '@/types';
+import { ApiResponse, SearchParams } from '@/types';
 
 export default async function RestfulFilledFormPage({
   params,
@@ -16,7 +16,7 @@ export default async function RestfulFilledFormPage({
   let body: string | undefined = '';
   if (params.base64Body) body = getDecodedStr(params.base64Body);
 
-  let response: unknown;
+  let response: ApiResponse | undefined;
   if (url) response = await getRestfulData(method, url, searchParams, body);
 
   return <RestfulClientForm params={params} response={response} searchParams={searchParams} />;

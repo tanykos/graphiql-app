@@ -20,8 +20,9 @@ import getDecodedStr from '@/utils/get-decoded-string';
 import { MethodType, RestfulFormFields, RestfulParams } from '@/types/restful';
 import transformHeadersToQueries from '@/utils/transform-headers-to-queries';
 import transformSearchParamsToHeaders from '@/utils/transform-search-params-to-headers';
-import { SearchParams } from '@/types';
-import BodyEditor from '@/components/restful-client/Body-editor/Body-editor';
+import { ApiResponse, SearchParams } from '@/types';
+import BodyEditor from '@/components/restful-client/BodyEditor/BodyEditor';
+import ResponseViewer from '@/components/response-viewer/response-viewer';
 
 export default function RestfulClientForm({
   params,
@@ -29,11 +30,9 @@ export default function RestfulClientForm({
   searchParams,
 }: {
   params?: RestfulParams;
-  response?: unknown;
+  response?: ApiResponse | undefined;
   searchParams?: SearchParams;
 }) {
-  if (response) console.log('response: ', response);
-
   const [method, setMethod] = useState(params && METHODS.includes(params.method) ? params.method : 'GET');
   const handleChange = (event: SelectChangeEvent) => {
     setMethod(event.target.value as MethodType);
@@ -111,13 +110,7 @@ export default function RestfulClientForm({
         <BodyEditor control={control} />
       </fieldset>
 
-      <fieldset className={style.fieldset}>
-        <legend className={style.sectionTitle}>{dictionary.response}</legend>
-        <p className={style.statusTitle}>{dictionary.status}</p>
-        <div className={style.statusValue}></div>
-        <p className={style.bodyTitle}>{dictionary.body.response}</p>
-        <div className={style.bodyValue}></div>
-      </fieldset>
+      <ResponseViewer response={response} />
     </form>
   );
 }
