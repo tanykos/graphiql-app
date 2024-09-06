@@ -1,8 +1,9 @@
 import { RestfulParams } from '@/types/restful';
-import RestfulClientForm from '../../restful/page';
 import getDecodedStr from '@/utils/get-decoded-string';
 import getRestfulData from '@/api/get-restful-data';
 import { ApiResponse, SearchParams } from '@/types';
+import RestfulClientForm from '@/components/restful-client/RestfulClientForm';
+import ResponseViewer from '@/components/response-viewer/response-viewer';
 
 export default async function RestfulFilledFormPage({
   params,
@@ -19,5 +20,10 @@ export default async function RestfulFilledFormPage({
   let response: ApiResponse | undefined;
   if (url) response = await getRestfulData(method, url, searchParams, body);
 
-  return <RestfulClientForm params={params} response={response} searchParams={searchParams} />;
+  return (
+    <>
+      <RestfulClientForm params={params} searchParams={searchParams} />
+      <ResponseViewer response={response} />
+    </>
+  );
 }

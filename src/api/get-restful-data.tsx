@@ -11,16 +11,16 @@ export default async function getRestfulData(
   console.log('body: ', body);
   const options = body ? { method: method, headers: searchParams, body } : { method: method, headers: searchParams };
   console.log('options: ', options);
-  const data: unknown = await fetch(url, options)
+  await fetch(url, options)
     .then((res: Response) => {
       response.status.code = res.status;
       response.status.text = res.statusText;
       return res.json();
     })
-    .catch((error: Error) => {
-      console.log(error);
-    });
-  response.data = data;
+    .then((data) => {
+      response.data = data;
+    })
+    .catch((error: Error) => error);
 
   return response;
 }
