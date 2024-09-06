@@ -1,0 +1,14 @@
+.text {
+  width: fit-content;
+  word-break: break-word;
+  transition: 0.5s;
+
+  &:hover {
+    background-color: var(--color-bg);
+  }
+}
+
+.text span {
+  color: #a7a7a7;
+  font-size: 0.9rem;
+}
