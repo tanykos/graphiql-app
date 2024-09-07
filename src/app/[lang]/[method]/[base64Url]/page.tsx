@@ -4,6 +4,7 @@ import getRestfulData from '@/api/get-restful-data';
 import { ApiResponse, SearchParams } from '@/types';
 import RestfulClientForm from '@/components/restful-client/RestfulClientForm';
 import ResponseViewer from '@/components/response-viewer/response-viewer';
+import style from '../../restful/restful.module.scss';
 
 export default async function RestfulFilledFormPage({
   params,
@@ -21,9 +22,9 @@ export default async function RestfulFilledFormPage({
   if (url) response = await getRestfulData(method, url, searchParams, body);
 
   return (
-    <>
+    <div className={style.restful}>
       <RestfulClientForm params={params} searchParams={searchParams} />
       <ResponseViewer response={response} />
-    </>
+    </div>
   );
 }

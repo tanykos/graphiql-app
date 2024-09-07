@@ -64,7 +64,6 @@ export default function RestfulClientForm({
   return (
     <>
       <form
-        className={style.restful}
         onSubmit={(e: FormEvent) => {
           e.preventDefault();
           void handleSubmit(onSubmit)();
