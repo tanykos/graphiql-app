@@ -8,9 +8,7 @@ export default async function getRestfulData(
   body?: string,
 ): Promise<ApiResponse> {
   const response: ApiResponse = { data: undefined, status: { code: undefined, text: undefined } };
-  console.log('body: ', body);
   const options = body ? { method: method, headers: searchParams, body } : { method: method, headers: searchParams };
-  console.log('options: ', options);
   await fetch(url, options)
     .then((res: Response) => {
       response.status.code = res.status;
