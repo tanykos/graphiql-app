@@ -3,7 +3,7 @@ import { Control, FieldValues, Controller } from 'react-hook-form';
 import { RestfulFormFields } from '@/types/restful';
 import { useContext } from 'react';
 import { DictionaryContext } from '@/providers/dictionary-provider';
-import style from './Body-editor.module.scss';
+import style from './BodyEditor.module.scss';
 
 interface Props {
   control: Control<RestfulFormFields, FieldValues>;

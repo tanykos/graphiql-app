@@ -4,12 +4,18 @@ import { DictionaryContext } from '@/providers/dictionary-provider';
 import styles from './response-viewer.module.scss';
 import { ApiResponse } from '@/types';
 import { useContext } from 'react';
+import JsonFormatter, { JsonObject } from 'react-json-formatter';
 
 export default function ResponseViewer({ response }: { response?: ApiResponse }) {
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
-  // TODO add JSON Viewer
+  const jsonStyle = {
+    propertyStyle: { color: '#533030' },
+    stringStyle: { color: '#0e5a0e' },
+    numberStyle: { color: '#774300' },
+  };
+
   return (
     <fieldset className={styles['response-wrapper']}>
       <legend>{dictionary.response}</legend>
@@ -22,7 +28,7 @@ export default function ResponseViewer({ response }: { response?: ApiResponse })
         </p>
         <div>
           <p>{`${dictionary.body.response}:`}</p>
-          <pre>{response && JSON.stringify(response.data, null, 2)}</pre>
+          {response && <JsonFormatter json={response.data as JsonObject} tabWith={4} jsonStyle={jsonStyle} />}
         </div>
       </div>
     </fieldset>
