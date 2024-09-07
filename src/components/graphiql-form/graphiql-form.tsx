@@ -12,6 +12,7 @@ import { DictionaryContext } from '@/providers/dictionary-provider';
 import getLocale from '@/utils/get-locale';
 import getEncodedString from '@/utils/get-encoded-string';
 import useLocalStorageHistory from '@/hooks/use-local-storage-history';
+import updateUrlEndpointParam from '@/utils/update-url-endpoint-param';
 
 export default function GraphiQlForm({
   params,
@@ -49,6 +50,11 @@ export default function GraphiQlForm({
     }
   };
 
+  const handleEndpointUrlChange = () => {
+    const updatedUrl = updateUrlEndpointParam(pathname, watch('endpointUrl'));
+    window.history.replaceState({}, '', `/${updatedUrl}`);
+  };
+
   return (
     <form
       onSubmit={(event: FormEvent) => {
@@ -58,7 +64,7 @@ export default function GraphiQlForm({
       className={styles['graphiql-form']}
     >
       <div className={styles['main-row']}>
-        <LabeledInput field="endpointUrl" register={register} isRequired={true} />
+        <LabeledInput field="endpointUrl" register={register} onChange={handleEndpointUrlChange} isRequired={true} />
         <input type="submit" value={dictionary.send} />
       </div>
       <LabeledInput field="sdlUrl" register={register} />
