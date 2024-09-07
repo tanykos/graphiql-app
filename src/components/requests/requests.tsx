@@ -1,37 +1,44 @@
 'use client';
 
+import styles from './requests.module.scss';
 import { REQUESTS_SEPARATOR } from '@/const';
 import useLocalStorageHistory from '@/hooks/use-local-storage-history';
 import { DictionaryContext } from '@/providers/dictionary-provider';
-import getDecodedStr from '@/utils/get-decoded-string';
+import getLocale from '@/utils/get-locale';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useContext } from 'react';
+import RequestLinkText from './RequestLinkText/RequestLinkText';
 
 export default function Requests(): React.ReactNode {
   const [requests] = useLocalStorageHistory();
 
+  const pathname = usePathname();
+  const locale = getLocale(pathname);
+
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
-  // TODO Rewrite requests handler, make it universal (working for both api clients), this is a temporary solution
-  const getRequests = (requests: string) => {
+  // TODO add query params
+  const getRequestsUrlParams = (requests: string) => {
     const arr = requests.split(REQUESTS_SEPARATOR);
 
     return arr.map((request) => {
-      const arr = request.split('/');
-      const apiClient = arr[2];
-      const endpoint = getDecodedStr(arr[3]);
-      const body = getDecodedStr(arr[4]) ?? '';
-
-      return `${apiClient} ${endpoint} ${body}`;
+      const [, , clientParam, endpointParam, bodyParam] = request.split('/');
+      return [clientParam, endpointParam, bodyParam];
     });
   };
 
   return (
     <>
       {requests &&
-        getRequests(requests).map((request: string, index: number) => {
-          return <p key={index}>{request}</p>;
-        })}
+        getRequestsUrlParams(requests)
+          .map((urlParams: string[], index: number) => (
+            <Link href={`/${locale}/${urlParams.join('/')}`} className={styles.link} key={index}>
+              <RequestLinkText urlParams={urlParams} />
+            </Link>
+          ))
+          .reverse()}
       {!requests && <p>{dictionary.historyPage.emptyMessage}</p>}
     </>
   );
