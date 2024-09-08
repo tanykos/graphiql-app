@@ -13,6 +13,7 @@ import getLocale from '@/utils/get-locale';
 import getEncodedString from '@/utils/get-encoded-string';
 import useLocalStorageHistory from '@/hooks/use-local-storage-history';
 import updateUrlEndpointParam from '@/utils/update-url-endpoint-param';
+import updateUrlBodyParam from '@/utils/update-url-body-param';
 
 export default function GraphiQlForm({
   params,
@@ -55,6 +56,10 @@ export default function GraphiQlForm({
     window.history.replaceState({}, '', `/${updatedUrl}`);
   };
 
+  const handleQueryChange = () => {
+    updateUrlBodyParam(pathname, watch('query'));
+  };
+
   return (
     <form
       onSubmit={(event: FormEvent) => {
@@ -70,7 +75,7 @@ export default function GraphiQlForm({
       <LabeledInput field="sdlUrl" register={register} />
       <div className={styles.editors}>
         {documentation && <LabeledInput field="documentation" register={register} />}
-        <LabeledInput field="query" register={register} />
+        <LabeledInput field="query" register={register} onBlur={handleQueryChange} />
       </div>
     </form>
   );
