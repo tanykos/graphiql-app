@@ -14,7 +14,7 @@ import isLocaleCorrect from '@/utils/is-locale-correct';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '',
+  title: 'REST & GraphQL clients',
   description: '',
 };
 
