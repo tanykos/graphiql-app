@@ -38,7 +38,7 @@ export default function RestfulClientForm({
     setMethod(event.target.value as MethodType);
     updateURLMethodParam(pathname, event.target.value as MethodType);
   };
-  const { handleSubmit, register, getValues, control, watch } = useForm<RestfulFormFields>({
+  const { handleSubmit, register, getValues, control } = useForm<RestfulFormFields>({
     mode: 'onChange',
     defaultValues: {
       method,
@@ -64,7 +64,7 @@ export default function RestfulClientForm({
   if (!dictionary) return;
 
   const handleEndpointUrlChange = () => {
-    const updatedUrl = updateUrlEndpointParam(pathname, watch('url'));
+    const updatedUrl = updateUrlEndpointParam(pathname, getValues().url);
     window.history.replaceState({}, '', `/${updatedUrl}`);
   };
 
