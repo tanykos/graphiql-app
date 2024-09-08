@@ -20,6 +20,7 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import withAuth from '@/hoc/withAuth';
+import Logo from './Logo/Logo';
 
 interface HeaderProps {
   user: User | null;
@@ -78,7 +79,7 @@ function Header({ user }: HeaderProps): React.ReactNode {
           href={`/${DEFAULT_LOCALE}`}
           className={pathname === `/${DEFAULT_LOCALE}` ? styles.inactive : styles.active}
         >
-          {dictionary.header.logo}
+          <Logo />
         </Link>
       </nav>
       <div className={styles.controls}>

@@ -1,0 +1,19 @@
+.little {
+  color: var(--color-accent);
+}
+
+.big {
+  color: transparent;
+  stroke: var(--color-accent);
+  stroke-width: 0.5;
+}
+
+.logo {
+  width: auto;
+  height: 50px;
+  transition: 1s;
+
+  &:hover {
+    transform: rotate(20deg);
+  }
+}
