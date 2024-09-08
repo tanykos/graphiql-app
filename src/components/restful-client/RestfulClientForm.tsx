@@ -22,6 +22,8 @@ import transformHeadersToQueries from '@/utils/transform-headers-to-queries';
 import transformSearchParamsToHeaders from '@/utils/transform-search-params-to-headers';
 import { SearchParams } from '@/types';
 import BodyEditor from '@/components/restful-client/BodyEditor/BodyEditor';
+import updateUrlEndpointParam from '@/utils/update-url-endpoint-param';
+import updateURLMethodParam from '@/utils/update-url-method-param';
 
 export default function RestfulClientForm({
   params,
@@ -31,10 +33,12 @@ export default function RestfulClientForm({
   searchParams?: SearchParams;
 }) {
   const [method, setMethod] = useState(params && METHODS.includes(params.method) ? params.method : 'GET');
+  const pathname = usePathname();
   const handleChange = (event: SelectChangeEvent) => {
     setMethod(event.target.value as MethodType);
+    updateURLMethodParam(pathname, event.target.value as MethodType);
   };
-  const { handleSubmit, register, getValues, control } = useForm<RestfulFormFields>({
+  const { handleSubmit, register, getValues, control, watch } = useForm<RestfulFormFields>({
     mode: 'onChange',
     defaultValues: {
       method,
@@ -43,8 +47,6 @@ export default function RestfulClientForm({
       body: params && params.base64Body ? getDecodedStr(params.base64Body) : '',
     },
   });
-
-  const pathname = usePathname();
   const router = useRouter();
 
   const onSubmit = () => {
@@ -60,6 +62,11 @@ export default function RestfulClientForm({
 
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
+
+  const handleEndpointUrlChange = () => {
+    const updatedUrl = updateUrlEndpointParam(pathname, watch('url'));
+    window.history.replaceState({}, '', `/${updatedUrl}`);
+  };
 
   return (
     <>
@@ -96,7 +103,10 @@ export default function RestfulClientForm({
                 label="URL"
                 variant="outlined"
                 size="small"
-                {...register('url', { required: { value: true, message: 'Enter URL' } })}
+                {...register('url', {
+                  onChange: handleEndpointUrlChange,
+                  required: { value: true, message: 'Enter URL' },
+                })}
               />
             </FormControl>
             <Button type="submit" variant="contained" size="medium" className={style.button}>
