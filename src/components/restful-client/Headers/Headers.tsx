@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { memo, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import { FormControl, TextField } from '@mui/material';
 import { UseFormRegister } from 'react-hook-form';
@@ -14,17 +14,14 @@ import { RestfulFormFields } from '@/types/restful';
 import queriesNumberToArray from '@/utils/queries-number-to-array';
 import { SearchParams } from '@/types';
 import { usePathname } from 'next/navigation';
-import updateURLQueryParams from '@/utils/update-url-query-params';
+import handleHeaderInputChange from './handle-header-input-change';
 
 interface Props {
   register: UseFormRegister<RestfulFormFields>;
   searchParams?: SearchParams;
 }
 
-type QueryParamPair = [string, string] | [];
-type QueryParamArr = QueryParamPair[];
-
-const Headers = memo(function Headers({ register, searchParams }: Props) {
+export default function Headers({ register, searchParams }: Props) {
   const [rows, setRows] = useState(queriesNumberToArray(searchParams));
   const pathname = usePathname();
 
@@ -33,37 +30,6 @@ const Headers = memo(function Headers({ register, searchParams }: Props) {
 
   const handleAddHeader = () => {
     setRows([...rows, rows.length + 1]);
-  };
-
-  const queryParamArr: QueryParamArr = [];
-
-  let queryParams = window.location.search ?? '';
-  console.log('queryParams: ', queryParams);
-  const queryParamsArrPairsJoined: string[] = [];
-  function joinQueryParams() {
-    queryParams = queryParamArr
-      .map(([key, value], index) => {
-        queryParamsArrPairsJoined[index] = `${key ? key : ''}${key || value ? '=' : ''}${value ? value : ''}`;
-        return queryParamsArrPairsJoined[index];
-      })
-      .join('&');
-    queryParams = `${queryParams ? '?' : ''}${queryParams}`;
-  }
-
-  const handleKeyChange = (e: InputEvent, fieldType: 'key' | 'value') => {
-    if (e.target instanceof HTMLInputElement) {
-      const thisValue = e.target.value;
-      const thisHeaderNumber = +e.target.name.slice(-1);
-
-      if (!queryParamArr[thisHeaderNumber - 1]) queryParamArr[thisHeaderNumber - 1] = [];
-      if (fieldType === 'key') {
-        queryParamArr[thisHeaderNumber - 1][0] = thisValue;
-      } else {
-        queryParamArr[thisHeaderNumber - 1][1] = thisValue;
-      }
-      joinQueryParams();
-      updateURLQueryParams(pathname, queryParams);
-    }
   };
 
   return (
@@ -86,7 +52,9 @@ const Headers = memo(function Headers({ register, searchParams }: Props) {
                         label={dictionary.key}
                         variant="outlined"
                         size="small"
-                        {...register(`key_${row}`, { onChange: (e: InputEvent) => handleKeyChange(e, 'key') })}
+                        {...register(`key_${row}`, {
+                          onChange: (e: InputEvent) => handleHeaderInputChange(e, 'key', pathname),
+                        })}
                       />
                     </FormControl>
                   </TableCell>
@@ -96,7 +64,9 @@ const Headers = memo(function Headers({ register, searchParams }: Props) {
                         label={dictionary.value}
                         variant="outlined"
                         size="small"
-                        {...register(`value_${row}`, { onChange: (e: InputEvent) => handleKeyChange(e, 'value') })}
+                        {...register(`value_${row}`, {
+                          onChange: (e: InputEvent) => handleHeaderInputChange(e, 'value', pathname),
+                        })}
                       />
                     </FormControl>
                   </TableCell>
@@ -107,6 +77,4 @@ const Headers = memo(function Headers({ register, searchParams }: Props) {
       </TableContainer>
     </>
   );
-});
-
-export default Headers;
+}
