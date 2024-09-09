@@ -11,24 +11,24 @@ import { DictionaryContext } from '@/providers/dictionary-provider';
 import isLocaleCorrect from '@/utils/is-locale-correct';
 import getLocale from '@/utils/get-locale';
 import { auth } from '../../../firebaseConfig';
-import { signOut, User } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import { Routes } from '@/constants/routes';
 import RouterLink from '../RouterLink/RouterLink';
-import { IconButton, Tooltip } from '@mui/material';
+import { CircularProgress, IconButton, Tooltip } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
-import withAuth from '@/hoc/withAuth';
+import { checkAuthStatus } from '@/utils/check-auth-status';
 
-interface HeaderProps {
-  user: User | null;
-}
-
-function Header({ user }: HeaderProps): React.ReactNode {
+function Header(): React.ReactNode {
   const pathname = usePathname();
   const locale = getLocale(pathname);
   const [selectValue, setSelectValue] = useState(isLocaleCorrect(locale) ? locale : '');
+  const [isLogged, setIsLogged] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // console.log('USER IN HEADER', user);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -42,6 +42,22 @@ function Header({ user }: HeaderProps): React.ReactNode {
   useEffect(() => {
     handleStickyHeader();
   }, []);
+
+  const fetchAuthStatus = async () => {
+    try {
+      const userData = await checkAuthStatus();
+      console.log('userData IN HEADER', userData);
+      setIsLogged(userData?.isLogged || false);
+    } catch {
+      setIsLogged(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    void fetchAuthStatus();
+  });
 
   useEffect(() => {
     window.addEventListener('scroll', handleStickyHeader);
@@ -62,9 +78,19 @@ function Header({ user }: HeaderProps): React.ReactNode {
   }
 
   const handleSignOut = async () => {
+    await signOut(auth);
+
     try {
-      await signOut(auth);
-      router.push(`/${locale}`);
+      const response = await fetch('/api/signout', {
+        method: 'POST',
+      });
+
+      console.log('SignOut IN HEADER');
+      if (response.status === 200) {
+        await fetchAuthStatus();
+        // setIsLogged(false);
+        router.push(`/${locale}`);
+      }
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -96,7 +122,9 @@ function Header({ user }: HeaderProps): React.ReactNode {
           </select>
         </div>
 
-        {user ? (
+        {isLoading ? (
+          <CircularProgress size={24} />
+        ) : isLogged ? (
           <>
             <RouterLink href={Routes.MAIN} tooltip={dictionary.icons.toMain} type="iconButton">
               <HomeIcon />
@@ -124,4 +152,4 @@ function Header({ user }: HeaderProps): React.ReactNode {
   );
 }
 
-export default withAuth(Header);
+export default Header;
