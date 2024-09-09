@@ -12,17 +12,15 @@ import { FormControl, TextField } from '@mui/material';
 import { UseFormRegister } from 'react-hook-form';
 import { RestfulFormFields } from '@/types/restful';
 import queriesNumberToArray from '@/utils/queries-number-to-array';
-import { SearchParams } from '@/types';
 import { usePathname } from 'next/navigation';
 import handleHeaderInputChange from './handle-header-input-change';
 
 interface Props {
   register: UseFormRegister<RestfulFormFields>;
-  searchParams?: SearchParams;
 }
 
-export default function Headers({ register, searchParams }: Props) {
-  const [rows, setRows] = useState(queriesNumberToArray(searchParams));
+export default function Headers({ register }: Props) {
+  const [rows, setRows] = useState(queriesNumberToArray());
   const pathname = usePathname();
 
   const dictionary = useContext(DictionaryContext);

@@ -1,38 +1,35 @@
 import updateURLQueryParams from '@/utils/update-url-query-params';
 
-type QueryParamArr = string[][];
+export type QueryParamArr = string[][];
 
 const assignQueryParamArr = (): [] | QueryParamArr => {
-  let queryParamArr: QueryParamArr;
-  if (!queryParams) {
-    queryParamArr = [];
-  } else {
-    queryParamArr = queryParams
-      .slice(1)
-      .split('&')
-      .map((str: string) => str.split('='));
-  }
+  if (!queryParams) return [];
+  const queryParamArr: QueryParamArr = queryParams
+    .slice(1)
+    .split('&')
+    .map((str: string) => str.split('='));
   return queryParamArr;
 };
 
-let queryParams = window.location.search ?? '';
-const queryParamArr: QueryParamArr = assignQueryParamArr();
+let queryParams = global.window ? window.location.search : '';
+
+let queryParamArr: QueryParamArr = assignQueryParamArr();
 
 const joinQueryParams = () => {
-  const queryParamsArrPairsJoined: string[] = [];
   queryParams = queryParamArr
-    .map(([key, value], index) => {
-      queryParamsArrPairsJoined[index] = `${key ?? ''}${key || value ? '=' : ''}${value ?? ''}`;
-      return queryParamsArrPairsJoined[index];
+    .map(([key, value]) => {
+      return `${key ?? ''}${key || value ? '=' : ''}${value ?? ''}`;
     })
     .join('&');
-  queryParams = `${queryParams ? '?' : ''}${queryParams}`;
+  queryParams = queryParams ? `?${queryParams}` : '';
 };
 
-const handleHeaderInputChange = (e: InputEvent, fieldType: 'key' | 'value', pathname: string) => {
-  if (e.target instanceof HTMLInputElement) {
-    const thisValue = e.target.value;
-    const thisHeaderNumber = +e.target.name.slice(-1);
+const handleHeaderInputChange = (ev: InputEvent, fieldType: 'key' | 'value', pathname: string) => {
+  queryParams = global.window ? window.location.search : '';
+  queryParamArr = assignQueryParamArr();
+  if (ev.target instanceof HTMLInputElement) {
+    const thisValue = ev.target.value.trim();
+    const thisHeaderNumber = +ev.target.name.split('_')[1];
 
     if (!queryParamArr[thisHeaderNumber - 1]) queryParamArr[thisHeaderNumber - 1] = [];
     if (fieldType === 'key') {

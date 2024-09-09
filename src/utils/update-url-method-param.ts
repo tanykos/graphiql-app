@@ -4,6 +4,7 @@ export default function updateURLMethodParam(pathname: string, method: MethodTyp
   const methodParam = pathname.split('/')[2];
   const updatedPathname = pathname.replace(methodParam, method);
 
+  if (!global.window) return;
   const searchParams = window.location.search;
   window.history.replaceState({}, '', `${updatedPathname}${searchParams}`);
 }
