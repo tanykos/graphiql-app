@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import SvgImage from '../svg-image/svg-image';
 import styles from './footer.module.scss';
-import getDictionary from '@/app/[lang]/dictionaries';
+import getDictionary from '../../app/[lang]/dictionaries';
 import { Locale } from '@/types';
 import { use } from 'react';
 
