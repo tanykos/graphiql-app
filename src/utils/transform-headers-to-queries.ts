@@ -8,5 +8,5 @@ export default function transformHeadersToQueries(values: { [key: string]: strin
       query += `${query.includes('?') ? '&' : '?'}${keyInputValue}${keyInputValue || valueInputValue ? '=' : ''}${valueInputValue}`;
     }
   }
-  return query.replace('?&', '?');
+  return query;
 }
