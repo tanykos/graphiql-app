@@ -11,7 +11,6 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { METHODS } from '@/const';
 import { DictionaryContext } from '@/providers/dictionary-provider';
-import Headers from '@/components/restful-client/Headers/Headers';
 import { useForm } from 'react-hook-form';
 import { usePathname, useRouter } from 'next/navigation';
 import getLocale from '@/utils/get-locale';
@@ -19,11 +18,11 @@ import getEncodedString from '@/utils/get-encoded-string';
 import getDecodedStr from '@/utils/get-decoded-string';
 import { MethodType, RestfulFormFields, RestfulParams } from '@/types/restful';
 import transformHeadersToQueries from '@/utils/transform-headers-to-queries';
-
 import BodyEditor from '@/components/restful-client/BodyEditor/BodyEditor';
 import updateUrlEndpointParam from '@/utils/update-url-endpoint-param';
 import updateURLMethodParam from '@/utils/update-url-method-param';
 import transformQueryParamsToHeaders from '@/utils/transform-query-params-to-headers';
+import Headers from '@/components/restful-client/Headers/Headers';
 
 export default function RestfulClientForm({ params }: { params?: RestfulParams }) {
   const [method, setMethod] = useState(params && METHODS.includes(params.method) ? params.method : 'GET');

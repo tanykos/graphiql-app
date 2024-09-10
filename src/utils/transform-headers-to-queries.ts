@@ -5,7 +5,7 @@ export default function transformHeadersToQueries(values: { [key: string]: strin
       const keyNumber = key.split('_')[1];
       const keyInputValue = values[key].trim();
       const valueInputValue = values[`value_${keyNumber}`].trim();
-      query = `${query}${query.includes('?') ? '&' : '?'}${keyInputValue}${keyInputValue || valueInputValue ? '=' : ''}${valueInputValue}`;
+      query += `${query.includes('?') ? '&' : '?'}${keyInputValue}${keyInputValue || valueInputValue ? '=' : ''}${valueInputValue}`;
     }
   }
   return query.replace('?&', '?');

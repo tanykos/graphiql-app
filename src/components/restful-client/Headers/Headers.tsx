@@ -1,9 +1,7 @@
 import style from './Headers.module.scss';
 import Button from '@mui/material/Button';
-import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useContext, useState } from 'react';
@@ -11,9 +9,14 @@ import { DictionaryContext } from '@/providers/dictionary-provider';
 import { FormControl, TextField } from '@mui/material';
 import { UseFormRegister } from 'react-hook-form';
 import { RestfulFormFields } from '@/types/restful';
-import queriesNumberToArray from '@/utils/queries-number-to-array';
+import queriesNumberToArray from '@/components/restful-client/Headers/queries-number-to-array';
 import { usePathname } from 'next/navigation';
 import handleHeaderInputChange from './handle-header-input-change';
+import TableContainer from '@mui/material/TableContainer';
+
+import dynamic from 'next/dynamic';
+
+const Table = dynamic(() => import('@mui/material/Table'), { ssr: false });
 
 interface Props {
   register: UseFormRegister<RestfulFormFields>;

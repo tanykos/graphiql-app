@@ -7,10 +7,8 @@ export default function transformQueryParamsToHeaders(queryParams: string): { [k
     .map((str: string) => str.split('='));
   const obj: { [key: string]: string } = {};
   queriesEntries.forEach(([key, value], index) => {
-    console.log('key, value: ', key, value);
     obj[`key_${index + 1}`] = key;
     obj[`value_${index + 1}`] = value;
   });
-  console.log('obj: ', obj);
   return obj;
 }
