@@ -3,9 +3,11 @@ import getEncodedString from './get-encoded-string';
 import updateUrl from './update-url';
 
 export default function updateUrlBodyParam(pathname: string, body: string): void {
+  console.log('body: ', body);
   const pathParams = pathname.split('/');
   const [, locale, , endpointParam = ''] = pathParams;
   let [, , clientParam, , bodyParam] = pathParams;
+  const queryParams = global.window ? window.location.search : '';
 
   if (body) {
     if (clientParam === CLIENT_PARAM.graphiql) clientParam = CLIENT_PARAM.GRAPHQL;
@@ -18,5 +20,5 @@ export default function updateUrlBodyParam(pathname: string, body: string): void
     bodyParam = '';
   }
 
-  updateUrl(`/${locale}/${clientParam}/${endpointParam}/${bodyParam}`);
+  updateUrl(`/${locale}/${clientParam}/${endpointParam}/${bodyParam}${queryParams}`);
 }
