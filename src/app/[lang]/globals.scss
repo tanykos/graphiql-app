@@ -12,6 +12,8 @@
   --form-legend-color: #00000099;
   --form-fieldset-color: #0000003b;
   --color-text-secondary: #636363;
+  --paper-border-color: #e2ece4;
+  --form-wrap-color: #f9fbf9;
 }
 
 * {
@@ -26,6 +28,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  background-image: url('/main-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 header,
@@ -41,6 +47,7 @@ footer {
 }
 
 main {
+  display: flex;
   flex-grow: 1;
 }
 

@@ -1,9 +1,10 @@
 'use client';
 
+import styles from './main-page.module.scss';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import { useContext } from 'react';
 import RouterLink from '@/components/RouterLink/RouterLink';
-import { Box, Grid, Typography } from '@mui/material';
+import { Avatar, Box, Paper, Stack, Grid, Typography } from '@mui/material';
 import { User } from 'firebase/auth';
 import { Routes } from '@/constants/routes';
 import withAuth from '@/hoc/withAuth';
@@ -17,7 +18,7 @@ function MainPage({ user }: MainPageProps) {
   if (!dictionary) return;
 
   return (
-    <Grid container spacing={2}>
+    <Grid container>
       <Grid item xs={12} sx={{ wordBreak: 'break-all' }}>
         <Typography variant="h3" sx={{ textAlign: 'center', mt: 4 }}>
           {dictionary.main.title}
@@ -36,10 +37,10 @@ function MainPage({ user }: MainPageProps) {
         >
           {user ? (
             <>
-              <RouterLink type="button" href={Routes.RESTFUL_CLIENT} variantBtn="outlined">
+              <RouterLink type="button" href={Routes.RESTFUL_CLIENT} variantBtn="contained">
                 {dictionary.restClient}
               </RouterLink>
-              <RouterLink type="button" href={Routes.GRAPHQL_CLIENT} variantBtn="outlined">
+              <RouterLink type="button" href={Routes.GRAPHQL_CLIENT} variantBtn="contained">
                 {dictionary.graphClient}
               </RouterLink>
               <RouterLink type="button" href={Routes.HISTORY} variantBtn="outlined">
@@ -48,10 +49,10 @@ function MainPage({ user }: MainPageProps) {
             </>
           ) : (
             <>
-              <RouterLink type="button" href={Routes.SIGN_IN} variantBtn="outlined">
+              <RouterLink type="button" href={Routes.SIGN_IN} variantBtn="contained">
                 {dictionary.main.signin}
               </RouterLink>
-              <RouterLink type="button" href={Routes.SIGN_UP} variantBtn="outlined">
+              <RouterLink type="button" href={Routes.SIGN_UP} variantBtn="contained">
                 {dictionary.main.signup}
               </RouterLink>
             </>
@@ -59,9 +60,59 @@ function MainPage({ user }: MainPageProps) {
         </Box>
       </Grid>
 
-      <Grid item xs={12} sx={{ textAlign: 'center', mt: 4 }}>
-        <Typography variant="h4">{dictionary.main.section}</Typography>
-        <Typography variant="h5">Coming soon...</Typography>
+      <Grid item className={styles.info} xs={12} sx={{ textAlign: 'center', ml: 6, mr: 6 }}>
+        <Grid container sx={{ justifyContent: 'center' }} spacing={2}>
+          <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Paper className={styles.paper} elevation={3} sx={{ padding: 2 }}>
+              <Typography variant="h4" sx={{ mb: 2 }}>
+                {dictionary.main.aboutProject}
+              </Typography>
+              <Typography variant="body1">{dictionary.main.projectDescription}</Typography>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={6} md={5}>
+            <Paper className={styles.paper} elevation={3} sx={{ padding: 2 }}>
+              <Typography variant="h4" sx={{ mb: 2 }}>
+                {dictionary.main.aboutCourse}
+              </Typography>
+              <Typography variant="body1">{dictionary.main.courseDescription}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={6} md={5}>
+            <Paper className={styles.paper} elevation={3} sx={{ padding: 2 }}>
+              <Typography variant="h4" sx={{ mb: 2 }}>
+                {dictionary.main.developers}
+              </Typography>
+              <Stack direction="row" spacing={2} sx={{ width: '100%', justifyContent: 'space-around' }}>
+                <Box className={styles.developer}>
+                  <Avatar alt={dictionary.main.devSurname1} sx={{ width: 56, height: 56 }} />
+                  <Typography>
+                    {dictionary.main.nameTatyana}
+                    <br />
+                    {dictionary.main.devSurname1}
+                  </Typography>
+                </Box>
+                <Box className={styles.developer}>
+                  <Avatar alt={dictionary.main.devSurname2} sx={{ width: 56, height: 56 }} />
+                  <Typography>
+                    {dictionary.main.nameArtyom}
+                    <br />
+                    {dictionary.main.devSurname2}
+                  </Typography>
+                </Box>
+                <Box className={styles.developer}>
+                  <Avatar alt={dictionary.main.devSurname3} src="/avatar-tk.jpg" sx={{ width: 56, height: 56 }} />
+                  <Typography>
+                    {dictionary.main.nameTatyana}
+                    <br />
+                    {dictionary.main.devSurname3}
+                  </Typography>
+                </Box>
+              </Stack>
+            </Paper>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
