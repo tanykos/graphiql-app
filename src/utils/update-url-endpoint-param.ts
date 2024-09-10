@@ -17,5 +17,5 @@ export default function updateUrlEndpointParam(pathname: string, endpoint: strin
     endpointParam = '';
   }
 
-  return `${locale}/${clientParam}/${endpointParam}/${bodyParam}`;
+  return `${locale}/${clientParam}/${endpointParam}${bodyParam && '/'}${bodyParam}`;
 }
