@@ -18,7 +18,6 @@ function BodyEditor({ control, getValues }: Props) {
   if (!dictionary) return;
 
   const handleBodyEdit = () => {
-    console.log('handleBodyEdit');
     updateUrlBodyParam(pathname, getValues().body);
   };
 

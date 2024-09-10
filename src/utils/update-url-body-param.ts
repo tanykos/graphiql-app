@@ -3,7 +3,6 @@ import getEncodedString from './get-encoded-string';
 import updateUrl from './update-url';
 
 export default function updateUrlBodyParam(pathname: string, body: string): void {
-  console.log('body: ', body);
   const pathParams = pathname.split('/');
   const [, locale, , endpointParam = ''] = pathParams;
   let [, , clientParam, , bodyParam] = pathParams;
