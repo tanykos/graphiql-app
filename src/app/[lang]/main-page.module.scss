@@ -18,3 +18,19 @@
   gap: 0.5rem;
   width: 116px;
 }
+
+@media (max-width: 899px) {
+  .developer {
+    flex-direction: row;
+
+    p {
+      text-align: start;
+    }
+  }
+}
+
+@media (min-width: 899px) and (max-width: 960px) {
+  .developer p {
+    font-size: 0.9rem;
+  }
+}

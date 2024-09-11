@@ -8,6 +8,7 @@ import { Avatar, Box, Paper, Stack, Grid, Typography } from '@mui/material';
 import { User } from 'firebase/auth';
 import { Routes } from '@/constants/routes';
 import withAuth from '@/hoc/withAuth';
+import { ButtonsTypes } from '@/const';
 
 interface MainPageProps {
   user: User | null;
@@ -16,6 +17,23 @@ interface MainPageProps {
 function MainPage({ user }: MainPageProps) {
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
+
+  const pageButtons = user
+    ? [
+        { href: Routes.RESTFUL_CLIENT, text: dictionary.restClient, variant: ButtonsTypes.CONTAINED },
+        { href: Routes.GRAPHQL_CLIENT, text: dictionary.graphClient, variant: ButtonsTypes.CONTAINED },
+        { href: Routes.HISTORY, text: dictionary.history, variant: ButtonsTypes.OUTLINED },
+      ]
+    : [
+        { href: Routes.SIGN_IN, text: dictionary.main.signin, variant: ButtonsTypes.CONTAINED },
+        { href: Routes.SIGN_UP, text: dictionary.main.signup, variant: ButtonsTypes.CONTAINED },
+      ];
+
+  const developers = [
+    { name: dictionary.main.nameTatyana, surname: dictionary.main.devSurname1, src: '' },
+    { name: dictionary.main.nameArtyom, surname: dictionary.main.devSurname2, src: '' },
+    { name: dictionary.main.nameTatyana, surname: dictionary.main.devSurname3, src: '/avatar-tk.jpg' },
+  ];
 
   return (
     <Grid container>
@@ -35,28 +53,11 @@ function MainPage({ user }: MainPageProps) {
             },
           }}
         >
-          {user ? (
-            <>
-              <RouterLink type="button" href={Routes.RESTFUL_CLIENT} variantBtn="contained">
-                {dictionary.restClient}
-              </RouterLink>
-              <RouterLink type="button" href={Routes.GRAPHQL_CLIENT} variantBtn="contained">
-                {dictionary.graphClient}
-              </RouterLink>
-              <RouterLink type="button" href={Routes.HISTORY} variantBtn="outlined">
-                {dictionary.history}
-              </RouterLink>
-            </>
-          ) : (
-            <>
-              <RouterLink type="button" href={Routes.SIGN_IN} variantBtn="contained">
-                {dictionary.main.signin}
-              </RouterLink>
-              <RouterLink type="button" href={Routes.SIGN_UP} variantBtn="contained">
-                {dictionary.main.signup}
-              </RouterLink>
-            </>
-          )}
+          {pageButtons.map(({ href, text, variant }, index) => (
+            <RouterLink key={index} type="button" href={href} variantBtn={variant}>
+              {text}
+            </RouterLink>
+          ))}
         </Box>
       </Grid>
 
@@ -84,31 +85,22 @@ function MainPage({ user }: MainPageProps) {
               <Typography variant="h4" sx={{ mb: 2 }}>
                 {dictionary.main.developers}
               </Typography>
-              <Stack direction="row" spacing={2} sx={{ width: '100%', justifyContent: 'space-around' }}>
-                <Box className={styles.developer}>
-                  <Avatar alt={dictionary.main.devSurname1} sx={{ width: 56, height: 56 }} />
-                  <Typography>
-                    {dictionary.main.nameTatyana}
-                    <br />
-                    {dictionary.main.devSurname1}
-                  </Typography>
-                </Box>
-                <Box className={styles.developer}>
-                  <Avatar alt={dictionary.main.devSurname2} sx={{ width: 56, height: 56 }} />
-                  <Typography>
-                    {dictionary.main.nameArtyom}
-                    <br />
-                    {dictionary.main.devSurname2}
-                  </Typography>
-                </Box>
-                <Box className={styles.developer}>
-                  <Avatar alt={dictionary.main.devSurname3} src="/avatar-tk.jpg" sx={{ width: 56, height: 56 }} />
-                  <Typography>
-                    {dictionary.main.nameTatyana}
-                    <br />
-                    {dictionary.main.devSurname3}
-                  </Typography>
-                </Box>
+              <Stack
+                direction={{ xs: 'column', md: 'row' }}
+                spacing={2}
+                className={styles['developers-wrap']}
+                sx={{ width: '100%', justifyContent: 'space-around' }}
+              >
+                {developers.map((developer, index) => (
+                  <Box key={index} className={styles.developer}>
+                    <Avatar alt={developer.surname} src={developer.src} sx={{ width: 56, height: 56 }} />
+                    <Typography>
+                      {developer.name}
+                      <br />
+                      {developer.surname}
+                    </Typography>
+                  </Box>
+                ))}
               </Stack>
             </Paper>
           </Grid>
