@@ -9,9 +9,9 @@ export default function Footer({ locale }: { locale: Locale }): React.ReactNode 
   const dictionary = use(getDictionary(locale));
 
   const developers = [
-    { name: dictionary.main.devSurname3, github: 'tanykos' },
-    { name: dictionary.main.devSurname1, github: 'pambaka' },
-    { name: dictionary.main.devSurname2, github: 'gunsnfnr' },
+    { name: dictionary.main.surnameTanyaK, github: 'tanykos' },
+    { name: dictionary.main.surnameTanyaT, github: 'pambaka' },
+    { name: dictionary.main.surnameArtyom, github: 'gunsnfnr' },
   ];
 
   return (
