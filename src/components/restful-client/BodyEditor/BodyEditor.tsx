@@ -34,7 +34,7 @@ function BodyEditor({ control, getValues }: Props) {
             onChange={(value) => {
               field.onChange(value);
             }}
-            onBlur={() => handleBodyEdit()}
+            onBlur={handleBodyEdit}
           />
         )}
       />
