@@ -17,7 +17,6 @@ export async function registerUser(email: string, password: string, displayName:
     await updateProfile(user, { displayName });
 
     const authIdToken = await user.getIdToken();
-    console.log('Successfully created new user:', user);
 
     await createSession(authIdToken);
     return { success: true, user };

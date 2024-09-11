@@ -1,40 +1,26 @@
 'use client';
 
 import { DictionaryContext } from '@/providers/dictionary-provider';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import RouterLink from '@/components/RouterLink/RouterLink';
 import { Box, CircularProgress, Grid, Typography } from '@mui/material';
 import { Routes } from '@/constants/routes';
-import { checkAuthStatus } from '@/utils/check-auth-status';
+import { UserContext } from '@/providers/user-provider';
 
 function MainPage() {
   const dictionary = useContext(DictionaryContext);
-  const [loading, setLoading] = useState(true);
-  const [isLogged, setIsLogged] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>('');
 
-  useEffect(() => {
-    const fetchAuthStatus = async () => {
-      try {
-        const userData = await checkAuthStatus();
-        console.log('userData IN MAIN', userData);
-        setIsLogged(userData?.isLogged || false);
-        setUserName(userData?.displayName || '');
-      } catch {
-        setIsLogged(false);
-        setUserName('');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    void fetchAuthStatus();
-  });
+  const userContext = useContext(UserContext);
+  const { user } = userContext!;
 
   if (!dictionary) return;
 
-  if (loading) {
-    return <CircularProgress />;
+  if (!user) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -42,7 +28,7 @@ function MainPage() {
       <Grid item xs={12} sx={{ wordBreak: 'break-all' }}>
         <Typography variant="h3" sx={{ textAlign: 'center', mt: 4 }}>
           {dictionary.main.title}
-          {isLogged ? `, ${userName}` : ``}!
+          {user?.isLogged ? `, ${user.displayName}` : ``}!
         </Typography>
       </Grid>
 
@@ -55,7 +41,7 @@ function MainPage() {
             },
           }}
         >
-          {isLogged ? (
+          {user?.isLogged ? (
             <>
               <RouterLink type="button" href={Routes.RESTFUL_CLIENT} variantBtn="outlined">
                 {dictionary.restClient}

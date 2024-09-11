@@ -56,7 +56,6 @@ export async function GET(): Promise<NextResponse<IsLoggedResponse>> {
   }
 
   const user = await adminAuth.getUser(isSession.userId);
-  console.log('++user in GET from adminAuth', user);
 
   return NextResponse.json({ isLogged: true, displayName: user.displayName || '' }, { status: 200 });
 }

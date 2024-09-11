@@ -10,8 +10,6 @@ import { useContext, useEffect, useState } from 'react';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import isLocaleCorrect from '@/utils/is-locale-correct';
 import getLocale from '@/utils/get-locale';
-import { auth } from '../../../firebaseConfig';
-import { signOut } from 'firebase/auth';
 import { Routes } from '@/constants/routes';
 import RouterLink from '../RouterLink/RouterLink';
 import { CircularProgress, IconButton, Tooltip } from '@mui/material';
@@ -19,16 +17,12 @@ import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
-import { checkAuthStatus } from '@/utils/check-auth-status';
+import { UserContext } from '@/providers/user-provider';
 
 function Header(): React.ReactNode {
   const pathname = usePathname();
   const locale = getLocale(pathname);
   const [selectValue, setSelectValue] = useState(isLocaleCorrect(locale) ? locale : '');
-  const [isLogged, setIsLogged] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  // console.log('USER IN HEADER', user);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -43,22 +37,6 @@ function Header(): React.ReactNode {
     handleStickyHeader();
   }, []);
 
-  const fetchAuthStatus = async () => {
-    try {
-      const userData = await checkAuthStatus();
-      console.log('userData IN HEADER', userData);
-      setIsLogged(userData?.isLogged || false);
-    } catch {
-      setIsLogged(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    void fetchAuthStatus();
-  });
-
   useEffect(() => {
     window.addEventListener('scroll', handleStickyHeader);
     return () => {
@@ -67,6 +45,9 @@ function Header(): React.ReactNode {
   });
 
   const dictionary = useContext(DictionaryContext);
+  const userContext = useContext(UserContext);
+  const { user, logout, fetchAuthStatus } = userContext!;
+
   if (!dictionary) return;
 
   function handleLocaleChange(event: React.ChangeEvent) {
@@ -78,22 +59,9 @@ function Header(): React.ReactNode {
   }
 
   const handleSignOut = async () => {
-    await signOut(auth);
-
-    try {
-      const response = await fetch('/api/signout', {
-        method: 'POST',
-      });
-
-      console.log('SignOut IN HEADER');
-      if (response.status === 200) {
-        await fetchAuthStatus();
-        // setIsLogged(false);
-        router.push(`/${locale}`);
-      }
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
+    await logout();
+    await fetchAuthStatus();
+    router.push(`/${locale}`);
   };
 
   return (
@@ -122,9 +90,9 @@ function Header(): React.ReactNode {
           </select>
         </div>
 
-        {isLoading ? (
+        {!user ? (
           <CircularProgress size={24} />
-        ) : isLogged ? (
+        ) : user.isLogged ? (
           <>
             <RouterLink href={Routes.MAIN} tooltip={dictionary.icons.toMain} type="iconButton">
               <HomeIcon />

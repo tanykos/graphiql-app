@@ -10,6 +10,7 @@ import DictionaryProvider from '@/providers/dictionary-provider';
 import { DEFAULT_LOCALE } from '@/const';
 import { Locale } from '@/types';
 import isLocaleCorrect from '@/utils/is-locale-correct';
+import { UserProvider } from '@/providers/user-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,8 +30,10 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={inter.className}>
         <DictionaryProvider dictionary={dictionary}>
-          <Header />
-          <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
+          <UserProvider>
+            <Header />
+            <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
+          </UserProvider>
           <Footer locale={locale} />
         </DictionaryProvider>
       </body>

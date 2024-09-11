@@ -14,6 +14,7 @@ import { AuthFormNames } from '@/constants/form-fields-const';
 import { usePathname, useRouter } from 'next/navigation';
 import getLocale from '@/utils/get-locale';
 import { Routes } from '@/constants/routes';
+import { UserContext } from '@/providers/user-provider';
 
 interface AuthFormProps {
   dictionaryKey: AuthKeys;
@@ -21,6 +22,8 @@ interface AuthFormProps {
 
 export default function AuthForm({ dictionaryKey }: AuthFormProps) {
   const dictionary = useContext(DictionaryContext);
+  const userContext = useContext(UserContext);
+  const { fetchAuthStatus } = userContext!;
   const router = useRouter();
   const pathname = usePathname();
 
@@ -81,6 +84,7 @@ export default function AuthForm({ dictionaryKey }: AuthFormProps) {
       if (result.error) {
         handleSnackbar(result.error, 'error');
       } else {
+        await fetchAuthStatus();
         router.push(`/${locale}`);
       }
     } catch {
