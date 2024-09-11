@@ -23,7 +23,7 @@ export default async function RestfulFilledFormPage({
 
   return (
     <div className={style.restful}>
-      <RestfulClientForm params={params} searchParams={searchParams} />
+      <RestfulClientForm params={params} />
       <ResponseViewer response={response} />
     </div>
   );
