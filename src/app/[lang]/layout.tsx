@@ -1,6 +1,5 @@
 import './globals.scss';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 import Header from '@/components/header/header';
 import Footer from '@/components/footer/footer';
@@ -10,8 +9,8 @@ import DictionaryProvider from '@/providers/dictionary-provider';
 import { DEFAULT_LOCALE } from '@/const';
 import { Locale } from '@/types';
 import isLocaleCorrect from '@/utils/is-locale-correct';
-
-const inter = Inter({ subsets: ['latin'] });
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import theme from '@/providers/theme-provider';
 
 export const metadata: Metadata = {
   title: 'REST & GraphQL clients',
@@ -27,11 +26,14 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>
+      <body>
         <DictionaryProvider dictionary={dictionary}>
-          <Header />
-          <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
-          <Footer locale={locale} />
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Header />
+            <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
+            <Footer locale={locale} />
+          </ThemeProvider>
         </DictionaryProvider>
       </body>
     </html>

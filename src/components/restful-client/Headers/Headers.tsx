@@ -41,7 +41,7 @@ export default function Headers({ register }: Props) {
           {dictionary.addHeader}
         </Button>
       </div>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ backgroundColor: 'transparent' }}>
         <Table>
           <TableBody>
             {rows &&
