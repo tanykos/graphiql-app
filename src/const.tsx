@@ -14,3 +14,9 @@ export const CLIENT_PARAM = {
   graphiql: 'graphiql',
   GRAPHQL: 'GRAPHQL',
 };
+
+export enum ButtonsTypes {
+  TEXT = 'text',
+  OUTLINED = 'outlined',
+  CONTAINED = 'contained',
+}
