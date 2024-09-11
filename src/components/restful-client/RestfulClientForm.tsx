@@ -23,6 +23,7 @@ import updateUrlEndpointParam from '@/utils/update-url-endpoint-param';
 import updateURLMethodParam from '@/utils/update-url-method-param';
 import transformQueryParamsToHeaders from '@/utils/transform-query-params-to-headers';
 import Headers from '@/components/restful-client/Headers/Headers';
+import FieldsetWrapper from '../FieldsetWrapper/FieldsetWrapper';
 
 export default function RestfulClientForm({ params }: { params?: RestfulParams }) {
   const [method, setMethod] = useState(params && METHODS.includes(params.method) ? params.method : 'GET');
@@ -74,8 +75,7 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
           void handleSubmit(onSubmit)();
         }}
       >
-        <fieldset className={style.fieldset}>
-          <legend className={style.sectionTitle}>{dictionary.request}</legend>
+        <FieldsetWrapper legendText="request">
           <div className={style.formInputLine}>
             <FormControl size="small">
               <InputLabel id="method-label">Method</InputLabel>
@@ -113,7 +113,7 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
           </div>
           <Headers register={register} />
           <BodyEditor control={control} getValues={getValues} />
-        </fieldset>
+        </FieldsetWrapper>
       </form>
     </>
   );

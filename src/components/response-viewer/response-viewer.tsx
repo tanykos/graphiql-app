@@ -5,6 +5,7 @@ import styles from './response-viewer.module.scss';
 import { ApiResponse } from '@/types';
 import { useContext } from 'react';
 import JsonFormatter, { JsonObject } from 'react-json-formatter';
+import FieldsetWrapper from '../FieldsetWrapper/FieldsetWrapper';
 
 export default function ResponseViewer({ response }: { response?: ApiResponse }) {
   const dictionary = useContext(DictionaryContext);
@@ -17,8 +18,7 @@ export default function ResponseViewer({ response }: { response?: ApiResponse })
   };
 
   return (
-    <fieldset className={styles['response-wrapper']}>
-      <legend>{dictionary.response}</legend>
+    <FieldsetWrapper legendText="response">
       <div className={styles.response}>
         <p>
           {`${dictionary.status}:`} <span className={styles['status-code']}>{response && response.status.code}</span>{' '}
@@ -31,6 +31,6 @@ export default function ResponseViewer({ response }: { response?: ApiResponse })
           {response && <JsonFormatter json={response.data as JsonObject} tabWith={4} jsonStyle={jsonStyle} />}
         </div>
       </div>
-    </fieldset>
+    </FieldsetWrapper>
   );
 }
