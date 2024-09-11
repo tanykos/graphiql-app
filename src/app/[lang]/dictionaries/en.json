@@ -42,9 +42,9 @@
     "developers": "Developers",
     "nameTatyana": "Tatyana",
     "nameArtyom": "Artyom",
-    "devSurname1": "Telegina",
-    "devSurname2": "Pavlushov",
-    "devSurname3": "Kostromitskaya"
+    "surnameTanyaT": "Telegina",
+    "surnameArtyom": "Pavlushov",
+    "surnameTanyaK": "Kostromitskaya"
   },
   "email": "Email",
   "password": "Password",

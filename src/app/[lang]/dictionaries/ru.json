@@ -42,9 +42,9 @@
     "developers": "Разработчики",
     "nameTatyana": "Татьяна",
     "nameArtyom": "Артём",
-    "devSurname1": "Телегина",
-    "devSurname2": "Павлушов",
-    "devSurname3": "Костромицкая"
+    "surnameTanyaT": "Телегина",
+    "surnameArtyom": "Павлушов",
+    "surnameTanyaK": "Костромицкая"
   },
   "email": "Почта",
   "password": "Пароль",
