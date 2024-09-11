@@ -112,7 +112,7 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
             </Button>
           </div>
           <Headers register={register} />
-          <BodyEditor control={control} />
+          <BodyEditor control={control} getValues={getValues} />
         </fieldset>
       </form>
     </>

@@ -6,6 +6,7 @@ export default function updateUrlBodyParam(pathname: string, body: string): void
   const pathParams = pathname.split('/');
   const [, locale, , endpointParam = ''] = pathParams;
   let [, , clientParam, , bodyParam] = pathParams;
+  const queryParams = global.window ? window.location.search : '';
 
   if (body) {
     if (clientParam === CLIENT_PARAM.graphiql) clientParam = CLIENT_PARAM.GRAPHQL;
@@ -13,10 +14,10 @@ export default function updateUrlBodyParam(pathname: string, body: string): void
 
     bodyParam = getEncodedString(body) ?? '';
   } else {
-    if (!endpointParam && clientParam === CLIENT_PARAM.GRAPHQL) clientParam = 'graphiql';
+    if (!endpointParam && clientParam === CLIENT_PARAM.GRAPHQL) clientParam = CLIENT_PARAM.graphiql;
 
     bodyParam = '';
   }
 
-  updateUrl(`/${locale}/${clientParam}/${endpointParam}/${bodyParam}`);
+  updateUrl(`/${locale}/${clientParam}/${endpointParam}/${bodyParam}${queryParams}`);
 }
