@@ -31,7 +31,7 @@ function MainPage({ user }: MainPageProps) {
 
   const developers = [
     { name: dictionary.main.nameTatyana, surname: dictionary.main.devSurname1, src: '' },
-    { name: dictionary.main.nameArtyom, surname: dictionary.main.devSurname2, src: '' },
+    { name: dictionary.main.nameArtyom, surname: dictionary.main.devSurname2, src: '/avatar-ap.png' },
     { name: dictionary.main.nameTatyana, surname: dictionary.main.devSurname3, src: '/avatar-tk.jpg' },
   ];
 
