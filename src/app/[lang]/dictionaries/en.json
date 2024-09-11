@@ -30,13 +30,21 @@
   "response": "Response",
   "send": "Send",
   "status": "Status",
-  "testRoute": "Some other page is here",
   "value": "Value",
   "main": {
     "title": "Welcome",
     "signin": "Sign In",
     "signup": "Sign Up",
-    "section": "Project information"
+    "aboutProject": "About the Project",
+    "projectDescription": "A light-weight version of Postman and GrqphiQL combined in one app.",
+    "aboutCourse": "About the Course",
+    "courseDescription": "The Rolling Scopes brings together developers of all levels who are passionate about technologies such as JavaScript, Front-end development, AWS, and more. Currently, many developers around the world recognize The Rolling Scopes for its community-based education program, along with fascinating events and its groovy mascot, Sloth.",
+    "developers": "Developers",
+    "nameTatyana": "Tatyana",
+    "nameArtyom": "Artyom",
+    "surnameTanyaT": "Telegina",
+    "surnameArtyom": "Pavlushov",
+    "surnameTanyaK": "Kostromitskaya"
   },
   "email": "Email",
   "password": "Password",

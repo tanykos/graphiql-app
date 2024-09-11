@@ -1,0 +1,21 @@
+.select {
+  width: 120px;
+}
+
+.inputUrl {
+  flex-grow: 1;
+}
+
+.button {
+  font-size: 1rem;
+}
+
+.formInputLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 5px;
+  width: 100%;
+  margin-top: 15px;
+}

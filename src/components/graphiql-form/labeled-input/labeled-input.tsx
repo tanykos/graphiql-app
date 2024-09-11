@@ -9,10 +9,16 @@ import { DictionaryContext } from '@/providers/dictionary-provider';
 export default function LabeledInput({
   field,
   register,
+  onChange,
+  onBlur,
+  value,
   isRequired = false,
 }: {
   field: GraphQlRequestField;
   register: UseFormRegister<GraphQlRequest>;
+  onChange?: (event: React.ChangeEvent) => void;
+  onBlur?: (event: React.FocusEvent) => void;
+  value?: string;
   isRequired?: boolean;
 }) {
   const dictionary = useContext(DictionaryContext);
@@ -23,7 +29,12 @@ export default function LabeledInput({
       <label>
         <p>{dictionary.graphql[field]}</p>
       </label>
-      <input type="text" {...register(field)} required={isRequired}></input>
+      <input
+        type="text"
+        {...register(field, { onChange: onChange, onBlur: onBlur })}
+        value={value}
+        required={isRequired}
+      ></input>
     </div>
   );
 }

@@ -3,12 +3,13 @@ import NextLink from 'next/link';
 import MuiButton from '@mui/material/Button';
 import { usePathname } from 'next/navigation';
 import { IconButton, Tooltip } from '@mui/material';
+import { ButtonsTypes } from '@/const';
 
 interface RouterLinkProps {
   type?: 'link' | 'button' | 'iconButton';
   href: string;
   children: React.ReactNode;
-  variantBtn?: 'text' | 'outlined' | 'contained';
+  variantBtn?: ButtonsTypes;
   [key: string]: string | React.ReactNode;
 }
 
