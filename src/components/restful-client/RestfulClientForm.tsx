@@ -68,53 +68,51 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
   };
 
   return (
-    <>
+    <FieldsetWrapper legendText="request">
       <form
         onSubmit={(e: FormEvent) => {
           e.preventDefault();
           void handleSubmit(onSubmit)();
         }}
       >
-        <FieldsetWrapper legendText="request">
-          <div className={style.formInputLine}>
-            <FormControl size="small">
-              <InputLabel id="method-label">Method</InputLabel>
-              <Select
-                labelId="method-label"
-                id="method"
-                value={method}
-                label="Method"
-                className={style.select}
-                size="small"
-                {...register('method', { onChange: handleChange })}
-              >
-                {METHODS.map((method) => (
-                  <MenuItem key={method} value={method}>
-                    {method}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl className={style.inputUrl}>
-              <TextField
-                id="url"
-                label="URL"
-                variant="outlined"
-                size="small"
-                {...register('url', {
-                  onChange: handleEndpointUrlChange,
-                  required: { value: true, message: 'Enter URL' },
-                })}
-              />
-            </FormControl>
-            <Button type="submit" variant="contained" size="medium" className={style.button}>
-              {dictionary.send}
-            </Button>
-          </div>
-          <Headers register={register} />
-          <BodyEditor control={control} getValues={getValues} />
-        </FieldsetWrapper>
+        <div className={style.formInputLine}>
+          <FormControl size="small">
+            <InputLabel id="method-label">Method</InputLabel>
+            <Select
+              labelId="method-label"
+              id="method"
+              value={method}
+              label="Method"
+              className={style.select}
+              size="small"
+              {...register('method', { onChange: handleChange })}
+            >
+              {METHODS.map((method) => (
+                <MenuItem key={method} value={method}>
+                  {method}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl className={style.inputUrl}>
+            <TextField
+              id="url"
+              label="URL"
+              variant="outlined"
+              size="small"
+              {...register('url', {
+                onChange: handleEndpointUrlChange,
+                required: { value: true, message: 'Enter URL' },
+              })}
+            />
+          </FormControl>
+          <Button type="submit" variant="contained" size="medium" className={style.button}>
+            {dictionary.send}
+          </Button>
+        </div>
+        <Headers register={register} />
+        <BodyEditor control={control} getValues={getValues} />
       </form>
-    </>
+    </FieldsetWrapper>
   );
 }

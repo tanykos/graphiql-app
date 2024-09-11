@@ -79,14 +79,14 @@ export default function GraphiQlForm({
   };
 
   return (
-    <form
-      onSubmit={(event: FormEvent) => {
-        event.preventDefault();
-        void handleSubmit(onSubmit)();
-      }}
-      className={styles['graphiql-form']}
-    >
-      <FieldsetWrapper legendText="request">
+    <FieldsetWrapper legendText="request">
+      <form
+        onSubmit={(event: FormEvent) => {
+          event.preventDefault();
+          void handleSubmit(onSubmit)();
+        }}
+        className={styles['graphiql-form']}
+      >
         <div className={styles['main-row']}>
           <LabeledInput field="endpointUrl" register={register} onChange={handleEndpointUrlChange} isRequired={true} />
           <input type="submit" value={dictionary.send} />
@@ -96,7 +96,7 @@ export default function GraphiQlForm({
           {documentation && <LabeledInput field="documentation" register={register} />}
           <LabeledInput field="query" register={register} onBlur={handleQueryChange} />
         </div>
-      </FieldsetWrapper>
-    </form>
+      </form>
+    </FieldsetWrapper>
   );
 }
