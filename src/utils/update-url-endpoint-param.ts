@@ -1,7 +1,8 @@
 import { CLIENT_PARAM, DEFAULT_METHOD } from '@/const';
 import getEncodedString from './get-encoded-string';
+import updateUrl from './update-url';
 
-export default function updateUrlEndpointParam(pathname: string, endpoint: string): string {
+export default function updateUrlEndpointParam(pathname: string, endpoint: string): void {
   const pathParams = pathname.split('/');
   const [, locale, , , bodyParam = ''] = pathParams;
   let [, , clientParam, endpointParam] = pathParams;
@@ -17,5 +18,7 @@ export default function updateUrlEndpointParam(pathname: string, endpoint: strin
     endpointParam = '';
   }
 
-  return `${locale}/${clientParam}/${endpointParam}${bodyParam && '/'}${bodyParam}`;
+  const searchParams = global.window ? window.location.search : '';
+  const updatedUrl = `/${locale}/${clientParam}/${endpointParam}${bodyParam && '/'}${bodyParam}${searchParams}`;
+  updateUrl(updatedUrl);
 }
