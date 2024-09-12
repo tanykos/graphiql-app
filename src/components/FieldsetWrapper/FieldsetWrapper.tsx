@@ -1,19 +1,17 @@
 import styles from './FieldsetWrapper.module.scss';
-import { useContext } from 'react';
-import { DictionaryContext } from '@/providers/dictionary-provider';
 
 export default function FieldsetWrapper({
   legendText,
+  className = '',
   children,
 }: {
-  legendText: 'request' | 'response';
+  legendText: string;
+  className?: string;
   children: React.ReactNode;
 }): React.ReactNode {
-  const dictionary = useContext(DictionaryContext);
-
   return (
-    <fieldset className={styles.fieldset}>
-      <legend className={styles.legend}>{dictionary ? dictionary[legendText] : legendText}</legend>
+    <fieldset className={`${styles.fieldset} ${className}`}>
+      <legend className={styles.legend}>{legendText}</legend>
       {children}
     </fieldset>
   );
