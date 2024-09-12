@@ -1,6 +1,6 @@
 'use client';
 
-import styles from './graphiql-form.module.css';
+import styles from './graphiql-form.module.scss';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useContext, useState } from 'react';
@@ -16,6 +16,7 @@ import updateUrlEndpointParam from '@/utils/update-url-endpoint-param';
 import updateUrlBodyParam from '@/utils/update-url-body-param';
 import updateUrl from '@/utils/update-url';
 import FieldsetWrapper from '../FieldsetWrapper/FieldsetWrapper';
+import JsonFormatter, { JsonObject } from 'react-json-formatter';
 
 export default function GraphiQlForm({
   params,
@@ -79,7 +80,7 @@ export default function GraphiQlForm({
   };
 
   return (
-    <FieldsetWrapper legendText="request">
+    <FieldsetWrapper legendText={dictionary.request}>
       <form
         onSubmit={(event: FormEvent) => {
           event.preventDefault();
@@ -93,8 +94,14 @@ export default function GraphiQlForm({
         </div>
         <LabeledInput field="sdlUrl" register={register} value={sdlUrlValue} onChange={handleSdlUrlChange} />
         <div className={styles.editors}>
-          {documentation && <LabeledInput field="documentation" register={register} />}
-          <LabeledInput field="query" register={register} onBlur={handleQueryChange} />
+          {documentation && (
+            <FieldsetWrapper className={styles.documentation} legendText={dictionary.graphql.documentation}>
+              <JsonFormatter json={documentation as JsonObject} tabWith={2} />
+            </FieldsetWrapper>
+          )}
+          <FieldsetWrapper className={styles.query} legendText={dictionary.graphql.query}>
+            <input {...register('query', { onBlur: handleQueryChange })} />
+          </FieldsetWrapper>
         </div>
       </form>
     </FieldsetWrapper>

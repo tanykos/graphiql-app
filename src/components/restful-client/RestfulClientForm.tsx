@@ -73,7 +73,7 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
   };
 
   return (
-    <FieldsetWrapper legendText="request">
+    <FieldsetWrapper legendText={dictionary.request}>
       <form
         onSubmit={(e: FormEvent) => {
           e.preventDefault();

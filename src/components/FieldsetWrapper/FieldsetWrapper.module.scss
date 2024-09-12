@@ -1,11 +1,10 @@
 .fieldset {
   padding: 5px;
   border: 1px solid var(--table-border);
-
-  .legend {
-    font-size: 1.1rem;
-    padding: 0 3px;
-    font-weight: 500;
-    color: var(--color-accent);
-  }
+}
+.legend {
+  padding: 0 3px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-accent);
 }

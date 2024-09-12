@@ -18,7 +18,7 @@ export default function ResponseViewer({ response }: { response?: ApiResponse })
   };
 
   return (
-    <FieldsetWrapper legendText="response">
+    <FieldsetWrapper legendText={dictionary.response}>
       <div className={styles.response}>
         <p>
           {`${dictionary.status}:`} <span className={styles['status-code']}>{response && response.status.code}</span>{' '}
