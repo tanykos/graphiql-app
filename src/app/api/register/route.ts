@@ -9,7 +9,7 @@ type RegisterRequestBody = {
   user: string;
 };
 
-export async function registerUser(email: string, password: string, displayName: string) {
+async function registerUser(email: string, password: string, displayName: string) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user: User = userCredential.user;
