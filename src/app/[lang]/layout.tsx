@@ -1,6 +1,6 @@
 import './globals.scss';
 import type { Metadata } from 'next';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import Header from '@/components/header/header';
 import Footer from '@/components/footer/footer';
 import Main from '@/components/main/main';
@@ -27,14 +27,16 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body>
-        <DictionaryProvider dictionary={dictionary}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Header />
-            <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
-            <Footer locale={locale} />
-          </ThemeProvider>
-        </DictionaryProvider>
+        <Suspense>
+          <DictionaryProvider dictionary={dictionary}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Header />
+              <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
+              <Footer locale={locale} />
+            </ThemeProvider>
+          </DictionaryProvider>
+        </Suspense>
       </body>
     </html>
   );

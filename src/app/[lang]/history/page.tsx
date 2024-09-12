@@ -17,3 +17,7 @@ export default async function RequestsHistory({ params }: { params: { lang: Loca
     </>
   );
 }
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'ru' }];
+}
