@@ -24,6 +24,7 @@ import updateURLMethodParam from '@/utils/update-url-method-param';
 import transformQueryParamsToHeaders from '@/utils/transform-query-params-to-headers';
 import Headers from '@/components/restful-client/Headers/Headers';
 import FieldsetWrapper from '../FieldsetWrapper/FieldsetWrapper';
+import useLocalStorageHistory from '@/hooks/use-local-storage-history';
 
 export default function RestfulClientForm({ params }: { params?: RestfulParams }) {
   const [method, setMethod] = useState(params && METHODS.includes(params.method) ? params.method : 'GET');
@@ -44,6 +45,7 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
     },
   });
   const router = useRouter();
+  const [, saveToLocalStorage] = useLocalStorageHistory();
 
   const onSubmit = () => {
     const values = getValues();
@@ -52,8 +54,11 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
     const base64Body = getEncodedString(values.body);
     const queryParamsToSend = transformHeadersToQueries(values);
 
-    if (base64Url && base64Body !== undefined)
-      router.push(`/${locale}/${values.method}/${base64Url}/${base64Body}${queryParamsToSend}`);
+    if (base64Url && base64Body !== undefined) {
+      const path = `/${locale}/${values.method}/${base64Url}/${base64Body}${queryParamsToSend}`;
+      saveToLocalStorage(path);
+      router.push(path);
+    }
   };
 
   const dictionary = useContext(DictionaryContext);
@@ -77,7 +82,7 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
       >
         <div className={style.formInputLine}>
           <FormControl size="small">
-            <InputLabel id="method-label">Method</InputLabel>
+            <InputLabel id="method-label">{dictionary.method}</InputLabel>
             <Select
               labelId="method-label"
               id="method"
