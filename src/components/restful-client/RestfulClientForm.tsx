@@ -90,6 +90,10 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
               label="Method"
               className={style.select}
               size="small"
+              MenuProps={{
+                disableScrollLock: true,
+                marginThreshold: null,
+              }}
               {...register('method', { onChange: handleChange })}
             >
               {METHODS.map((method) => (
