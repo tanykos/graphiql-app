@@ -37,7 +37,7 @@ function MainPage({ user }: MainPageProps) {
 
   return (
     <Grid container>
-      <Grid item xs={12} sx={{ wordBreak: 'break-all' }}>
+      <Grid item xs={12} sx={{ wordBreak: 'break-word' }}>
         <Typography variant="h3" sx={{ textAlign: 'center', mt: 4 }}>
           {dictionary.main.title}
           {user ? `, ${user.displayName}` : ``}!
