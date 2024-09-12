@@ -22,7 +22,7 @@ import BodyEditor from '@/components/restful-client/BodyEditor/BodyEditor';
 import updateUrlEndpointParam from '@/utils/update-url-endpoint-param';
 import updateURLMethodParam from '@/utils/update-url-method-param';
 import transformQueryParamsToHeaders from '@/utils/transform-query-params-to-headers';
-import Headers from '@/components/restful-client/Headers/Headers';
+import Headers from '@/components/Headers/Headers';
 import FieldsetWrapper from '../FieldsetWrapper/FieldsetWrapper';
 import useLocalStorageHistory from '@/hooks/use-local-storage-history';
 
@@ -65,11 +65,7 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
   if (!dictionary) return;
 
   const handleEndpointUrlChange = () => {
-    const updatedUrl = updateUrlEndpointParam(pathname, getValues().url);
-
-    if (!window) return;
-    const searchParams = window.location.search;
-    window.history.replaceState({}, '', `/${updatedUrl}${searchParams}`);
+    updateUrlEndpointParam(pathname, getValues().url);
   };
 
   return (

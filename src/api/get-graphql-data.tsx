@@ -1,14 +1,16 @@
 import { ApiResponse } from '@/types';
 
-export default async function getGraphQlData(endpoint: string, query?: string): Promise<ApiResponse> {
+export default async function getGraphQlData(
+  endpoint: string,
+  searchParams: Record<string, string>,
+  query?: string,
+): Promise<ApiResponse> {
   const bodyQuery = query ? `query ${query}` : '';
 
   const response: ApiResponse = { data: undefined, status: { code: undefined, text: undefined } };
   await fetch(endpoint, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: searchParams,
     body: JSON.stringify({ query: bodyQuery }),
   })
     .then((res: Response) => {
