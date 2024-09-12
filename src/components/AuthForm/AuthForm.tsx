@@ -76,6 +76,7 @@ export default function AuthForm({ dictionaryKey }: AuthFormProps) {
         body: JSON.stringify(data || {}),
         headers: {
           'Content-Type': 'application/json',
+          'Accept-Language': locale,
         },
       });
 

@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { adminAuth } from '../../firebaseAdminConfig';
 
-const SESSION_COOKIE_MAX_AGE = 15 * 60 * 1000;
+const SESSION_COOKIE_MAX_AGE = 60 * 60 * 1000;
 
 export async function createSession(idToken: string) {
   const expiresIn = SESSION_COOKIE_MAX_AGE;
