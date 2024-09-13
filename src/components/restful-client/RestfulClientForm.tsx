@@ -69,11 +69,7 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
 
   const handleEndpointUrlChange = () => {
     const processedUrl = handleVariables(getValues().url, variables);
-    const updatedUrl = updateUrlEndpointParam(pathname, processedUrl);
-
-    if (!window) return;
-    const searchParams = window.location.search;
-    window.history.replaceState({}, '', `/${updatedUrl}${searchParams}`);
+    updateUrlEndpointParam(pathname, processedUrl);
   };
 
   return (

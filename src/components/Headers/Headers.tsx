@@ -13,13 +13,13 @@ import queriesNumberToArray from '@/components/Headers/queries-number-to-array';
 import { usePathname } from 'next/navigation';
 import handleHeaderInputChange from './handle-header-input-change';
 import TableContainer from '@mui/material/TableContainer';
-
+import { GraphQlRequest } from '@/types/graphql';
 import dynamic from 'next/dynamic';
 
 const Table = dynamic(() => import('@mui/material/Table'), { ssr: false });
 
 interface Props {
-  register: UseFormRegister<RestfulFormFields>;
+  register: UseFormRegister<RestfulFormFields> | UseFormRegister<GraphQlRequest>;
   variables: string[][];
 }
 
@@ -30,15 +30,16 @@ export default function Headers({ register, variables }: Props) {
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
-  const handleAddVariable = () => {
+  const handleAddHeader = () => {
     setRows([...rows, rows.length + 1]);
   };
 
   return (
-    <>
+
+    <div>
       <div className={style.headersTitleWrapper}>
         <p className={style.headersTitle}>{dictionary.headers}</p>
-        <Button type="button" variant="outlined" size="medium" className={style.button} onClick={handleAddVariable}>
+        <Button type="button" variant="outlined" size="medium" className={style.button} onClick={handleAddHeader}>
           {dictionary.addHeader}
         </Button>
       </div>
@@ -77,6 +78,6 @@ export default function Headers({ register, variables }: Props) {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </div>
   );
 }

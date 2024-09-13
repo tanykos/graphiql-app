@@ -3,9 +3,11 @@ export type GraphQlRequest = {
   sdlUrl: string;
   documentation: string;
   query: string;
+  [key: string]: string;
 };
 
-export type GraphQlRequestField = keyof GraphQlRequest;
+type GraphQlRequestWoHeaders = Pick<GraphQlRequest, 'endpointUrl' | 'sdlUrl' | 'documentation' | 'query'>;
+export type GraphQlRequestField = keyof GraphQlRequestWoHeaders;
 
 export type GraphQlUrlParams = {
   lang: string;
