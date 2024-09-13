@@ -21,7 +21,7 @@ export default async function getGraphQlData(
       response.status.text = res.statusText;
       return res.json();
     })
-    .then((data) => {
+    .then((data: object) => {
       response.data = data;
     })
     .catch((error: Error) => error);

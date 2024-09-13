@@ -17,7 +17,7 @@ export default async function getRestfulData(
       response.status.text = res.statusText;
       return res.json();
     })
-    .then((data) => {
+    .then((data: object) => {
       response.data = data;
     })
     .catch((error: Error) => error);
