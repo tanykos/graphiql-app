@@ -1,45 +1,40 @@
-import style from './Headers.module.scss';
+import style from '../restful-client/Headers/Headers.module.scss';
 import Button from '@mui/material/Button';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useContext, useState } from 'react';
+import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import { FormControl, TextField } from '@mui/material';
-import { UseFormRegister } from 'react-hook-form';
-import { RestfulFormFields } from '@/types/restful';
-import queriesNumberToArray from '@/components/restful-client/Headers/queries-number-to-array';
-import { usePathname } from 'next/navigation';
-import handleHeaderInputChange from './handle-header-input-change';
+import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
-
-import dynamic from 'next/dynamic';
-
-const Table = dynamic(() => import('@mui/material/Table'), { ssr: false });
+import handleVariableInputChange from './handle-variable-input-change';
 
 interface Props {
-  register: UseFormRegister<RestfulFormFields>;
   variables: string[][];
+  setVariables: Dispatch<SetStateAction<string[][]>>;
 }
 
-export default function Headers({ register, variables }: Props) {
-  const [rows, setRows] = useState(queriesNumberToArray());
-  const pathname = usePathname();
+export default function Variables({ variables, setVariables }: Props) {
+  const [rows, setRows] = useState<number[] | undefined>();
 
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
   const handleAddVariable = () => {
-    setRows([...rows, rows.length + 1]);
+    if (rows) {
+      setRows([...rows, rows.length + 1]);
+    } else setRows([1]);
+    setVariables([...variables, []]);
   };
 
   return (
     <>
       <div className={style.headersTitleWrapper}>
-        <p className={style.headersTitle}>{dictionary.headers}</p>
+        <p className={style.headersTitle}>{dictionary.variables}</p>
         <Button type="button" variant="outlined" size="medium" className={style.button} onClick={handleAddVariable}>
-          {dictionary.addHeader}
+          {dictionary.addVariable}
         </Button>
       </div>
       <TableContainer component={Paper} sx={{ backgroundColor: 'transparent' }}>
@@ -51,12 +46,12 @@ export default function Headers({ register, variables }: Props) {
                   <TableCell className={style.tdStyle}>
                     <FormControl className={style.nestedInput}>
                       <TextField
-                        label={dictionary.key}
+                        label={dictionary.name}
                         variant="outlined"
                         size="small"
-                        {...register(`key_${row}`, {
-                          onChange: (e: InputEvent) => handleHeaderInputChange(e, 'key', pathname, variables),
-                        })}
+                        onChange={(ev: React.ChangeEvent<HTMLInputElement>) =>
+                          handleVariableInputChange(ev, 'name', row, variables)
+                        }
                       />
                     </FormControl>
                   </TableCell>
@@ -66,9 +61,9 @@ export default function Headers({ register, variables }: Props) {
                         label={dictionary.value}
                         variant="outlined"
                         size="small"
-                        {...register(`value_${row}`, {
-                          onChange: (e: InputEvent) => handleHeaderInputChange(e, 'value', pathname, variables),
-                        })}
+                        onChange={(ev: React.ChangeEvent<HTMLInputElement>) =>
+                          handleVariableInputChange(ev, 'value', row, variables)
+                        }
                       />
                     </FormControl>
                   </TableCell>
