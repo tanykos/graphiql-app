@@ -9,7 +9,7 @@
   },
   "headers": "Заголовки",
   "historyPage": {
-    "emptyMessage": "Вы не отправили еще ни одного запроса"
+    "emptyMessage": "Вы не отправили еще ни одного запроса. Попробуйте:"
   },
   "graphql": {
     "documentation": "Документация",

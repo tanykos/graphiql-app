@@ -9,7 +9,7 @@
   },
   "headers": "Headers",
   "historyPage": {
-    "emptyMessage": "You haven't sent any requests yet"
+    "emptyMessage": "You haven't sent any requests yet. Try this:"
   },
   "graphql": {
     "documentation": "Documentation",
