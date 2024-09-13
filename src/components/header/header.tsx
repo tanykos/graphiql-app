@@ -36,6 +36,8 @@ function Header({ user }: HeaderProps): React.ReactNode {
 
   const [isHeaderSticky, setIsHeaderSticky] = useState(false);
 
+  const correctLocale = isLocaleCorrect(locale) ? locale : DEFAULT_LOCALE;
+
   const handleStickyHeader = () => {
     setIsHeaderSticky(window.scrollY > 0);
   };
@@ -71,14 +73,13 @@ function Header({ user }: HeaderProps): React.ReactNode {
     }
   };
 
+  const isMainPath = (pathname: string) => LOCALES.some((locale) => pathname === `/${locale}`);
+
   return (
     <header className={`${styles.header} ${isHeaderSticky && styles.sticky}`}>
       <div className={styles.backdrop}></div>
       <nav>
-        <Link
-          href={`/${DEFAULT_LOCALE}`}
-          className={pathname === `/${DEFAULT_LOCALE}` ? styles.inactive : styles.active}
-        >
+        <Link href={`/${correctLocale}`} className={isMainPath(pathname) ? styles.inactive : styles.active}>
           <Logo />
         </Link>
       </nav>
