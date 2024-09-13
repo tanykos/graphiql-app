@@ -1,8 +1,13 @@
+import getValidUrl from './get-valid-url';
+
 export default async function getGraphQlSchema(endpoint: string): Promise<object | undefined> {
   const schemaQuery = '{ __schema { types { name fields { name } } } }';
 
   let response: object | undefined;
-  await fetch(endpoint, {
+
+  const endpointUrl = getValidUrl(endpoint);
+
+  await fetch(endpointUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -10,10 +15,11 @@ export default async function getGraphQlSchema(endpoint: string): Promise<object
     body: JSON.stringify({ query: schemaQuery }),
   })
     .then((res: Response) => {
-      return res.json();
+      if (res.ok) return res.json();
+      return undefined;
     })
     .then((data: object) => {
-      response = data;
+      if (data) response = data;
     })
     .catch((error: Error) => error);
 

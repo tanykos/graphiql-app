@@ -1,7 +1,4 @@
-import {
-  QueryParamArr,
-  queryParamsToQueriesEntries,
-} from '@/components/restful-client/Headers/handle-header-input-change';
+import { QueryParamArr, queryParamsToQueriesEntries } from '@/components/Headers/handle-header-input-change';
 
 const queriesNumberToArray = (): number[] => {
   const queryParams = global.window ? window.location.search : '';

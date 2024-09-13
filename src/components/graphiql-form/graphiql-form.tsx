@@ -1,7 +1,7 @@
 'use client';
 
 import styles from './graphiql-form.module.scss';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -14,9 +14,10 @@ import getEncodedString from '@/utils/get-encoded-string';
 import useLocalStorageHistory from '@/hooks/use-local-storage-history';
 import updateUrlEndpointParam from '@/utils/update-url-endpoint-param';
 import updateUrlBodyParam from '@/utils/update-url-body-param';
-import updateUrl from '@/utils/update-url';
 import FieldsetWrapper from '../FieldsetWrapper/FieldsetWrapper';
 import JsonFormatter, { JsonObject } from 'react-json-formatter';
+import Headers from '../Headers/Headers';
+import transformQueryParamsToHeaders from '@/utils/transform-query-params-to-headers';
 
 export default function GraphiQlForm({
   params,
@@ -25,9 +26,12 @@ export default function GraphiQlForm({
   params?: GraphQlUrlParams;
   documentation?: object | undefined;
 }) {
+  const queryParamsReturned = global.window ? window.location.search : '';
+
   const { register, handleSubmit, watch } = useForm<GraphQlRequest>({
     defaultValues: {
       endpointUrl: params ? getDecodedStr(params.base64endpoint) : '',
+      ...transformQueryParamsToHeaders(queryParamsReturned),
       query: params ? getDecodedStr(params.base64body) : '',
       documentation: documentation ? JSON.stringify(documentation) : '',
     },
@@ -38,6 +42,7 @@ export default function GraphiQlForm({
   });
 
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   const [, saveToLocalStorage] = useLocalStorageHistory();
@@ -46,22 +51,21 @@ export default function GraphiQlForm({
   if (!dictionary) return;
 
   const onSubmit = () => {
-    const locale = getLocale(pathname);
     const endpoint = watch('endpointUrl');
     const base64endpoint = getEncodedString(endpoint);
     const body = watch('query');
     const base64body = getEncodedString(body);
 
     if (base64endpoint && base64body !== undefined) {
-      const path = `/${locale}/GRAPHQL/${base64endpoint}/${base64body}`;
+      const locale = getLocale(pathname);
+      const path = `/${locale}/GRAPHQL/${base64endpoint}/${base64body}?${searchParams.toString()}`;
       saveToLocalStorage(path);
       router.push(path);
     }
   };
 
   const handleEndpointUrlChange = (event: React.ChangeEvent) => {
-    const updatedUrl = updateUrlEndpointParam(pathname, watch('endpointUrl'));
-    updateUrl(`/${updatedUrl}`);
+    updateUrlEndpointParam(pathname, watch('endpointUrl'));
 
     if (!(event.target instanceof HTMLInputElement)) return;
 
@@ -93,6 +97,7 @@ export default function GraphiQlForm({
           <input type="submit" value={dictionary.send} />
         </div>
         <LabeledInput field="sdlUrl" register={register} value={sdlUrlValue} onChange={handleSdlUrlChange} />
+        <Headers register={register} />
         <div className={styles.editors}>
           {documentation && (
             <FieldsetWrapper className={styles.documentation} legendText={dictionary.graphql.documentation}>
