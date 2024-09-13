@@ -1,5 +1,5 @@
 import { ApiResponse } from '@/types';
-import isValidUrl, { defaultScheme } from './is-valid-url';
+import getValidUrl from './get-valid-url';
 
 export default async function getGraphQlData(
   endpoint: string,
@@ -8,7 +8,7 @@ export default async function getGraphQlData(
 ): Promise<ApiResponse> {
   const bodyQuery = query ? `query ${query}` : '';
 
-  const endpointUrl = isValidUrl(endpoint) ? endpoint : `${defaultScheme}${endpoint}`;
+  const endpointUrl = getValidUrl(endpoint);
 
   const response: ApiResponse = { data: undefined, status: { code: undefined, text: undefined } };
   await fetch(endpointUrl, {
