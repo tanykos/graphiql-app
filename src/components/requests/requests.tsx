@@ -8,6 +8,7 @@ import getLocale from '@/utils/get-locale';
 import { usePathname } from 'next/navigation';
 import { useContext } from 'react';
 import RequestLinkText from './RequestLinkText/RequestLinkText';
+import EmptyRequestsList from './EmptyRequestsList/EmptyRequestsList';
 
 export default function Requests(): React.ReactNode {
   const [requests] = useLocalStorageHistory();
@@ -38,7 +39,7 @@ export default function Requests(): React.ReactNode {
             </a>
           ))
           .reverse()}
-      {!requests && <p>{dictionary.historyPage.emptyMessage}</p>}
+      {!requests && <EmptyRequestsList />}
     </>
   );
 }

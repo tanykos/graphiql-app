@@ -10,7 +10,7 @@ export default async function RequestsHistory({ params }: { params: { lang: Loca
 
   return (
     <>
-      <h2>{dictionary.requestsHistory}</h2>
+      <h2 className={styles.title}>{dictionary.requestsHistory}</h2>
       <section className={styles.requests}>
         <Requests />
       </section>

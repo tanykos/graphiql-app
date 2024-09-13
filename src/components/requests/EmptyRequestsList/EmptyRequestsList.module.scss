@@ -1,0 +1,18 @@
+.empty {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+
+  p {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+}
+
+.buttons {
+  align-self: center;
+  display: flex;
+  gap: 20px;
+}
