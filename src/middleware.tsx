@@ -1,32 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { DEFAULT_LOCALE } from './const';
+import { DEFAULT_LOCALE, METHODS } from './const';
+import getLocale from './utils/get-locale';
+import { PROTECTED_ROUTES, PUBLIC_ROUTES, RouteAccessTypes, Routes } from './constants/routes';
 
-const locales = ['en', 'ru'];
-const protectedRoutes = ['/history', '/restful', '/graphiql'];
-const publicRoutes = ['/sign-in', '/sign-up'];
+function getRouteAccessType(normalizedPath: Routes | string): RouteAccessTypes | null {
+  if (
+    Object.values(PROTECTED_ROUTES).includes(normalizedPath) ||
+    METHODS.includes(normalizedPath as (typeof METHODS)[number])
+  ) {
+    return RouteAccessTypes.PROTECTED;
+  }
+
+  if (PUBLIC_ROUTES.includes(normalizedPath as Routes)) {
+    return RouteAccessTypes.PUBLIC;
+  }
+
+  return null;
+}
 
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const session = request.cookies.get('session');
 
   const segments = path.split('/').filter(Boolean);
-  const locale = locales.includes(segments[0]) ? segments[0] : DEFAULT_LOCALE;
+  const locale = getLocale(path);
   const mainUrl = new URL(`/${locale}`, request.nextUrl.origin);
-  const normalizedPath = `/${segments.slice(1).join('/')}`;
+  const route = segments[1];
 
-  const isProtectedRoute = protectedRoutes.includes(normalizedPath);
-  const isPublicRoute = publicRoutes.includes(normalizedPath);
+  const routeType = getRouteAccessType(route);
 
   if (path === '/') {
     request.nextUrl.pathname = `/${DEFAULT_LOCALE}`;
     return NextResponse.redirect(request.nextUrl);
   }
 
-  if (isProtectedRoute && !session) {
+  if (routeType === RouteAccessTypes.PROTECTED && !session) {
     return NextResponse.redirect(mainUrl);
   }
 
-  if (isPublicRoute && session) {
+  if (routeType === RouteAccessTypes.PUBLIC && session) {
     return NextResponse.redirect(mainUrl);
   }
 
