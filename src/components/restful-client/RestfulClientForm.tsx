@@ -68,9 +68,7 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
   if (!dictionary) return;
 
   const handleEndpointUrlChange = () => {
-    console.log('NOTupdatedUrl: ', getValues().url, variables);
     const processedUrl = handleVariables(getValues().url, variables);
-    console.log('processedUrl: ', processedUrl);
     const updatedUrl = updateUrlEndpointParam(pathname, processedUrl);
 
     if (!window) return;

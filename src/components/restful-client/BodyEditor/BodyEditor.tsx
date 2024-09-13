@@ -34,7 +34,6 @@ function BodyEditor({ control, getValues, variables }: Props) {
             {...field}
             height="100px"
             onChange={(value) => {
-              console.log('value: ', value);
               field.onChange(value);
             }}
             onBlur={handleBodyEdit}
