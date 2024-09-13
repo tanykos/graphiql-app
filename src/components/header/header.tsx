@@ -4,7 +4,7 @@ import styles from './header.module.scss';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import SvgImage from '@/components/svg-image/svg-image';
-import { LOCALES } from '@/const';
+import { DEFAULT_LOCALE, LOCALES } from '@/const';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { DictionaryContext } from '@/providers/dictionary-provider';
@@ -35,6 +35,8 @@ function Header({ user }: HeaderProps): React.ReactNode {
   const router = useRouter();
 
   const [isHeaderSticky, setIsHeaderSticky] = useState(false);
+
+  const correctLocale = isLocaleCorrect(locale) ? locale : DEFAULT_LOCALE;
 
   const handleStickyHeader = () => {
     setIsHeaderSticky(window.scrollY > 0);
@@ -77,7 +79,7 @@ function Header({ user }: HeaderProps): React.ReactNode {
     <header className={`${styles.header} ${isHeaderSticky && styles.sticky}`}>
       <div className={styles.backdrop}></div>
       <nav>
-        <Link href={`/${locale}`} className={isMainPath(pathname) ? styles.inactive : styles.active}>
+        <Link href={`/${correctLocale}`} className={isMainPath(pathname) ? styles.inactive : styles.active}>
           <Logo />
         </Link>
       </nav>
