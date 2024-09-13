@@ -84,7 +84,7 @@ export default function GraphiQlForm({
     }
   };
 
-  const CodeEditor = ({ field }: { field: ControllerRenderProps<GraphQlRequest, string> }) => (
+  const QueryEditor = ({ field }: { field: ControllerRenderProps<GraphQlRequest, 'query'> }) => (
     <ReactCodeMirror
       {...field}
       onChange={(value) => {
@@ -116,7 +116,7 @@ export default function GraphiQlForm({
             </FieldsetWrapper>
           )}
           <FieldsetWrapper className={styles.query} legendText={dictionary.graphql.query}>
-            <Controller name="query" control={control} render={CodeEditor} />
+            <Controller name="query" control={control} render={QueryEditor} />
           </FieldsetWrapper>
         </div>
       </form>
