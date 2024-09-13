@@ -1,7 +1,7 @@
 import Footer from '../components/footer/footer';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import dictionary from '../app/[lang]/dictionaries/en.json';
+import dictionary from '@/app/[lang]/dictionaries/en.json';
 
 vi.mock('../app/[lang]/dictionaries', () => {
   return { default: vi.fn() };
