@@ -6,9 +6,8 @@ export async function checkAuthStatus() {
     if (response.ok) {
       const data = (await response.json()) as IsLoggedResponse;
       return data;
-    } else {
-      return null;
     }
+    return null;
   } catch {
     return null;
   }
