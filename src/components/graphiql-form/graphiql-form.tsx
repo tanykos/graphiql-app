@@ -4,7 +4,7 @@ import styles from './graphiql-form.module.scss';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useContext, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 import LabeledInput from './labeled-input/labeled-input';
 import { GraphQlRequest, GraphQlUrlParams } from '@/types/graphql';
 import getDecodedStr from '@/utils/get-decoded-string';
@@ -18,6 +18,7 @@ import FieldsetWrapper from '../FieldsetWrapper/FieldsetWrapper';
 import JsonFormatter, { JsonObject } from 'react-json-formatter';
 import Headers from '../Headers/Headers';
 import transformQueryParamsToHeaders from '@/utils/transform-query-params-to-headers';
+import ReactCodeMirror from '@uiw/react-codemirror';
 
 export default function GraphiQlForm({
   params,
@@ -28,11 +29,11 @@ export default function GraphiQlForm({
 }) {
   const queryParamsReturned = global.window ? window.location.search : '';
 
-  const { register, handleSubmit, watch } = useForm<GraphQlRequest>({
+  const { register, handleSubmit, watch, control } = useForm<GraphQlRequest>({
     defaultValues: {
       endpointUrl: params ? getDecodedStr(params.base64endpoint) : '',
       ...transformQueryParamsToHeaders(queryParamsReturned),
-      query: params ? getDecodedStr(params.base64body) : '',
+      query: params && params.base64body ? getDecodedStr(params.base64body) : '',
       documentation: documentation ? JSON.stringify(documentation) : '',
     },
   });
@@ -83,6 +84,16 @@ export default function GraphiQlForm({
     }
   };
 
+  const CodeEditor = ({ field }: { field: ControllerRenderProps<GraphQlRequest, string> }) => (
+    <ReactCodeMirror
+      {...field}
+      onChange={(value) => {
+        field.onChange(value);
+      }}
+      onBlur={handleQueryChange}
+    />
+  );
+
   return (
     <FieldsetWrapper legendText={dictionary.request}>
       <form
@@ -105,7 +116,7 @@ export default function GraphiQlForm({
             </FieldsetWrapper>
           )}
           <FieldsetWrapper className={styles.query} legendText={dictionary.graphql.query}>
-            <input {...register('query', { onBlur: handleQueryChange })} />
+            <Controller name="query" control={control} render={CodeEditor} />
           </FieldsetWrapper>
         </div>
       </form>
