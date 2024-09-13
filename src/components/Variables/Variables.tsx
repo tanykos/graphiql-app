@@ -1,4 +1,4 @@
-import style from '../restful-client/Headers/Headers.module.scss';
+import style from '../Headers/Headers.module.scss';
 import Button from '@mui/material/Button';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';

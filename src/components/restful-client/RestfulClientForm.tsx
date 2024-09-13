@@ -22,7 +22,7 @@ import BodyEditor from '@/components/restful-client/BodyEditor/BodyEditor';
 import updateUrlEndpointParam from '@/utils/update-url-endpoint-param';
 import updateURLMethodParam from '@/utils/update-url-method-param';
 import transformQueryParamsToHeaders from '@/utils/transform-query-params-to-headers';
-import Headers from '@/components/restful-client/Headers/Headers';
+import Headers from '@/components/Headers/Headers';
 import FieldsetWrapper from '../FieldsetWrapper/FieldsetWrapper';
 import useLocalStorageHistory from '@/hooks/use-local-storage-history';
 import Variables from '../Variables/Variables';

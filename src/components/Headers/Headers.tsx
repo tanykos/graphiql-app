@@ -9,7 +9,7 @@ import { DictionaryContext } from '@/providers/dictionary-provider';
 import { FormControl, TextField } from '@mui/material';
 import { UseFormRegister } from 'react-hook-form';
 import { RestfulFormFields } from '@/types/restful';
-import queriesNumberToArray from '@/components/restful-client/Headers/queries-number-to-array';
+import queriesNumberToArray from '@/components/Headers/queries-number-to-array';
 import { usePathname } from 'next/navigation';
 import handleHeaderInputChange from './handle-header-input-change';
 import TableContainer from '@mui/material/TableContainer';
