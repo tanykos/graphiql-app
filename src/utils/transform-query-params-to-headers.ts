@@ -1,4 +1,4 @@
-import { QueryParamArr } from '@/components/restful-client/Headers/handle-header-input-change';
+import { QueryParamArr } from '@/components/Headers/handle-header-input-change';
 
 export default function transformQueryParamsToHeaders(queryParams: string): { [key: string]: string } | '' {
   const queriesEntries: QueryParamArr = queryParams

@@ -8,12 +8,18 @@ import getGraphQlData from '@/api/get-graphql-data';
 import ResponseViewer from '../response-viewer/response-viewer';
 import { ApiResponse } from '@/types';
 
-export default async function GraphQlPageContent({ params }: { params: GraphQlUrlParams }) {
+export default async function GraphQlPageContent({
+  params,
+  searchParams,
+}: {
+  params: GraphQlUrlParams;
+  searchParams: Record<string, string>;
+}) {
   const endpoint = getDecodedStr(params.base64endpoint);
   const query = params.base64body ? getDecodedStr(params.base64body) : '';
 
   let response: ApiResponse | undefined;
-  if (endpoint !== undefined && query !== undefined) response = await getGraphQlData(endpoint, query);
+  if (endpoint !== undefined && query !== undefined) response = await getGraphQlData(endpoint, searchParams, query);
 
   let doc: object | undefined;
   if (endpoint) doc = await getGraphQlSchema(endpoint);

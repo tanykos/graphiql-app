@@ -1,6 +1,6 @@
 import './globals.scss';
 import type { Metadata } from 'next';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import Header from '@/components/header/header';
 import Footer from '@/components/footer/footer';
 import Main from '@/components/main/main';
@@ -12,6 +12,7 @@ import isLocaleCorrect from '@/utils/is-locale-correct';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from '@/providers/theme-provider';
 import { UserProvider } from '@/providers/user-provider';
+import Loading from './loading';
 
 export const metadata: Metadata = {
   title: 'REST & GraphQL clients',
@@ -33,7 +34,9 @@ export default async function RootLayout({
             <CssBaseline />
             <UserProvider>
               <Header />
-              <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
+              <Suspense fallback={<Loading />}>
+                <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
+              </Suspense>
             </UserProvider>
             <Footer locale={locale} />
           </ThemeProvider>

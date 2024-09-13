@@ -9,17 +9,17 @@ import { DictionaryContext } from '@/providers/dictionary-provider';
 import { FormControl, TextField } from '@mui/material';
 import { UseFormRegister } from 'react-hook-form';
 import { RestfulFormFields } from '@/types/restful';
-import queriesNumberToArray from '@/components/restful-client/Headers/queries-number-to-array';
+import queriesNumberToArray from '@/components/Headers/queries-number-to-array';
 import { usePathname } from 'next/navigation';
 import handleHeaderInputChange from './handle-header-input-change';
 import TableContainer from '@mui/material/TableContainer';
-
+import { GraphQlRequest } from '@/types/graphql';
 import dynamic from 'next/dynamic';
 
 const Table = dynamic(() => import('@mui/material/Table'), { ssr: false });
 
 interface Props {
-  register: UseFormRegister<RestfulFormFields>;
+  register: UseFormRegister<RestfulFormFields> | UseFormRegister<GraphQlRequest>;
 }
 
 export default function Headers({ register }: Props) {
@@ -34,7 +34,7 @@ export default function Headers({ register }: Props) {
   };
 
   return (
-    <>
+    <div>
       <div className={style.headersTitleWrapper}>
         <p className={style.headersTitle}>{dictionary.headers}</p>
         <Button type="button" variant="outlined" size="medium" className={style.button} onClick={handleAddHeader}>
@@ -76,6 +76,6 @@ export default function Headers({ register }: Props) {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </div>
   );
 }
