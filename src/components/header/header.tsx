@@ -2,8 +2,7 @@
 
 import styles from './header.module.scss';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
-import SvgImage from '@/components/svg-image/svg-image';
+import { usePathname } from 'next/navigation';
 import { DEFAULT_LOCALE, LOCALES } from '@/const';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
@@ -21,6 +20,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import withAuth from '@/hoc/withAuth';
 import Logo from './Logo/Logo';
+import LangSelector from './LangSelector/LangSelector';
 
 interface HeaderProps {
   user: User | null;
@@ -29,9 +29,6 @@ interface HeaderProps {
 function Header({ user }: HeaderProps): React.ReactNode {
   const pathname = usePathname();
   const locale = getLocale(pathname);
-  const [selectValue, setSelectValue] = useState(isLocaleCorrect(locale) ? locale : '');
-
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   const [isHeaderSticky, setIsHeaderSticky] = useState(false);
@@ -56,14 +53,6 @@ function Header({ user }: HeaderProps): React.ReactNode {
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
-  function handleLocaleChange(event: React.ChangeEvent) {
-    if (!(event.target instanceof HTMLSelectElement)) return;
-
-    setSelectValue(event.target.value);
-    const newLocale = event.target.value;
-    router.push(`${pathname.replace(locale, newLocale)}?${searchParams.toString()}`, { scroll: true });
-  }
-
   const handleSignOut = async () => {
     try {
       await signOut(auth);
@@ -84,20 +73,7 @@ function Header({ user }: HeaderProps): React.ReactNode {
         </Link>
       </nav>
       <div className={styles.controls}>
-        <div className={styles.lang}>
-          <label htmlFor="select">
-            <SvgImage url={'/globe-sprite.svg#lang'} className={styles.svg} ariaLabel={dictionary.icons.globe} />
-          </label>
-          <select id="select" onChange={handleLocaleChange} value={selectValue}>
-            <option></option>
-            {LOCALES.map((locale) => (
-              <option value={locale} key={locale}>
-                {locale.toUpperCase()}
-              </option>
-            ))}
-          </select>
-        </div>
-
+        <LangSelector />
         {user ? (
           <>
             <RouterLink href={Routes.MAIN} tooltip={dictionary.icons.toMain} type="iconButton">
