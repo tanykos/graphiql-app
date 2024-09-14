@@ -1,3 +1,4 @@
+import { handleVariables } from '@/components/Variables/handle-variable-input-change';
 import updateURLQueryParams from '@/utils/update-url-query-params';
 
 export type QueryParamArr = string[][];
@@ -27,7 +28,12 @@ const joinQueryParams = () => {
   queryParams = queryParams ? `?${queryParams}` : '';
 };
 
-const handleHeaderInputChange = (ev: InputEvent, fieldType: 'key' | 'value', pathname: string) => {
+const handleHeaderInputChange = (
+  ev: InputEvent,
+  fieldType: 'key' | 'value',
+  pathname: string,
+  variables: string[][],
+) => {
   queryParams = global.window ? window.location.search : '';
   queriesEntries = assignQueryParamArr();
   if (ev.target instanceof HTMLInputElement) {
@@ -41,7 +47,7 @@ const handleHeaderInputChange = (ev: InputEvent, fieldType: 'key' | 'value', pat
       queriesEntries[thisHeaderNumber - 1][1] = thisValue;
     }
     joinQueryParams();
-    updateURLQueryParams(pathname, queryParams);
+    updateURLQueryParams(pathname, handleVariables(queryParams, variables));
   }
 };
 

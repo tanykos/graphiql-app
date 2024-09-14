@@ -1,4 +1,5 @@
 import { AuthFormNames } from '@/constants/form-fields-const';
+import { User } from 'firebase/auth';
 
 export interface authPageData {
   title: string;
@@ -31,3 +32,14 @@ export interface FormField<T extends SignInFormInputs | SignUpFormInputs> {
 export type FormInputs = SignInFormInputs | SignUpFormInputs;
 
 export type AuthKeys = AuthFormNames.SIGNUP | AuthFormNames.SIGNIN;
+
+export interface AuthResponse {
+  message?: string;
+  user?: User;
+  error?: string;
+}
+
+export interface IsLoggedResponse {
+  isLogged: boolean;
+  displayName: string;
+}

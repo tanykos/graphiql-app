@@ -7,15 +7,14 @@ import { FormContainer } from '@/components/AuthForm/FormContainer/FormContainer
 import { InputField } from '@/components/InputField/InputField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
-import { AuthKeys, FormInputs, SignUpFormInputs } from '@/types/auth';
+import { AuthKeys, AuthResponse, FormInputs } from '@/types/auth';
 import { getValidationSchemas } from '@/utils/validation';
 import { getFieldsData } from '@/utils/get-fields-data';
 import { AuthFormNames } from '@/constants/form-fields-const';
 import { usePathname, useRouter } from 'next/navigation';
-import { auth } from '../../../firebaseConfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import getLocale from '@/utils/get-locale';
 import { Routes } from '@/constants/routes';
+import { UserContext } from '@/providers/user-provider';
 
 interface AuthFormProps {
   dictionaryKey: AuthKeys;
@@ -23,6 +22,8 @@ interface AuthFormProps {
 
 export default function AuthForm({ dictionaryKey }: AuthFormProps) {
   const dictionary = useContext(DictionaryContext);
+  const userContext = useContext(UserContext);
+  const { fetchAuthStatus } = userContext!;
   const router = useRouter();
   const pathname = usePathname();
 
@@ -59,30 +60,36 @@ export default function AuthForm({ dictionaryKey }: AuthFormProps) {
     setSnackbarOpen(false);
   };
 
+  const handleSnackbar = (message: string, severity: 'error' | 'success') => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
+
   const onSubmit = async (data: FormInputs) => {
     const locale = getLocale(pathname);
+    const apiEndpoint = isSignUp ? '/api/register' : '/api/login';
 
     try {
-      if (isSignUp) {
-        await createUserWithEmailAndPassword(auth, data.email, data.password);
-        if (auth.currentUser) {
-          await updateProfile(auth.currentUser, {
-            displayName: (data as SignUpFormInputs).user,
-          });
-        } else {
-          console.error('No user is logged in.');
-        }
+      const res = await fetch(apiEndpoint, {
+        method: 'POST',
+        body: JSON.stringify(data || {}),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept-Language': locale,
+        },
+      });
+
+      const result = (await res.json()) as AuthResponse;
+
+      if (result.error) {
+        handleSnackbar(result.error, 'error');
       } else {
-        await signInWithEmailAndPassword(auth, data.email, data.password);
+        await fetchAuthStatus();
+        router.push(`/${locale}`);
       }
-
-      router.push(`/${locale}`);
-    } catch (error) {
-      console.error('Authentication Error: ', error);
-
-      setSnackbarMessage(dictionary.authFailed);
-      setSnackbarSeverity('error');
-      setSnackbarOpen(true);
+    } catch {
+      handleSnackbar(dictionary.authFailed, 'error');
     }
   };
 

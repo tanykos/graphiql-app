@@ -11,6 +11,7 @@ import { Locale } from '@/types';
 import isLocaleCorrect from '@/utils/is-locale-correct';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from '@/providers/theme-provider';
+import { UserProvider } from '@/providers/user-provider';
 import Loading from './loading';
 
 export const metadata: Metadata = {
@@ -31,10 +32,12 @@ export default async function RootLayout({
         <DictionaryProvider dictionary={dictionary}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Header />
-            <Suspense fallback={<Loading />}>
-              <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
-            </Suspense>
+            <UserProvider>
+              <Header />
+              <Suspense fallback={<Loading />}>
+                <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
+              </Suspense>
+            </UserProvider>
             <Footer locale={locale} />
           </ThemeProvider>
         </DictionaryProvider>
