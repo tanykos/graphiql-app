@@ -4,10 +4,8 @@ export default function handleVariableInputChange(
   row: number,
   variables: string[][],
 ) {
-  if (ev.target instanceof HTMLInputElement) {
-    const orderInArray = fieldType === 'name' ? 0 : 1;
-    variables[row - 1][orderInArray] = `${ev.target.value}`;
-  }
+  const orderInArray = fieldType === 'name' ? 0 : 1;
+  variables[row - 1][orderInArray] = `${ev.target.value}`;
 }
 
 export function handleVariables(inputValue: string, variables: string[][]) {
@@ -25,5 +23,6 @@ export function handleVariables(inputValue: string, variables: string[][]) {
       }
     }
   }
+  console.log('inputValueWithReplacements: ', inputValueWithReplacements);
   return inputValueWithReplacements;
 }

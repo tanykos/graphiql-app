@@ -30,7 +30,7 @@ export default function Variables({ variables, setVariables }: Props) {
   };
 
   return (
-    <>
+    <div>
       <div className={style.headersTitleWrapper}>
         <p className={style.headersTitle}>{dictionary.variables}</p>
         <Button type="button" variant="outlined" size="medium" className={style.button} onClick={handleAddVariable}>
@@ -72,6 +72,6 @@ export default function Variables({ variables, setVariables }: Props) {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </div>
   );
 }

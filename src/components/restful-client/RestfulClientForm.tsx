@@ -53,7 +53,7 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
     const values = getValues();
     const locale = getLocale(pathname);
     const base64Url = getEncodedString(handleVariables(values.url, variables));
-    const base64Body = getEncodedString(values.body);
+    const base64Body = getEncodedString(handleVariables(values.body, variables));
     const queryParamsToSend = transformHeadersToQueries(values);
 
     if (base64Url && base64Body !== undefined) {
