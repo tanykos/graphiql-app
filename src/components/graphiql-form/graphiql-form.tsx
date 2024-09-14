@@ -19,6 +19,7 @@ import JsonFormatter, { JsonObject } from 'react-json-formatter';
 import Headers from '../Headers/Headers';
 import transformQueryParamsToHeaders from '@/utils/transform-query-params-to-headers';
 import ReactCodeMirror from '@uiw/react-codemirror';
+import Variables from '../Variables/Variables';
 
 export default function GraphiQlForm({
   params,
@@ -48,6 +49,7 @@ export default function GraphiQlForm({
 
   const [, saveToLocalStorage] = useLocalStorageHistory();
 
+  const [variables, setVariables] = useState<string[][]>([]);
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
@@ -108,7 +110,7 @@ export default function GraphiQlForm({
           <input type="submit" value={dictionary.send} />
         </div>
         <LabeledInput field="sdlUrl" register={register} value={sdlUrlValue} onChange={handleSdlUrlChange} />
-        <Headers register={register} />
+        <Headers register={register} variables={variables} />
         <div className={styles.editors}>
           {documentation && (
             <FieldsetWrapper className={styles.documentation} legendText={dictionary.graphql.documentation}>
@@ -119,6 +121,7 @@ export default function GraphiQlForm({
             <Controller name="query" control={control} render={QueryEditor} />
           </FieldsetWrapper>
         </div>
+        <Variables variables={variables} setVariables={setVariables} />
       </form>
     </FieldsetWrapper>
   );

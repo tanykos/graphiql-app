@@ -31,6 +31,9 @@
   "send": "Send",
   "status": "Status",
   "value": "Value",
+  "variables": "Variables",
+  "addVariable": "Add variable",
+  "name": "Name",
   "main": {
     "title": "Welcome",
     "signin": "Sign In",
