@@ -1,9 +1,12 @@
+'use client';
+
 import styles from './RouterLink.module.scss';
 import NextLink from 'next/link';
 import MuiButton from '@mui/material/Button';
 import { usePathname } from 'next/navigation';
 import { IconButton, Tooltip } from '@mui/material';
-import { ButtonsTypes } from '@/const';
+import { ButtonsTypes, DEFAULT_LOCALE } from '@/const';
+import isLocaleCorrect from '@/utils/is-locale-correct';
 
 interface RouterLinkProps {
   type?: 'link' | 'button' | 'iconButton';
@@ -15,7 +18,8 @@ interface RouterLinkProps {
 
 export default function RouterLink({ type = 'link', href, children, ...props }: RouterLinkProps) {
   const pathname = usePathname();
-  const locale = pathname.split('/')[1];
+  const localeURL = pathname.split('/')[1];
+  const locale = isLocaleCorrect(localeURL) ? localeURL : DEFAULT_LOCALE;
 
   const renderLinkContent = () => {
     if (type === 'button') {

@@ -2,12 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { DEFAULT_LOCALE, METHODS } from './const';
 import getLocale from './utils/get-locale';
 import { PROTECTED_ROUTES, PUBLIC_ROUTES, RouteAccessTypes, Routes } from './constants/routes';
+import { MethodType } from './types/restful';
 
 function getRouteAccessType(normalizedPath: Routes | string): RouteAccessTypes | null {
-  if (
-    Object.values(PROTECTED_ROUTES).includes(normalizedPath) ||
-    METHODS.includes(normalizedPath as (typeof METHODS)[number])
-  ) {
+  if (Object.values(PROTECTED_ROUTES).includes(normalizedPath) || METHODS.includes(normalizedPath as MethodType)) {
     return RouteAccessTypes.PROTECTED;
   }
 
