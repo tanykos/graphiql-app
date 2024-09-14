@@ -22,7 +22,6 @@ export function PasswordAction({ showPassword, setShowPassword }: PasswordAdornm
         onClick={handleClick}
         onMouseDown={handleMouseDown}
         edge="end"
-        data-testid="password-toggle-button"
       >
         {showPassword ? <VisibilityOff /> : <Visibility />}
       </IconButton>
