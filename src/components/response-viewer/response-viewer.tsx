@@ -28,7 +28,7 @@ export default function ResponseViewer({ response }: { response?: ApiResponse })
         </p>
         <div>
           <p>{`${dictionary.body.response}:`}</p>
-          {response && <JsonFormatter json={response.data as JsonObject} tabWith={4} jsonStyle={jsonStyle} />}
+          {response?.data && <JsonFormatter json={response.data as JsonObject} tabWith={4} jsonStyle={jsonStyle} />}
         </div>
       </div>
     </FieldsetWrapper>

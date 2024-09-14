@@ -4,9 +4,8 @@ export interface SearchParams {
   [key: string]: string;
 }
 
-// TODO specify data type to replace 'unknown'
 export type ApiResponse = {
-  data: unknown;
+  data: object | undefined;
   status: {
     code: number | undefined;
     text: string | undefined;
