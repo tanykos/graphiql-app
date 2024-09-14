@@ -4,21 +4,20 @@ import styles from './main-page.module.scss';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import { useContext } from 'react';
 import RouterLink from '@/components/RouterLink/RouterLink';
-import { Avatar, Box, Paper, Stack, Grid, Typography } from '@mui/material';
-import { User } from 'firebase/auth';
+import { Avatar, Box, Paper, Stack, CircularProgress, Grid, Typography } from '@mui/material';
 import { Routes } from '@/constants/routes';
-import withAuth from '@/hoc/withAuth';
+import { UserContext } from '@/providers/user-provider';
 import { ButtonsTypes } from '@/const';
 
-interface MainPageProps {
-  user: User | null;
-}
-
-function MainPage({ user }: MainPageProps) {
+function MainPage() {
   const dictionary = useContext(DictionaryContext);
+
+  const userContext = useContext(UserContext);
+  const { user } = userContext!;
+
   if (!dictionary) return;
 
-  const pageButtons = user
+  const pageButtons = user?.isLogged
     ? [
         { href: Routes.RESTFUL_CLIENT, text: dictionary.restClient, variant: ButtonsTypes.CONTAINED },
         { href: Routes.GRAPHQL_CLIENT, text: dictionary.graphClient, variant: ButtonsTypes.CONTAINED },
@@ -35,12 +34,20 @@ function MainPage({ user }: MainPageProps) {
     { name: dictionary.main.nameTatyana, surname: dictionary.main.surnameTanyaK, src: '/avatar-tk.jpg' },
   ];
 
+  if (!user) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <Grid container>
       <Grid item xs={12} sx={{ wordBreak: 'break-word' }}>
         <Typography variant="h3" sx={{ textAlign: 'center', mt: 4 }}>
           {dictionary.main.title}
-          {user ? `, ${user.displayName}` : ``}!
+          {user?.isLogged ? `, ${user.displayName}` : ``}!
         </Typography>
       </Grid>
 
@@ -110,4 +117,4 @@ function MainPage({ user }: MainPageProps) {
   );
 }
 
-export default withAuth(MainPage);
+export default MainPage;

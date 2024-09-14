@@ -10,23 +10,17 @@ import { useContext, useEffect, useState } from 'react';
 import { DictionaryContext } from '@/providers/dictionary-provider';
 import isLocaleCorrect from '@/utils/is-locale-correct';
 import getLocale from '@/utils/get-locale';
-import { auth } from '../../../firebaseConfig';
-import { signOut, User } from 'firebase/auth';
 import { Routes } from '@/constants/routes';
 import RouterLink from '../RouterLink/RouterLink';
-import { IconButton, Tooltip } from '@mui/material';
+import { CircularProgress, IconButton, Tooltip } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
-import withAuth from '@/hoc/withAuth';
+import { UserContext } from '@/providers/user-provider';
 import Logo from './Logo/Logo';
 
-interface HeaderProps {
-  user: User | null;
-}
-
-function Header({ user }: HeaderProps): React.ReactNode {
+function Header(): React.ReactNode {
   const pathname = usePathname();
   const locale = getLocale(pathname);
   const [selectValue, setSelectValue] = useState(isLocaleCorrect(locale) ? locale : '');
@@ -54,6 +48,9 @@ function Header({ user }: HeaderProps): React.ReactNode {
   });
 
   const dictionary = useContext(DictionaryContext);
+  const userContext = useContext(UserContext);
+  const { user, logout, fetchAuthStatus } = userContext!;
+
   if (!dictionary) return;
 
   function handleLocaleChange(event: React.ChangeEvent) {
@@ -65,12 +62,9 @@ function Header({ user }: HeaderProps): React.ReactNode {
   }
 
   const handleSignOut = async () => {
-    try {
-      await signOut(auth);
-      router.push(`/${locale}`);
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
+    await logout();
+    await fetchAuthStatus();
+    router.push(`/${locale}`);
   };
 
   const isMainPath = (pathname: string) => LOCALES.some((locale) => pathname === `/${locale}`);
@@ -98,7 +92,9 @@ function Header({ user }: HeaderProps): React.ReactNode {
           </select>
         </div>
 
-        {user ? (
+        {!user ? (
+          <CircularProgress size={24} />
+        ) : user.isLogged ? (
           <>
             <RouterLink href={Routes.MAIN} tooltip={dictionary.icons.toMain} type="iconButton">
               <HomeIcon />
@@ -126,4 +122,4 @@ function Header({ user }: HeaderProps): React.ReactNode {
   );
 }
 
-export default withAuth(Header);
+export default Header;
