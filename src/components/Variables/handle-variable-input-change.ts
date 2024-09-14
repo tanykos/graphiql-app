@@ -23,6 +23,5 @@ export function handleVariables(inputValue: string, variables: string[][]) {
       }
     }
   }
-  console.log('inputValueWithReplacements: ', inputValueWithReplacements);
   return inputValueWithReplacements;
 }
