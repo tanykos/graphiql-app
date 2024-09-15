@@ -14,6 +14,7 @@ import theme from '@/providers/theme-provider';
 import { UserProvider } from '@/providers/user-provider';
 import Loading from './loading';
 import NotFoundPage from './[...not-found]/page';
+import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
 
 export const metadata: Metadata = {
   title: 'REST & GraphQL clients',
@@ -31,18 +32,20 @@ export default async function RootLayout({
     <html lang={locale}>
       <body>
         <DictionaryProvider dictionary={dictionary}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <UserProvider>
-              <Header />
-              <Suspense fallback={<Loading />}>
-                <Main>
-                  {isLocaleCorrect(params.lang) ? children : <NotFoundPage params={{ lang: DEFAULT_LOCALE }} />}
-                </Main>
-              </Suspense>
-            </UserProvider>
-            <Footer locale={locale} />
-          </ThemeProvider>
+          <ErrorBoundary dictionary={dictionary}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <UserProvider>
+                <Header />
+                <Suspense fallback={<Loading />}>
+                  <Main>
+                    {isLocaleCorrect(params.lang) ? children : <NotFoundPage params={{ lang: DEFAULT_LOCALE }} />}
+                  </Main>
+                </Suspense>
+              </UserProvider>
+              <Footer locale={locale} />
+            </ThemeProvider>
+          </ErrorBoundary>
         </DictionaryProvider>
       </body>
     </html>

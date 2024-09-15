@@ -89,5 +89,6 @@
   "history": "History",
   "pageNotFound": "Page Not Found",
   "sorryMessage": "Sorry, the page you requested doesn't exist.",
-  "goToHome": "Go back to the home page"
+  "goToHome": "Go back to the home page",
+  "wentWrong": "Something went wrong..."
 }
