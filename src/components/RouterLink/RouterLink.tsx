@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { IconButton, Tooltip } from '@mui/material';
 import { ButtonsTypes, DEFAULT_LOCALE } from '@/const';
 import isLocaleCorrect from '@/utils/is-locale-correct';
+import getLocale from '@/utils/get-locale';
 
 interface RouterLinkProps {
   type?: 'link' | 'button' | 'iconButton';
@@ -18,7 +19,7 @@ interface RouterLinkProps {
 
 export default function RouterLink({ type = 'link', href, children, ...props }: RouterLinkProps) {
   const pathname = usePathname();
-  const localeURL = pathname.split('/')[1];
+  const localeURL = getLocale(pathname);
   const locale = isLocaleCorrect(localeURL) ? localeURL : DEFAULT_LOCALE;
 
   const renderLinkContent = () => {
