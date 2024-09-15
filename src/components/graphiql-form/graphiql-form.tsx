@@ -1,7 +1,7 @@
 'use client';
 
 import styles from './graphiql-form.module.scss';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useContext, useState } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
@@ -20,6 +20,8 @@ import Headers from '../Headers/Headers';
 import transformQueryParamsToHeaders from '@/utils/transform-query-params-to-headers';
 import ReactCodeMirror from '@uiw/react-codemirror';
 import Variables from '../Variables/Variables';
+import { handleVariables } from '../Variables/handle-variable-input-change';
+import transformHeadersToQueries from '@/utils/transform-headers-to-queries';
 
 export default function GraphiQlForm({
   params,
@@ -30,7 +32,7 @@ export default function GraphiQlForm({
 }) {
   const queryParamsReturned = global.window ? window.location.search : '';
 
-  const { register, handleSubmit, watch, control } = useForm<GraphQlRequest>({
+  const { register, handleSubmit, watch, control, getValues } = useForm<GraphQlRequest>({
     defaultValues: {
       endpointUrl: params ? getDecodedStr(params.base64endpoint) : '',
       ...transformQueryParamsToHeaders(queryParamsReturned),
@@ -44,7 +46,6 @@ export default function GraphiQlForm({
   });
 
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   const [, saveToLocalStorage] = useLocalStorageHistory();
@@ -55,20 +56,22 @@ export default function GraphiQlForm({
 
   const onSubmit = () => {
     const endpoint = watch('endpointUrl');
-    const base64endpoint = getEncodedString(endpoint);
+    const base64endpoint = getEncodedString(handleVariables(endpoint, variables));
     const body = watch('query');
-    const base64body = getEncodedString(body);
+    const base64body = getEncodedString(handleVariables(body, variables));
+    const queryParamsToSend = transformHeadersToQueries(getValues());
 
     if (base64endpoint && base64body !== undefined) {
       const locale = getLocale(pathname);
-      const path = `/${locale}/GRAPHQL/${base64endpoint}/${base64body}?${searchParams.toString()}`;
+      const path = `/${locale}/GRAPHQL/${base64endpoint}/${base64body}${handleVariables(queryParamsToSend, variables)}`;
       saveToLocalStorage(path);
       router.push(path);
     }
   };
 
   const handleEndpointUrlChange = (event: React.ChangeEvent) => {
-    updateUrlEndpointParam(pathname, watch('endpointUrl'));
+    const processedEnpointParam = handleVariables(watch('endpointUrl'), variables);
+    updateUrlEndpointParam(pathname, processedEnpointParam);
 
     if (!(event.target instanceof HTMLInputElement)) return;
 
@@ -77,7 +80,7 @@ export default function GraphiQlForm({
   };
 
   const handleQueryChange = () => {
-    updateUrlBodyParam(pathname, watch('query'));
+    updateUrlBodyParam(pathname, handleVariables(watch('query'), variables));
   };
 
   const handleSdlUrlChange = (event: React.ChangeEvent) => {
