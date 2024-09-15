@@ -8,6 +8,7 @@ vi.mock('react', async (importOriginal) => {
   return {
     ...actual,
     useContext: () => dictionary,
+    useState: () => ['', vi.fn()],
   };
 });
 
