@@ -3,7 +3,7 @@
 import styles from './graphiql-form.module.scss';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 import LabeledInput from './labeled-input/labeled-input';
 import { GraphQlRequest, GraphQlUrlParams } from '@/types/graphql';
@@ -22,6 +22,8 @@ import ReactCodeMirror from '@uiw/react-codemirror';
 import Variables from '../Variables/Variables';
 import { handleVariables } from '../Variables/handle-variable-input-change';
 import transformHeadersToQueries from '@/utils/transform-headers-to-queries';
+import { Button } from '@mui/material';
+import getGraphQlSchema from '@/api/get-graphql-schema';
 
 export default function GraphiQlForm({
   params,
@@ -32,12 +34,13 @@ export default function GraphiQlForm({
 }) {
   const queryParamsReturned = global.window ? window.location.search : '';
 
+  const [docValue, setDocValue] = useState(documentation ? JSON.stringify(documentation) : '');
+
   const { register, handleSubmit, watch, control, getValues } = useForm<GraphQlRequest>({
     defaultValues: {
       endpointUrl: params ? getDecodedStr(params.base64endpoint) : '',
       ...transformQueryParamsToHeaders(queryParamsReturned),
       query: params && params.base64body ? getDecodedStr(params.base64body) : '',
-      documentation: documentation ? JSON.stringify(documentation) : '',
     },
   });
   const [sdlUrlValue, setSdlUrlValue] = useState(() => {
@@ -51,6 +54,20 @@ export default function GraphiQlForm({
   const [, saveToLocalStorage] = useLocalStorageHistory();
 
   const [variables, setVariables] = useState<string[][]>([]);
+
+  const [getButtonClicked, setGetButtonClicked] = useState(false);
+  useEffect(() => {
+    if (!getButtonClicked) return;
+
+    const getDoc = async () => {
+      const data = await getGraphQlSchema(sdlUrlValue);
+      setDocValue(JSON.stringify(data));
+    };
+    getDoc().catch(() => {});
+
+    setGetButtonClicked(false);
+  }, [getButtonClicked, sdlUrlValue]);
+
   const dictionary = useContext(DictionaryContext);
   if (!dictionary) return;
 
@@ -110,14 +127,21 @@ export default function GraphiQlForm({
       >
         <div className={styles['main-row']}>
           <LabeledInput field="endpointUrl" register={register} onChange={handleEndpointUrlChange} isRequired={true} />
-          <input type="submit" value={dictionary.send} />
+          <Button type="submit" variant="contained" size="medium" className={styles.button}>
+            {dictionary.send}
+          </Button>
         </div>
-        <LabeledInput field="sdlUrl" register={register} value={sdlUrlValue} onChange={handleSdlUrlChange} />
+        <div className={styles['main-row']}>
+          <LabeledInput field="sdlUrl" register={register} value={sdlUrlValue} onChange={handleSdlUrlChange} />
+          <Button variant="outlined" size="medium" className={styles.button} onClick={() => setGetButtonClicked(true)}>
+            {dictionary.getDocumentation}
+          </Button>
+        </div>
         <Headers register={register} variables={variables} />
         <div className={styles.editors}>
-          {documentation && (
+          {docValue && (
             <FieldsetWrapper className={styles.documentation} legendText={dictionary.graphql.documentation}>
-              <JsonFormatter json={documentation as JsonObject} tabWith={2} />
+              <JsonFormatter json={docValue as JsonObject} tabWith={2} />
             </FieldsetWrapper>
           )}
           <FieldsetWrapper className={styles.query} legendText={dictionary.graphql.query}>

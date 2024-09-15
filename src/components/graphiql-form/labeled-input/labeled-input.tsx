@@ -1,6 +1,6 @@
 'use client';
 
-import styles from './labeled-input.module.css';
+import styles from './labeled-input.module.scss';
 import { UseFormRegister } from 'react-hook-form';
 import { GraphQlRequest, GraphQlRequestField } from '@/types/graphql';
 import { useContext } from 'react';
