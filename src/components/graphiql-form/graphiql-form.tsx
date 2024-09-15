@@ -133,7 +133,6 @@ export default function GraphiQlForm({
         </div>
         <div className={styles['main-row']}>
           <LabeledInput field="sdlUrl" register={register} value={sdlUrlValue} onChange={handleSdlUrlChange} />
-          {/* <button>Get documentation</button> */}
           <Button variant="outlined" size="medium" className={styles.button} onClick={() => setGetButtonClicked(true)}>
             {dictionary.getDocumentation}
           </Button>
