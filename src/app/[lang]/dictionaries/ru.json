@@ -11,6 +11,7 @@
   "historyPage": {
     "emptyMessage": "Вы не отправили еще ни одного запроса. Попробуйте:"
   },
+  "getDocumentation": "Получить",
   "graphql": {
     "documentation": "Документация",
     "endpointUrl": "URL-адрес",
