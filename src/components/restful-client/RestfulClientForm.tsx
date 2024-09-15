@@ -109,9 +109,10 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
               label="URL"
               variant="outlined"
               size="small"
+              required
               {...register('url', {
                 onChange: handleEndpointUrlChange,
-                required: { value: true, message: 'Enter URL' },
+                required: { value: true, message: 'Please fill out this field.' },
               })}
             />
           </FormControl>
