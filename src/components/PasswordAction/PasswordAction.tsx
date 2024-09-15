@@ -17,12 +17,7 @@ export function PasswordAction({ showPassword, setShowPassword }: PasswordAdornm
 
   return (
     <InputAdornment position="end">
-      <IconButton
-        aria-label="toggle password visibility"
-        onClick={handleClick}
-        onMouseDown={handleMouseDown}
-        edge="end"
-      >
+      <IconButton aria-label="toggle visibility" onClick={handleClick} onMouseDown={handleMouseDown} edge="end">
         {showPassword ? <VisibilityOff /> : <Visibility />}
       </IconButton>
     </InputAdornment>

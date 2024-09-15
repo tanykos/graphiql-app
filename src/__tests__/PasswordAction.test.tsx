@@ -17,7 +17,7 @@ describe('PasswordAction Component', () => {
   beforeEach(() => {
     setShowPassword = vi.fn();
     render(<PasswordAction showPassword={false} setShowPassword={setShowPassword} />);
-    toggleButton = screen.getByRole('button', { name: 'toggle password visibility' });
+    toggleButton = screen.getByRole('button', { name: 'toggle visibility' });
   });
 
   it('renders the visibility toggle button', () => {
