@@ -13,6 +13,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from '@/providers/theme-provider';
 import { UserProvider } from '@/providers/user-provider';
 import Loading from './loading';
+import NotFoundPage from './[...not-found]/page';
 
 export const metadata: Metadata = {
   title: 'REST & GraphQL clients',
@@ -35,7 +36,9 @@ export default async function RootLayout({
             <UserProvider>
               <Header />
               <Suspense fallback={<Loading />}>
-                <Main>{isLocaleCorrect(params.lang) ? children : <p>Page is not found</p>}</Main>
+                <Main>
+                  {isLocaleCorrect(params.lang) ? children : <NotFoundPage params={{ lang: DEFAULT_LOCALE }} />}
+                </Main>
               </Suspense>
             </UserProvider>
             <Footer locale={locale} />

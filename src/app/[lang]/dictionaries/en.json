@@ -86,5 +86,8 @@
   "authFailed": "Authentication failed. Please try again.",
   "restClient": "REST Client",
   "graphClient": "GraphiQL Client",
-  "history": "History"
+  "history": "History",
+  "pageNotFound": "Page Not Found",
+  "sorryMessage": "Sorry, the page you requested doesn't exist.",
+  "goToHome": "Go back to the home page"
 }

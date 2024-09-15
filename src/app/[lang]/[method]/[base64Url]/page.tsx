@@ -5,6 +5,8 @@ import { ApiResponse, SearchParams } from '@/types';
 import RestfulClientForm from '@/components/restful-client/RestfulClientForm';
 import ResponseViewer from '@/components/response-viewer/response-viewer';
 import style from '../../restful/restful.module.scss';
+import { METHODS } from '@/const';
+import NotFoundPage from '../../[...not-found]/page';
 
 export default async function RestfulFilledFormPage({
   params,
@@ -16,6 +18,11 @@ export default async function RestfulFilledFormPage({
   const url = getDecodedStr(params.base64Url);
   const method = params.method;
   let body: string | undefined = '';
+
+  if (!METHODS.includes(method)) {
+    return <NotFoundPage params={params} />;
+  }
+
   if (params.base64Body) body = getDecodedStr(params.base64Body);
 
   let response: ApiResponse | undefined;
