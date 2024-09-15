@@ -1,5 +1,5 @@
 import styles from './NotFoundPage.module.scss';
-import { ButtonsTypes, DEFAULT_LOCALE } from '@/const';
+import { ButtonsTypes } from '@/const';
 import getDictionary from '../dictionaries';
 import RouterLink from '@/components/RouterLink/RouterLink';
 import { Routes } from '@/constants/routes';
@@ -7,7 +7,7 @@ import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 
 export default async function NotFoundPage({ params }: { params: { lang: string } }) {
-  const dictionary = await getDictionary(params?.lang || DEFAULT_LOCALE);
+  const dictionary = await getDictionary(params.lang);
 
   return (
     <Box className={styles.wrapper}>
