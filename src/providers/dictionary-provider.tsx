@@ -2,8 +2,9 @@
 
 import { createContext } from 'react';
 import { Dictionary } from '@/app/[lang]/dictionaries';
+import defaultDictionary from '@/app/[lang]/dictionaries/en.json' with { type: 'json' };
 
-export const DictionaryContext = createContext<Dictionary | null>(null);
+export const DictionaryContext = createContext<Dictionary>(defaultDictionary);
 
 export default function DictionaryProvider({
   dictionary,

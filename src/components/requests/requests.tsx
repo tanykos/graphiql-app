@@ -3,10 +3,8 @@
 import styles from './requests.module.scss';
 import { REQUESTS_SEPARATOR } from '@/const';
 import useLocalStorageHistory from '@/hooks/use-local-storage-history';
-import { DictionaryContext } from '@/providers/dictionary-provider';
 import getLocale from '@/utils/get-locale';
 import { usePathname } from 'next/navigation';
-import { useContext } from 'react';
 import RequestLinkText from './RequestLinkText/RequestLinkText';
 import EmptyRequestsList from './EmptyRequestsList/EmptyRequestsList';
 
@@ -15,9 +13,6 @@ export default function Requests(): React.ReactNode {
 
   const pathname = usePathname();
   const locale = getLocale(pathname);
-
-  const dictionary = useContext(DictionaryContext);
-  if (!dictionary) return;
 
   // TODO add query params
   const getRequestsUrlParams = (requests: string) => {

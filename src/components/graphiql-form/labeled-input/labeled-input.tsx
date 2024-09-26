@@ -22,7 +22,6 @@ export default function LabeledInput({
   isRequired?: boolean;
 }) {
   const dictionary = useContext(DictionaryContext);
-  if (!dictionary) return;
 
   return (
     <div className={styles['labeled-input']}>

@@ -65,7 +65,6 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
 
   const [variables, setVariables] = useState<string[][]>([]);
   const dictionary = useContext(DictionaryContext);
-  if (!dictionary) return;
 
   const handleEndpointUrlChange = () => {
     const processedUrl = handleVariables(getValues().url, variables);

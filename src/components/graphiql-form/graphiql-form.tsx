@@ -69,7 +69,6 @@ export default function GraphiQlForm({
   }, [getButtonClicked, sdlUrlValue]);
 
   const dictionary = useContext(DictionaryContext);
-  if (!dictionary) return;
 
   const onSubmit = () => {
     const endpoint = watch('endpointUrl');

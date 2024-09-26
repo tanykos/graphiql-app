@@ -32,7 +32,7 @@ export default function AuthForm({ dictionaryKey }: AuthFormProps) {
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
 
   const isSignUp = dictionaryKey === AuthFormNames.SIGNUP;
-  const validationSchema = getValidationSchemas(dictionary!, isSignUp);
+  const validationSchema = getValidationSchemas(dictionary, isSignUp);
   const defaultValues: FormInputs = isSignUp ? { email: '', password: '', user: '' } : { email: '', password: '' };
 
   const {
@@ -44,8 +44,6 @@ export default function AuthForm({ dictionaryKey }: AuthFormProps) {
     mode: 'onChange',
     defaultValues,
   });
-
-  if (!dictionary) return;
 
   const formData = {
     title: dictionary[dictionaryKey].title,

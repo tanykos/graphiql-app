@@ -17,7 +17,6 @@ export default function LangSelector(): React.ReactNode {
   const router = useRouter();
 
   const dictionary = useContext(DictionaryContext);
-  if (!dictionary) return;
 
   function handleLocaleChange(event: React.ChangeEvent) {
     if (!(event.target instanceof HTMLSelectElement)) return;

@@ -9,7 +9,6 @@ import { useContext } from 'react';
 
 export default function EmptyRequestsList() {
   const dictionary = useContext(DictionaryContext);
-  if (!dictionary) return;
 
   const pageButtons = [
     { href: Routes.RESTFUL_CLIENT, text: dictionary.restClient },
