@@ -1,4 +1,4 @@
-import { handleVariables } from '@/components/Variables/handle-variable-input-change';
+import { substituteVariables } from '@/components/Variables/handle-variable-input-change';
 import updateURLQueryParams from '@/utils/update-url-query-params';
 
 export type QueryParamArr = string[][];
@@ -47,7 +47,7 @@ const handleHeaderInputChange = (
       queriesEntries[thisHeaderNumber - 1][1] = thisValue;
     }
     joinQueryParams();
-    updateURLQueryParams(pathname, handleVariables(queryParams, variables));
+    updateURLQueryParams(pathname, substituteVariables(queryParams, variables));
   }
 };
 

@@ -26,7 +26,7 @@ import Headers from '@/components/Headers/Headers';
 import FieldsetWrapper from '../FieldsetWrapper/FieldsetWrapper';
 import useLocalStorageHistory from '@/hooks/use-local-storage-history';
 import Variables from '../Variables/Variables';
-import { handleVariables } from '../Variables/handle-variable-input-change';
+import { substituteVariables } from '../Variables/handle-variable-input-change';
 
 export default function RestfulClientForm({ params }: { params?: RestfulParams }) {
   const [method, setMethod] = useState(params && METHODS.includes(params.method) ? params.method : 'GET');
@@ -52,12 +52,12 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
   const onSubmit = () => {
     const values = getValues();
     const locale = getLocale(pathname);
-    const base64Url = getEncodedString(handleVariables(values.url, variables));
-    const base64Body = getEncodedString(handleVariables(values.body, variables));
+    const base64Url = getEncodedString(substituteVariables(values.url, variables));
+    const base64Body = getEncodedString(substituteVariables(values.body, variables));
     const queryParamsToSend = transformHeadersToQueries(values);
 
     if (base64Url && base64Body !== undefined) {
-      const path = `/${locale}/${values.method}/${base64Url}/${base64Body}${handleVariables(queryParamsToSend, variables)}`;
+      const path = `/${locale}/${values.method}/${base64Url}/${base64Body}${substituteVariables(queryParamsToSend, variables)}`;
       saveToLocalStorage(path);
       router.push(path);
     }
@@ -68,7 +68,7 @@ export default function RestfulClientForm({ params }: { params?: RestfulParams }
   if (!dictionary) return;
 
   const handleEndpointUrlChange = () => {
-    const processedUrl = handleVariables(getValues().url, variables);
+    const processedUrl = substituteVariables(getValues().url, variables);
     updateUrlEndpointParam(pathname, processedUrl);
   };
 
