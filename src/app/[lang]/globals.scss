@@ -31,6 +31,8 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  min-width: 700px;
+  max-width: 1200px;
 }
 
 header,
@@ -48,8 +50,6 @@ footer {
 main {
   display: flex;
   flex-grow: 1;
-  min-width: 700px;
-  max-width: 1200px;
   margin: 0 auto;
 }
 
