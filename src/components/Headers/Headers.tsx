@@ -28,14 +28,12 @@ export default function Headers({ register, variables }: Props) {
   const pathname = usePathname();
 
   const dictionary = useContext(DictionaryContext);
-  if (!dictionary) return;
 
   const handleAddHeader = () => {
     setRows([...rows, rows.length + 1]);
   };
 
   return (
-
     <div>
       <div className={style.headersTitleWrapper}>
         <p className={style.headersTitle}>{dictionary.headers}</p>

@@ -9,7 +9,6 @@ import FieldsetWrapper from '../FieldsetWrapper/FieldsetWrapper';
 
 export default function ResponseViewer({ response }: { response?: ApiResponse }) {
   const dictionary = useContext(DictionaryContext);
-  if (!dictionary) return;
 
   const jsonStyle = {
     propertyStyle: { color: '#533030' },

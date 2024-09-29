@@ -15,8 +15,6 @@ function MainPage() {
   const userContext = useContext(UserContext);
   const { user } = userContext!;
 
-  if (!dictionary) return;
-
   const pageButtons = user?.isLogged
     ? [
         { href: Routes.RESTFUL_CLIENT, text: dictionary.restClient, variant: ButtonsTypes.CONTAINED },

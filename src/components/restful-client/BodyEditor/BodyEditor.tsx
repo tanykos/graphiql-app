@@ -17,7 +17,6 @@ interface Props {
 function BodyEditor({ control, getValues, variables }: Props) {
   const pathname = usePathname();
   const dictionary = useContext(DictionaryContext);
-  if (!dictionary) return;
 
   const handleBodyEdit = () => {
     updateUrlBodyParam(pathname, handleVariables(getValues().body, variables));

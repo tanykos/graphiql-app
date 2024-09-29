@@ -48,8 +48,6 @@ function Header(): React.ReactNode {
   const userContext = useContext(UserContext);
   const { user, logout, fetchAuthStatus } = userContext!;
 
-  if (!dictionary) return;
-
   const handleSignOut = async () => {
     await logout();
     await fetchAuthStatus();

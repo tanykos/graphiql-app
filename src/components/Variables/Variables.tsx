@@ -20,7 +20,6 @@ export default function Variables({ variables, setVariables }: Props) {
   const [rows, setRows] = useState<number[] | undefined>();
 
   const dictionary = useContext(DictionaryContext);
-  if (!dictionary) return;
 
   const handleAddVariable = () => {
     if (rows) {
