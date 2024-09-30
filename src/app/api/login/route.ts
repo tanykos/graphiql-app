@@ -4,19 +4,12 @@ import { auth } from '../../../../firebaseConfig';
 import { createSession, verifySession } from '@/utils/auth-session';
 import { IsLoggedResponse } from '@/types/auth';
 import { adminAuth } from '../../../../firebaseAdminConfig';
-import { Locale } from '@/types';
-import { DEFAULT_LOCALE, LOCALES } from '@/const';
 import getDictionary from '@/app/[lang]/dictionaries';
 
 type LoginRequestBody = {
   email: string;
   password: string;
 };
-
-function getLocale(request: NextRequest): Locale {
-  const locale = request.headers.get('Accept-Language');
-  return LOCALES.includes(locale as Locale) ? (locale as Locale) : DEFAULT_LOCALE;
-}
 
 async function loginUser(email: string, password: string) {
   try {
@@ -34,7 +27,7 @@ async function loginUser(email: string, password: string) {
 }
 
 export async function POST(request: NextRequest) {
-  const locale = getLocale(request);
+  const locale = request.headers.get('Accept-Language') || '';
   const dictionary = await getDictionary(locale);
 
   try {
