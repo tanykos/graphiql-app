@@ -1,0 +1,9 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  background: var(--form-wrap-color);
+  padding: 1.5rem;
+  opacity: 0.9;
+}

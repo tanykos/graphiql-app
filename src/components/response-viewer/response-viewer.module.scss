@@ -1,0 +1,16 @@
+.response {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.status-code {
+  color: var(--color-accent);
+}
+
+.status-text {
+  color: var(--color-label);
+  font-size: 0.8rem;
+}

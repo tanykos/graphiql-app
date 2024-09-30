@@ -1,0 +1,19 @@
+@import '../../../styles/mixins.scss';
+
+.title {
+  align-self: center;
+}
+
+.requests {
+  @include main-bg;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+main:has(.requests) {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

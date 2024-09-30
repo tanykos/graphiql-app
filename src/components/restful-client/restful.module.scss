@@ -1,0 +1,23 @@
+.select {
+  width: 120px;
+  background-color: #ffffff;
+}
+
+.inputUrl {
+  flex-grow: 1;
+  background-color: #ffffff;
+}
+
+.button {
+  font-size: 1rem;
+}
+
+.formInputLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 5px;
+  width: 100%;
+  margin-top: 15px;
+}

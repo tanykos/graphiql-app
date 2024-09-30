@@ -1,0 +1,27 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  color: var(--color-text-secondary);
+
+  a {
+    height: 24px;
+  }
+}
+
+.developers {
+  display: flex;
+  gap: 15px;
+}
+
+.github {
+  width: 24px;
+  height: 24px;
+  color: var(--color-text-secondary);
+  transition: 0.2s;
+
+  &:hover {
+    color: #1f1f1f;
+  }
+}
