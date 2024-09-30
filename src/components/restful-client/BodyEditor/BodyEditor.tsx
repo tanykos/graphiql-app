@@ -6,7 +6,7 @@ import { DictionaryContext } from '@/providers/dictionary-provider';
 import style from './BodyEditor.module.scss';
 import updateUrlBodyParam from '@/utils/update-url-body-param';
 import { usePathname } from 'next/navigation';
-import { handleVariables } from '@/components/Variables/handle-variable-input-change';
+import { substituteVariables } from '@/components/Variables/handle-variable-input-change';
 
 interface Props {
   control: Control<RestfulFormFields, FieldValues>;
@@ -19,7 +19,7 @@ function BodyEditor({ control, getValues, variables }: Props) {
   const dictionary = useContext(DictionaryContext);
 
   const handleBodyEdit = () => {
-    updateUrlBodyParam(pathname, handleVariables(getValues().body, variables));
+    updateUrlBodyParam(pathname, substituteVariables(getValues().body, variables));
   };
 
   return (

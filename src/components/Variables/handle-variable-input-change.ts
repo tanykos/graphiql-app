@@ -8,7 +8,7 @@ export default function handleVariableInputChange(
   variables[row - 1][orderInArray] = `${ev.target.value}`;
 }
 
-export function handleVariables(inputValue: string, variables: string[][]) {
+export function substituteVariables(inputValue: string, variables: string[][]) {
   let inputValueWithReplacements: string = inputValue;
   const variableRegexp = /\{{2}[^{]{1,}\}{2}/g;
   if (variableRegexp.test(inputValue)) {

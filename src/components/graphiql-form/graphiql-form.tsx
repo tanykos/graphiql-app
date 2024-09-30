@@ -20,7 +20,7 @@ import Headers from '../Headers/Headers';
 import transformQueryParamsToHeaders from '@/utils/transform-query-params-to-headers';
 import ReactCodeMirror from '@uiw/react-codemirror';
 import Variables from '../Variables/Variables';
-import { handleVariables } from '../Variables/handle-variable-input-change';
+import { substituteVariables } from '../Variables/handle-variable-input-change';
 import transformHeadersToQueries from '@/utils/transform-headers-to-queries';
 import { Button } from '@mui/material';
 import getGraphQlSchema from '@/api/get-graphql-schema';
@@ -72,21 +72,21 @@ export default function GraphiQlForm({
 
   const onSubmit = () => {
     const endpoint = watch('endpointUrl');
-    const base64endpoint = getEncodedString(handleVariables(endpoint, variables));
+    const base64endpoint = getEncodedString(substituteVariables(endpoint, variables));
     const body = watch('query');
-    const base64body = getEncodedString(handleVariables(body, variables));
+    const base64body = getEncodedString(substituteVariables(body, variables));
     const queryParamsToSend = transformHeadersToQueries(getValues());
 
     if (base64endpoint && base64body !== undefined) {
       const locale = getLocale(pathname);
-      const path = `/${locale}/GRAPHQL/${base64endpoint}/${base64body}${handleVariables(queryParamsToSend, variables)}`;
+      const path = `/${locale}/GRAPHQL/${base64endpoint}/${base64body}${substituteVariables(queryParamsToSend, variables)}`;
       saveToLocalStorage(path);
       router.push(path);
     }
   };
 
   const handleEndpointUrlChange = (event: React.ChangeEvent) => {
-    const processedEnpointParam = handleVariables(watch('endpointUrl'), variables);
+    const processedEnpointParam = substituteVariables(watch('endpointUrl'), variables);
     updateUrlEndpointParam(pathname, processedEnpointParam);
 
     if (!(event.target instanceof HTMLInputElement)) return;
@@ -96,7 +96,7 @@ export default function GraphiQlForm({
   };
 
   const handleQueryChange = () => {
-    updateUrlBodyParam(pathname, handleVariables(watch('query'), variables));
+    updateUrlBodyParam(pathname, substituteVariables(watch('query'), variables));
   };
 
   const handleSdlUrlChange = (event: React.ChangeEvent) => {
