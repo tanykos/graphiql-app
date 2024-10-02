@@ -91,5 +91,7 @@
   "pageNotFound": "Page Not Found",
   "sorryMessage": "Sorry, the page you requested doesn't exist.",
   "goToHome": "Go back to the home page",
-  "wentWrong": "Something went wrong..."
+  "wentWrong": "Something went wrong...",
+  "regFailed": "Registration failed. Email already in use.",
+  "unknownError": "Unknown error occurred."
 }

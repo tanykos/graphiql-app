@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createSession } from '@/utils/auth-session';
 import { auth } from '../../../../firebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile, User } from 'firebase/auth';
+import getDictionary from '@/app/[lang]/dictionaries';
+import { FirebaseError } from 'firebase/app';
 
 type RegisterRequestBody = {
   email: string;
@@ -21,12 +23,18 @@ async function registerUser(email: string, password: string, displayName: string
     await createSession(authIdToken);
     return { success: true, user };
   } catch (error) {
-    console.error('Error during registration:', error);
-    return { success: false, error: error };
+    if (error instanceof FirebaseError) {
+      return { success: false, error: { code: error.code } };
+    }
+
+    return { success: false, error: { code: 'unknown-error' } };
   }
 }
 
 export async function POST(request: NextRequest) {
+  const locale = request.headers.get('Accept-Language') || '';
+  const dictionary = await getDictionary(locale);
+
   try {
     const body = (await request.json()) as RegisterRequestBody;
     const { email, password, user } = body;
@@ -39,10 +47,17 @@ export async function POST(request: NextRequest) {
         user: registrationResult.user,
       });
     } else {
-      return NextResponse.json({ error: registrationResult.error }, { status: 500 });
+      let errorMessage: string;
+      if (registrationResult.error?.code === 'auth/email-already-in-use') {
+        errorMessage = dictionary.regFailed;
+      } else {
+        errorMessage = dictionary.unknownError;
+      }
+
+      return NextResponse.json({ error: errorMessage }, { status: 200 });
     }
   } catch (error) {
-    console.error('Error during registration 2:', error);
+    console.error('Error during registration:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
