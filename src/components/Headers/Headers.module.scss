@@ -1,0 +1,27 @@
+.button {
+  font-size: 1rem;
+}
+
+.headersTitle {
+  line-height: 40px;
+  font-size: 1rem;
+  color: var(--form-legend-color);
+}
+
+.headersTitleWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-left: 8px;
+  margin: 15px 0 10px;
+}
+
+.nestedInput {
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.tdStyle {
+  padding: 8px;
+  border: none;
+}

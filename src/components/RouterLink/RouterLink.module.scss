@@ -1,0 +1,7 @@
+.link {
+  color: inherit;
+  transition: color 0.3s;
+  &:hover {
+    color: gray;
+  }
+}

@@ -1,0 +1,62 @@
+:root {
+  --header-height: 60px;
+  --body-gap: 2rem;
+  --color-bg: rgb(226, 236, 228);
+  --border-input: #8f8f8f;
+  --table-text-color: #585858;
+  --placeholder-color: #b9b9b9;
+  --table-border: #d3d3d3;
+  --color-accent: #4f6e61;
+  --color-label: #8f8f8f;
+  --form-legend-color: #00000099;
+  --form-fieldset-color: #0000003b;
+  --color-text-secondary: #636363;
+  --paper-border-color: #e2ece4;
+  --form-wrap-color: #f9fbf9;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-image: url('/main-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-width: 700px;
+}
+
+header,
+main,
+footer {
+  width: 100%;
+  padding: 1rem 2rem;
+}
+
+header,
+footer {
+  background-color: var(--color-bg);
+}
+
+main {
+  display: flex;
+  flex-grow: 1;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  pointer-events: none;
+}

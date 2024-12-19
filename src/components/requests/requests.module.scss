@@ -1,0 +1,8 @@
+.link {
+  text-decoration: none;
+  color: var(--color-accent);
+
+  &:visited {
+    color: var(--color-text-secondary);
+  }
+}

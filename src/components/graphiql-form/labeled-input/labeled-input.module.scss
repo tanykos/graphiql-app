@@ -1,0 +1,21 @@
+.labeled-input {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.labeled-input label {
+  color: var(--color-label);
+}
+
+.labeled-input input {
+  width: 100%;
+  padding: 10px;
+  font-size: inherit;
+  border-radius: 4px;
+  border: 1px solid var(--table-border);
+
+  &:focus {
+    outline-color: var(--color-accent);
+  }
+}
